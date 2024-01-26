@@ -4,11 +4,12 @@ import Link from "next/link";
 
 export const BaseContainer = ({
   maxWidth = false,
-  disableGutter = true,
+  disableGutters = false,
   children,
+  ...otherProps
 }) => {
   return (
-    <Container maxWidth={maxWidth} disableGutter>
+    <Container maxWidth={maxWidth} disableGutters={disableGutters} {...otherProps}>
       {children}
     </Container>
   );
@@ -45,3 +46,17 @@ export const Headline01 = styled(Typography)`
   letter-spacing: -1.5px;
   text-transform: capitalize;
 `;
+
+export const StyledPage = styled(BaseContainer)`
+  background: ${({ theme }) => theme.palette.background.page};
+  padding: 0;
+  margin: 0;
+`
+
+export const BaseGridContainer = styled(Grid)`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px;
+  padding: 0 64px;
+`
+

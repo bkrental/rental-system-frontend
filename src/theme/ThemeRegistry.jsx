@@ -16,7 +16,8 @@ const themeOptions = {
         },
         background: {
             default: 'rgba(255, 255, 255, 1)',
-            input: ''
+            page: 'linear-gradient(180deg, #FFE6B9 12.06%, #FFFBF3 48.21%, #FFF 82.18%)',
+            test: 'aqua'
         },
         text: {
             primary: 'rgba(0, 0, 0, 1)',
@@ -42,6 +43,21 @@ const themeOptions = {
               }
             `,
           },
+    },
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 600,
+            md: 960,
+            lg: 1280,
+            xl: 1920
+        }
+    },
+    componentSize: {
+        header: {
+            height: "80px",
+            width: "100%",
+        }
     }
 }
 

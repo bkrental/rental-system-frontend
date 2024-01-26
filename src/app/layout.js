@@ -1,6 +1,7 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import Header from '@/components/Header';
-import ThemeRegistry from '@/theme/ThemeRegistry';
+import Header from '@components/Header';
+import ThemeRegistry from '@theme/ThemeRegistry';
+import './app.css';
 
 
 export const metadata = {
@@ -15,7 +16,7 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeRegistry>
             {/* Header goes here */}
-            <Header />
+            <Header className="header"/>
             {children}
           </ThemeRegistry>
         </AppRouterCacheProvider>
