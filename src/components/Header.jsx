@@ -15,8 +15,8 @@ import styled from "@emotion/styled";
 
 const HeaderContainer = styled(BaseGridContainer)`
   height: ${({ theme }) => theme.componentSize.header.height};
-  // background-color: ${({ theme }) => theme.palette.background.default}; 
-  background-color: yellow;
+  background-color: ${({ theme }) => theme.palette.background.default}; 
+  // background-color: yellow;
 
   position: sticky;
   top: 0;
@@ -25,7 +25,7 @@ const HeaderContainer = styled(BaseGridContainer)`
 const HeaderItem = styled(BaseContainer)`
   grid-column: span 12;
 
-  background-color: red;
+  // background-color: red;
   display: flex;
   padding: 0;
   margin: 0;
@@ -36,7 +36,7 @@ const HeaderItem = styled(BaseContainer)`
 function Header() {
   return (
     <HeaderContainer container className="nav-bar container">
-      <HeaderItem item>
+      <HeaderItem item >
         <Button variant="contained" color="complementary">
           <TitleTypo variant="h1">
             <BaseLink href="/">BKrental</BaseLink>

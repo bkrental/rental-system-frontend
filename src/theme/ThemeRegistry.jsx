@@ -1,7 +1,7 @@
 "use client"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material/styles"
-// import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from '@mui/material/CssBaseline';
+import { useEffect } from "react";
 
 const themeOptions = {
     palette: {
@@ -16,7 +16,7 @@ const themeOptions = {
         },
         background: {
             default: 'rgba(255, 255, 255, 1)',
-            page: 'linear-gradient(180deg, #FFE6B9 12.06%, #FFFBF3 48.21%, #FFF 82.18%)',
+            page: 'linear-gradient(180deg, #FFE6B9 12.06%, #FFFBF3 67.57%, #FFF 72.83%)',
             test: 'aqua'
         },
         text: {
@@ -63,8 +63,23 @@ const themeOptions = {
 
 const theme = createTheme(themeOptions)
 
-
 export default function ThemeRegistry({children}) {
+    useEffect(() => {
+        const root = document.documentElement;
+    
+        Object.entries(theme.palette).forEach(([key, value]) => {
+          if (typeof value === 'object' && value !== null) {
+            Object.entries(value).forEach(([innerKey, innerValue]) => {
+              root.style.setProperty(`--${key}-${innerKey}`, innerValue);
+            });
+          } else {
+            root.style.setProperty(`--${key}`, value);
+          }
+        });
+
+        root.style.setProperty(`--componentSize-header-height`, theme.componentSize.header.height);
+      }, [theme]);
+      
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
