@@ -6,7 +6,6 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
-  Copyright,
   Box,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -42,8 +41,6 @@ const LoginForm = styled(BaseContainer)`
   .login-avatar {
     background-color: ${({ theme }) => theme.palette.primary.main};
   }
-
-  
 `
 
 const LoginImageSection = styled(BaseContainer)`
@@ -102,9 +99,9 @@ function LoginPage() {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
+            <Grid item>
               <Description01 variant="body2">
-              <Link href="" variant="body2">Forgot password?</Link>
+                <Link href="" variant="body2">Forgot password?</Link>
               </Description01>
             </Grid>
             <Grid item>

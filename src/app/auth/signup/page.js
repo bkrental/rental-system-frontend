@@ -20,30 +20,19 @@ import {
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import Image from 'next/image';
-// import bannerAuth from '@public/banner-auth.png';
+import bannerAuth from '@public/banner-auth.svg';
 
 const SignupContainer = styled(BaseGridContainer)`
-  height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});
   background: ${({ theme }) => theme.palette.background.page};
 `;
 
-const SignupItem = styled(BaseContainer)`
-  grid-column: span 6;
-`
-
 const SignupForm = styled(BaseContainer)`
   grid-column: 2 / 7;
-
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
-  // grid-row-gap: 8px;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  grid-row-gap: 8px;
   padding: 32px 0;
-
-
-  
-    
-
 
   .have-account-section {
     align-items: center;
@@ -52,32 +41,45 @@ const SignupForm = styled(BaseContainer)`
 
 `
 
-const SignupImageSection = styled(BaseContainer)`
-  grid-column: 8 / 12;
-  background-color: green;
+const ImageSectionWrapper = styled(BaseContainer)`
+  grid-column: 7 / 13;
+  height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});
+`
 
+const ImageSection = styled(BaseContainer)`
+  grid-column: 7 / 13;
+  height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});
+
+  .banner-auth {
+    width: 80%;
+    height: 80%;
+  }
 `
 
 const HeadingSection = styled(BaseContainer)`
-  grid-rows: 1 / 3  ;
-  grid-column: 6 / 8;
+  grid-row: 1 / 3  ;
+  grid-column: span 12;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   
   .signup-avatar {
-    // margin: ${({ theme }) => theme.spacing(1)}px;
     background-color: ${({ theme }) => theme.palette.primary.main};
   }
 `
 
 const InputSection = styled(BaseContainer)`
-  grid-row: 4 / 10;
+  grid-row: 3 / 10;
+  grid-column: 2 / 12;
+
+  .input {
+    margin-top: 8px;
+  }
 `
 
 const SubmitSection = styled(BaseContainer)`
-  grid-row: 11 / 13;
+  // grid-row: 11 / 13;
   grid-column: 2 / 12;
   display: flex;
   flex-direction: column;
@@ -86,7 +88,7 @@ const SubmitSection = styled(BaseContainer)`
 
   .submit-button {
     margin-bottom: 8px;
-
+  }
 `
 
 
@@ -99,9 +101,61 @@ function SignupPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Headline01 component="h1" variant="h5">
-            Signup
+            {"Sign up"}
           </Headline01>
         </HeadingSection>
+
+
+        <InputSection className="input-section">
+          <Box component="form" noValidate >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Your Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              className='input'
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="phone-number"
+              label="Phone Number"
+              name="phone-number"
+              autoComplete="phone-number"
+              className='input'
+            />
+            {/* <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Your email"
+              name="phone-number"
+              autoComplete="phone-number"
+
+            /> */}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              className='input'
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+          </Box>
+        </InputSection>
 
 
         <SubmitSection className="submit-section">
@@ -123,57 +177,13 @@ function SignupPage() {
         </SubmitSection>
         {/* 
         
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Your Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="phone-number"
-            label="Phone Number"
-            name="phone-number"
-            autoComplete="phone-number"
-
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Your email"
-            name="phone-number"
-            autoComplete="phone-number"
-
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          
-        </Box> */}
+         */}
       </SignupForm>
-      <SignupImageSection>
-        <Headline01>Image</Headline01>
-      </SignupImageSection>
+      <ImageSectionWrapper>
+        <ImageSection>
+          <Image src={bannerAuth} className='banner-auth' alt="banner-auth" />
+        </ImageSection>
+      </ImageSectionWrapper >
     </SignupContainer>
   );
 }

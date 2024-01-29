@@ -12,14 +12,14 @@ import {
 } from "./BaseComponents";
 import styled from "@emotion/styled";
 
-
 const HeaderContainer = styled(BaseGridContainer)`
   height: ${({ theme }) => theme.componentSize.header.height};
-  background-color: ${({ theme }) => theme.palette.background.default}; 
+  background-color: ${({ theme }) => theme.palette.background.default};
   // background-color: yellow;
 
   position: sticky;
   top: 0;
+  z-index: 100;
 `;
 
 const HeaderItem = styled(BaseContainer)`
@@ -36,7 +36,7 @@ const HeaderItem = styled(BaseContainer)`
 function Header() {
   return (
     <HeaderContainer container className="nav-bar container">
-      <HeaderItem item >
+      <HeaderItem>
         <Button variant="contained" color="complementary">
           <TitleTypo variant="h1">
             <BaseLink href="/">BKrental</BaseLink>
