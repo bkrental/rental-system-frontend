@@ -1,6 +1,6 @@
 "use client";
 import styled from "@emotion/styled";
-import { Container, Grid, Box, Typography } from "@mui/material";
+import { Container, Grid, Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 
 export const BaseContainer = styled(
@@ -77,4 +77,8 @@ export const BaseGridContainer = styled(Grid)`
   padding: 0 64px;
 
   grid-auto-rows: minmax(8px, auto);
+`;
+
+export const BaseButton = styled(Button)`
+  min-width: 112px;
 `;

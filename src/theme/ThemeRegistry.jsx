@@ -22,7 +22,7 @@ const themeOptions = {
     text: {
       primary: "rgba(0, 0, 0, 1)",
       secondary: "rgba(59, 65, 68, 1)",
-      hover: "rgba(255, 255, 255, 1)",
+      active: "rgba(255, 255, 255, 1)",
       description: "rgba(59, 65, 68, 0.50)",
     },
   },

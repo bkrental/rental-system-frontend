@@ -41,6 +41,13 @@ const LoginForm = styled(BaseContainer)`
   .login-avatar {
     background-color: ${({ theme }) => theme.palette.primary.main};
   }
+
+  .not-have-account {
+    display-flex: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
 `
 
 const LoginImageSection = styled(BaseContainer)`
@@ -98,7 +105,7 @@ function LoginPage() {
           >
             Sign In
           </Button>
-          <Grid container>
+          <Grid container className="not-have-account">
             <Grid item>
               <Description01 variant="body2">
                 <Link href="" variant="body2">Forgot password?</Link>
@@ -110,11 +117,9 @@ function LoginPage() {
               </Description01>
             </Grid>
           </Grid>
-          {/* <Copyright sx={{ mt: 5 }} />   */}
         </Box>
       </LoginForm>
       <LoginImageSection>
-        {/* <Headline01>Image</Headline01> */}
         <Image src={bannerAuth} className='banner-auth' alt="banner " />
       </LoginImageSection>
     </LoginContainer>
