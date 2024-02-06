@@ -1,8 +1,11 @@
 import React from 'react'
+import { StyledPage } from '@/components/BaseComponents'
 
 function LandlordPage() {
     return (
-        <div>Landlord page</div>
+        <StyledPage>
+            <h1>Landlord Page</h1>
+        </StyledPage>
     )
 }
 

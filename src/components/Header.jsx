@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Button, Grid, Box } from "@mui/material";
-
 import {
   BaseContainer,
   BaseLink,
@@ -11,7 +10,10 @@ import {
   StyledPage,
   BaseButton,
 } from "./BaseComponents";
+import { changeBtnVar } from "@redux/features/header/headerSlice";
 import styled from "@emotion/styled";
+import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const HeaderContainer = styled(BaseGridContainer)`
   height: ${({ theme }) => theme.componentSize.header.height};
@@ -45,16 +47,12 @@ const HeaderItem = styled(BaseContainer)`
       align-items: center;
       gap: 12px;
 
-      
-      .tenant-landlord-btn {
-        background-color: none;
-        color: ${({ theme }) => theme.palette.text.secondary};
-      }
-      
-      .non-active-btn {
-        // background-color: transparent;
-        // box-shadow: none;
-        color: ${({ theme }) => theme.palette.text.secondary};
+      .tenant-landlord-btn{
+          color: ${({ theme }) => theme.palette.text.secondary};
+        &:hover, &.active{
+          background-color: ${({ theme }) => theme.palette.primary.main};
+          color: ${({ theme }) => theme.palette.text.active};
+        } 
       }
     }
   }
@@ -67,25 +65,12 @@ const HeaderItem = styled(BaseContainer)`
 `;
 
 function Header() {
-  const [curBtnVar, setCurBtnVar] = useState({
-    tenant: "text",
-    landlord: "contained",
-  });
+  const dispatch = useDispatch();
+  const curBtnVar = useSelector((state) => state.header.curBtnVar);
 
   const handleBtnOnClick = (e) => {
-    console.log("heelo");
-    console.log(e.currentTarget.getAttribute("data-value"));
-    if (curBtnVar.tenant === "text") {
-      setCurBtnVar({
-        tenant: "contained",
-        landlord: "text",
-      });
-    } else {
-      setCurBtnVar({
-        tenant: "text",
-        landlord: "contained",
-      });
-    }
+    const btnClicked = e.currentTarget.getAttribute("data-value");
+    dispatch(changeBtnVar({ btnClicked }));
   };
 
   return (
@@ -122,19 +107,19 @@ const TenantLandlordOption = ({ handleBtnOnClick, curBtnVar }) => {
   return (
     <BaseContainer className="tenant-landlord-option">
       <BaseButton
-        variant={curBtnVar.tenant}
-        className="tenant-landlord-btn non-active-btn"
+        variant={curBtnVar.tenant.type}
+        className={`tenant-landlord-btn ${curBtnVar.tenant.status}`}
         color="primary"
         data-value="tenant"
         onClick={handleBtnOnClick}
       >
         <SubtTitleTypo variant="h2" className="heeeeeeeeeeeee">
-          <BaseLink href="/tenant">Tenant</BaseLink>
+          <BaseLink href="/">Tenant</BaseLink>
         </SubtTitleTypo>
       </BaseButton>
       <BaseButton
-        variant={curBtnVar.landlord}
-        className="tenant-landlord-btn"
+        variant={curBtnVar.landlord.type}
+        className={`tenant-landlord-btn ${curBtnVar.landlord.status}`}
         color="primary"
         data-value="landlord"
         onClick={handleBtnOnClick}
