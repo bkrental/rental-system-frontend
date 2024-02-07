@@ -1,5 +1,5 @@
 ---
-- name: Deploy the backend application
+- name: Deploy the frontend application
   hosts: all
   become: true
   remote_user: congdat
@@ -16,9 +16,9 @@
         mode: "0644"
         backup: true
 
-    - name: Create a backend container
+    - name: Create a frontend container
       community.docker.docker_container:
-        name: backend
+        name: frontend
         image: "{{ container_image }}"
         ports:
           - "4000:4000"
