@@ -17,12 +17,14 @@ const StyledPage = styled(BaseContainer)`
   margin: 0;
 `;
 
+console.log(process.env.TEXT);
+
 function LandingPage() {
-  // console.log((Link));
+  console.log(process.env.NEXT_PUBLIC_TEXT);
   return (
     <StyledPage>
       {/* <div>Header</div> */}
-      <h1>Landing Page {process.env.TEXT}</h1>
+      <h1>Landing Page</h1>
 
       <Button variant="contained" color="primary">
         <Link href="/auth/login">Login</Link>

@@ -11,15 +11,48 @@ permissions:
 
 env:
   DOCKERHUB_REPO: congdat2409/rental-service-frontend
+  APP_SECRETS: ""
 
 jobs:
-  build:
-    name: Build & Push the Docker Image
+  get-secrets:
+    name: Get App Environment Secrets
     runs-on: ubuntu-latest
     environment: development
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-southeast-1
+          role-to-assume: arn:aws:iam::239995296586:role/GitHubAction-SSMAdmin
+
+      - name: Retrieve App Secrets from AWS Parameter Store
+        uses: gsf/aws-params-env-action@v1
+        with:
+          params: |
+            APP_SECRETS=${{vars.APP_SECRETS_SSM_ARN}}
+
+      - name: Store App Secrets as Environment Variables
+        id: store-secrets
+        run: |
+          rm -f .env.development
+          echo "APP_SECRETS=$APP_SECRETS" >> $GITHUB_ENV
+
+  build:
+    name: Build & Push the Docker Image
+    runs-on: ubuntu-latest
+    environment: development
+    needs: get-secrets
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse App Secrets from Environment Variables
+        run: |
+          echo ${{env.APP_SECRETS}}
+          echo ${{env.APP_SECRETS}} >> .env.production
 
       - name: Build the Docker Image
         run: docker build -t ${{env.DOCKERHUB_REPO}}:${{github.sha}} .
