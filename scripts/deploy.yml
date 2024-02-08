@@ -4,7 +4,6 @@
   become: true
   remote_user: congdat
   vars:
-    env: "dev"
     container_image: ""
 
   tasks:

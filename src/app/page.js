@@ -17,10 +17,7 @@ const StyledPage = styled(BaseContainer)`
   margin: 0;
 `;
 
-console.log(process.env.TEXT);
-
 function LandingPage() {
-  console.log(process.env.NEXT_PUBLIC_TEXT);
   return (
     <StyledPage>
       {/* <div>Header</div> */}
