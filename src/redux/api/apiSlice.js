@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setUserInfo, removeUserInfo } from '@/redux/features/auth/authSlice';
+import { publicRuntimeConfig } from '../../../next.config';
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://dev-backend.datnguyen2409.me/',
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
     // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-        console.log('prepareHeaders', getState().auth.user);
+        console.log('prepareHeaders baseurl', process.env.NEXT_PUBLIC_API_BASE_URL);
         const token = getState().auth.accessToken;
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);

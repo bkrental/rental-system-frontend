@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import headerSlice from './features/header/headerSlice'
 import authSlice from './features/auth/authSlice'
-import { apiSlice } from '@/api/apiSlice'
+import { apiSlice } from '@api/apiSlice'
 
 
 export const makeStore = () => {

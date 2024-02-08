@@ -7,7 +7,7 @@
       "@public/*": ["./public/*"],
       "@app/*": ["./src/app/*"],
       "@redux/*": ["./src/redux/*"],
-      "@api/*": ["./src/api/*"],
+      "@api/*": ["./src/redux/api/*"],
     }
   }
 }

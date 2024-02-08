@@ -87,16 +87,16 @@ function Header() {
         </Box>
 
         <Box className="right-section">
-          <BaseButton variant="contained" color="primary">
-            <SubtTitleTypo variant="h2">
-              <BaseLink href="/auth/login">Login</BaseLink>
-            </SubtTitleTypo>
-          </BaseButton>
-          <BaseButton variant="contained" color="primary">
-            <SubtTitleTypo variant="h2">
-              <BaseLink href="/auth/signup">Signup</BaseLink>
-            </SubtTitleTypo>
-          </BaseButton>
+          <BaseLink href="/auth/login">
+            <BaseButton variant="contained" color="primary">
+              <SubtTitleTypo variant="h2">Login</SubtTitleTypo>
+            </BaseButton>
+          </BaseLink>
+          <BaseLink href="/auth/signup">
+            <BaseButton variant="contained" color="primary">
+              <SubtTitleTypo variant="h2">Signup</SubtTitleTypo>
+            </BaseButton>
+          </BaseLink>
         </Box>
       </HeaderItem>
     </HeaderContainer>
