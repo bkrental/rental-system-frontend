@@ -1,0 +1,31 @@
+---
+- name: Deploy the frontend application
+  hosts: all
+  become: true
+  remote_user: congdat
+  vars:
+    env: "dev"
+    container_image: ""
+
+  tasks:
+    - name: Store the app_secrets to .env file
+      ansible.builtin.copy:
+        src: "../.env.{{ env }}"
+        dest: /home/congdat/.env.frontend.{{ env }}
+        owner: congdat
+        mode: "0644"
+        backup: true
+
+    - name: Create a frontend container
+      community.docker.docker_container:
+        name: frontend
+        image: "{{ container_image }}"
+        ports:
+          - "4000:4000"
+        env_file: "/home/congdat/.env.frontend.{{ env }}"
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+          interval: 30s
+          retries: 3
+          start_period: 30s
+          timeout: 30s
