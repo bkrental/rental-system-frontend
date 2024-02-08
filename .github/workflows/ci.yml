@@ -36,9 +36,7 @@ jobs:
 
       - name: Store App Secrets in .env files
         run: |
-          echo $APP_SECRETS
-          echo $APP_SECRETS >> .env.production
-          echo $APP_SECRETS >> .env.dev
+          echo "$APP_SECRETS" > .env
 
       - name: Build the Docker Image
         run: docker build -t ${{env.DOCKERHUB_REPO}}:${{github.sha}} .
