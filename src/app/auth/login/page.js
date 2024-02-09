@@ -1,4 +1,5 @@
 "use client"
+import { useState, useRef, useEffect } from 'react';
 import {
   Grid,
   Avatar,
@@ -18,8 +19,13 @@ import {
 } from '@components/BaseComponents';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import bannerAuth from '@public/banner-auth.svg';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo, removeUserInfo } from '@/redux/features/auth/authSlice';
+import { useLoginMutation } from '@/redux/features/auth/authApiSlice';
 
 const LoginContainer = styled(BaseGridContainer)`
   height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});
@@ -41,6 +47,13 @@ const LoginForm = styled(BaseContainer)`
   .login-avatar {
     background-color: ${({ theme }) => theme.palette.primary.main};
   }
+
+  .not-have-account {
+    display-flex: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
 `
 
 const LoginImageSection = styled(BaseContainer)`
@@ -56,6 +69,48 @@ const LoginImageSection = styled(BaseContainer)`
 
 
 function LoginPage() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [loginInfo, setLoginInfo] = useState({
+    phone: '',
+    password: ''
+  });
+  const [login, { isLoading, error }] = useLoginMutation();
+  const [errMsg, setErrMsg] = useState('');
+
+
+  useEffect(() => {
+    setErrMsg('');
+  }, [loginInfo]);
+
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const userData = await login(loginInfo);
+      console.log("handleLoginSubmit", userData);
+
+      if (userData.data) {
+        dispatch(setUserInfo(userData.data.data));
+        setLoginInfo({
+          phone: '',
+          password: ''
+        })
+        router.push('/');
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleUserInput = (e) => {
+    setLoginInfo({
+      ...loginInfo,
+      [e.target.name]: e.target.value
+    });
+  }
+
   return (
     <LoginContainer className="login-container">
       <LoginForm>
@@ -72,8 +127,9 @@ function LoginPage() {
             fullWidth
             id="phone-number"
             label="Phone Number"
-            name="phone-number"
+            name="phone"
             autoComplete="phone-number"
+            onChange={handleUserInput}
             autoFocus
           />
           <TextField
@@ -81,10 +137,11 @@ function LoginPage() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="password"
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleUserInput}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -95,10 +152,11 @@ function LoginPage() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleLoginSubmit}
           >
             Sign In
           </Button>
-          <Grid container>
+          <Grid container className="not-have-account">
             <Grid item>
               <Description01 variant="body2">
                 <Link href="" variant="body2">Forgot password?</Link>
@@ -110,11 +168,9 @@ function LoginPage() {
               </Description01>
             </Grid>
           </Grid>
-          {/* <Copyright sx={{ mt: 5 }} />   */}
         </Box>
       </LoginForm>
       <LoginImageSection>
-        {/* <Headline01>Image</Headline01> */}
         <Image src={bannerAuth} className='banner-auth' alt="banner " />
       </LoginImageSection>
     </LoginContainer>

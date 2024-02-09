@@ -3,6 +3,8 @@ import Header from '@components/Header';
 import ThemeRegistry from '@theme/ThemeRegistry';
 import './app.css';
 import { BaseGridContainer } from '@components/BaseComponents';
+import StoreProvider from '@app/StoreProvider';
+
 
 export const metadata = {
   title: 'BKrental',
@@ -17,10 +19,11 @@ export default function RootLayout({ children }) {
       <body className='app'>
         <AppRouterCacheProvider >
           <ThemeRegistry>
-            {/* Header goes here */}
-            <Header className="header"/>
-
-            {children}
+            <StoreProvider>
+              {/* Header goes here */}
+              <Header className="header" />
+              {children}
+            </StoreProvider>
           </ThemeRegistry>
         </AppRouterCacheProvider>
       </body>

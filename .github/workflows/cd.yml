@@ -10,31 +10,13 @@ permissions:
   contents: read # This is required for actions/checkout
 
 env:
-  DOCKERHUB_REPO: congdat2409/rental-service-frontend
+  DOCKER_IMAGE: congdat2409/rental-service-frontend:${{github.sha}}
 
 jobs:
   build:
     name: Build & Push the Docker Image
     runs-on: ubuntu-latest
     environment: production
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build the Docker Image
-        run: docker build -t ${{env.DOCKERHUB_REPO}}:prod-${{github.sha}} .
-
-      - name: Login to DockerHub
-        run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
-
-      - name: Push image to DockerHub
-        run: docker push ${{env.DOCKERHUB_REPO}}:prod-${{github.sha}}
-
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    environment: production
-    needs: build
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,11 +33,18 @@ jobs:
           params: |
             APP_SECRETS=${{vars.APP_SECRETS_SSM_ARN}}
 
-      - name: Store App Secrets as Environment Variables
-        id: store-secrets
+      - name: Store App Secrets in .env files
         run: |
-          rm -f .env.prod
-          echo "$APP_SECRETS" > .env.prod
+          echo "$APP_SECRETS" > .env
+
+      - name: Build the Docker Image
+        run: docker build -t ${{env.DOCKER_IMAGE}} .
+
+      - name: Login to DockerHub
+        run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: Push image to DockerHub
+        run: docker push ${{env.DOCKER_IMAGE}}
 
       - name: Deploy service
         uses: dawidd6/action-ansible-playbook@v2
@@ -63,7 +52,5 @@ jobs:
           directory: ./scripts
           playbook: deploy.yml
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          inventory: |
-            ${{vars.PROD_INSTANCES_IP}}
-          options: |
-            --extra-vars "container_image=${{env.DOCKERHUB_REPO}}:prod-${{github.sha}} env=prod"
+          inventory: ${{vars.PROD_INSTANCES_IP}}
+          options: --extra-vars "container_image=${{env.DOCKER_IMAGE}}"

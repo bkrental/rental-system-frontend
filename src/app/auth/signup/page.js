@@ -1,4 +1,5 @@
 "use client"
+import { useState } from 'react';
 import {
   Grid,
   Avatar,
@@ -21,6 +22,11 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import Image from 'next/image';
 import bannerAuth from '@public/banner-auth.svg';
+import { useRouter } from 'next/navigation';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo, removeUserInfo } from '@/redux/features/auth/authSlice';
+import { useSignupMutation } from '@/redux/features/auth/authApiSlice';
 
 const SignupContainer = styled(BaseGridContainer)`
   background: ${({ theme }) => theme.palette.background.page};
@@ -93,13 +99,52 @@ const SubmitSection = styled(BaseContainer)`
 
 
 function SignupPage() {
+  const router = useRouter();
+  const dispatch = useDispatch()
+  const [signupInfo, setSignupInfo] = useState({
+    name: '',
+    phoneNumber: '',
+    email: '',
+    password: ''
+  })
+  const [signup, { isLoading, error }] = useSignupMutation();
+
+  const handleOnChange = (e) => {
+    setSignupInfo({
+      ...signupInfo,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const userData = await signup(signupInfo);
+      console.log('handleSignupSubmit', userData);
+
+      if (userData.data) {
+        dispatch(setUserInfo(userData.data.data));
+        setSignupInfo({
+          name: '',
+          phone: '',
+          email: '',
+          password: ''
+        })
+        router.push('/');
+      }
+
+    }
+    catch (error) {
+      console.error('handleSignupSubmit', error)
+    }
+  }
+
+
+
   return (
     <SignupContainer className="signup-container">
       <SignupForm className="signup-form-container">
         <HeadingSection className="avatar-section">
-          <Avatar className='signup-avatar'>
-            <LockOutlinedIcon />
-          </Avatar>
           <Headline01 component="h1" variant="h5">
             {"Sign up"}
           </Headline01>
@@ -118,6 +163,7 @@ function SignupPage() {
               autoComplete="name"
               autoFocus
               className='input'
+              onChange={handleOnChange}
             />
             <TextField
               margin="normal"
@@ -125,34 +171,33 @@ function SignupPage() {
               fullWidth
               id="phone-number"
               label="Phone Number"
-              name="phone-number"
+              name="phone"
               autoComplete="phone-number"
               className='input'
+              onChange={handleOnChange}
             />
-            {/* <TextField
+            <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Your email"
-              name="phone-number"
-              autoComplete="phone-number"
-
-            /> */}
+              label="Your Email"
+              name="email"
+              autoComplete="email"
+              className='input'
+              onChange={handleOnChange}
+            />
             <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Enter Password"
               type="password"
               id="password"
               autoComplete="current-password"
               className='input'
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              onChange={handleOnChange}
             />
           </Box>
         </InputSection>
@@ -164,13 +209,14 @@ function SignupPage() {
             type="submit"
             fullWidth
             variant="contained"
+            onClick={handleSignupSubmit}
           >
             Sign In
           </Button>
           <Grid container className='have-account-section' >
             <Grid item >
               <Description01 variant="body2">
-                {"Already have an account"} <Link href="/auth/signup" variant="body2">{"Login"}</Link>
+                {"Already have an account? "} <Link href="/auth/signup" variant="body2">{"Login"}</Link>
               </Description01>
             </Grid>
           </Grid>

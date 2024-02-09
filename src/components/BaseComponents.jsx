@@ -1,6 +1,6 @@
 "use client";
 import styled from "@emotion/styled";
-import { Container, Grid, Box, Typography } from "@mui/material";
+import { Container, Grid, Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 
 export const BaseContainer = styled(
@@ -49,11 +49,20 @@ export const SubtTitleTypo = styled(Typography)`
 
 export const Headline01 = styled(Typography)`
   font-size: 55px;
-  font-style: normal;
+  font-style: semi-bold;
   font-weight: 600;
   line-height: 118.7%;
   letter-spacing: -1.5px;
-  text-transform: capitalize;
+  // text-transform: capitalize;
+`;
+
+export const SubHeadline01 = styled(Typography)`
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 118.7%;
+  letter-spacing: -0.17px;
+  // text-transform: capitalize;
 `;
 
 export const Description01 = styled(Typography)`
@@ -77,4 +86,8 @@ export const BaseGridContainer = styled(Grid)`
   padding: 0 64px;
 
   grid-auto-rows: minmax(8px, auto);
+`;
+
+export const BaseButton = styled(Button)`
+  min-width: 112px;
 `;
