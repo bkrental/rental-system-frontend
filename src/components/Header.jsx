@@ -12,8 +12,8 @@ import {
 } from "./BaseComponents";
 import { changeBtnVar } from "@redux/features/header/headerSlice";
 import styled from "@emotion/styled";
-import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const HeaderContainer = styled(BaseGridContainer)`
   height: ${({ theme }) => theme.componentSize.header.height};
@@ -66,11 +66,29 @@ const HeaderItem = styled(BaseContainer)`
 
 function Header() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const curBtnVar = useSelector((state) => state.header.curBtnVar);
+  console.log("curBtnVar", curBtnVar);
 
   const handleBtnOnClick = (e) => {
+    const handleRedirectRouteLandlord = () => {
+      // get accToken from local storage
+      const accToken = localStorage.getItem("accessToken");
+      console.log("accToken", accToken);
+      if (accToken) {
+        router.push("/landlord/");
+        dispatch(changeBtnVar({ btnClicked }));
+      } else {
+        alert("Please login first");
+      }
+    };
+
     const btnClicked = e.currentTarget.getAttribute("data-value");
-    dispatch(changeBtnVar({ btnClicked }));
+    if (btnClicked == "landlord") {
+      handleRedirectRouteLandlord();
+    } else {
+      dispatch(changeBtnVar({ btnClicked }));
+    }
   };
 
   return (
@@ -106,27 +124,29 @@ function Header() {
 const TenantLandlordOption = ({ handleBtnOnClick, curBtnVar }) => {
   return (
     <BaseContainer className="tenant-landlord-option">
-      <BaseButton
-        variant={curBtnVar.tenant.type}
-        className={`tenant-landlord-btn ${curBtnVar.tenant.status}`}
-        color="primary"
-        data-value="tenant"
-        onClick={handleBtnOnClick}
-      >
-        <SubtTitleTypo variant="h2" className="heeeeeeeeeeeee">
-          <BaseLink href="/">Tenant</BaseLink>
-        </SubtTitleTypo>
-      </BaseButton>
+      <BaseLink href="/">
+        <BaseButton
+          variant={curBtnVar.tenant.type}
+          className={`tenant-landlord-btn ${curBtnVar.tenant.status}`}
+          color="primary"
+          data-value="tenant"
+          onClick={handleBtnOnClick}
+        >
+          <SubtTitleTypo variant="h2">Tenant</SubtTitleTypo>
+        </BaseButton>
+      </BaseLink>
       <BaseButton
         variant={curBtnVar.landlord.type}
         className={`tenant-landlord-btn ${curBtnVar.landlord.status}`}
         color="primary"
         data-value="landlord"
         onClick={handleBtnOnClick}
+        // onClick={() => {
+        //   handleBtnOnClick();
+        //   handleRedirectRouteLandlord();
+        // }}
       >
-        <SubtTitleTypo variant="h2">
-          <BaseLink href="/landlord">Landlord</BaseLink>
-        </SubtTitleTypo>
+        <SubtTitleTypo variant="h2">Landlord</SubtTitleTypo>
       </BaseButton>
     </BaseContainer>
   );
