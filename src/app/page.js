@@ -1,33 +1,27 @@
-"use client"
+"use client";
+import { Button, Paper, InputBase } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import {
-    Button,
-    Paper,
-    InputBase,
-} from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
-import {
-    BaseContainer,
-    BaseGridContainer,
-    Headline01,
-    Description01,
-    SubHeadline01,
+  BaseContainer,
+  BaseGridContainer,
+  Headline01,
+  Description01,
+  SubHeadline01,
 } from "@components/BaseComponents";
 import Image from "next/image";
 import styled from "@emotion/styled";
 
 const StyledPage = styled(BaseGridContainer)`
-    height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});  
-    background: ${({ theme }) => theme.palette.background.page};
-`
+  height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});
+  background: ${({ theme }) => theme.palette.background.page};
+`;
 
 const HeroWrapper = styled(BaseContainer)`
-    grid-column: 1 / 7;
-    // background-color: yellow;
+  grid-column: 1 / 7;
 
-    grid-template-rows: repeat(auto, 1fr);
-    margin: 32px 0;
-    
-`
+  grid-template-rows: repeat(auto, 1fr);
+  margin: 32px 0;
+`;
 
 const HeroSection = styled(BaseContainer)`
     height: 100%;
@@ -56,7 +50,7 @@ const HeroSection = styled(BaseContainer)`
 
 
     .hero-subtitle {
-        grid-column: 1 / 5; 
+        grid-column: 1 / 6; 
         color: ${({ theme }) => theme.palette.text.secondary};
     }
     
@@ -80,7 +74,7 @@ const HeroSection = styled(BaseContainer)`
             border: 1px solid ${({ theme }) => theme.palette.text.secondary};
         
             .search-bar-input {
-                font-size: 24px;
+                font-size: 20px;
         }
 
         .search-bar-button {
@@ -91,63 +85,79 @@ const HeroSection = styled(BaseContainer)`
         }
     }
 
-`
+`;
 
 const BannerWrapper = styled(BaseContainer)`
-    background-color: green;
-    grid-column: 7 / 13;
-    margin: 32px 0;
+  // background-color: green;
+  grid-column: 7 / 13;
+  margin: 32px 0;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-`
+  .banner-img {
+    width: 100% !important;
+    height: 100% !important;
+    // object-fit: cover;
+    border-radius: 16px;
+  }
+`;
 
 function LandingPage() {
-    return (
-        <StyledPage>
-            <HeroWrapper >
-                <HeroSection>
-                    <BaseContainer className="container">
-                        <Headline01 className="hero-title">Experience the ease of <span className="highlight">BKrental</span> for seamless home discovery.</Headline01>
-                    </BaseContainer>
-                    <BaseContainer className="container">
-                        <SubHeadline01 className="hero-subtitle">
-                            Discover houses and apartments for rent tailored to your needs and budget.
-                        </SubHeadline01>
-                    </BaseContainer>
+  const bannerImageURL =
+    "https://datnguyen2409-bkrental-dev.s3.ap-southeast-1.amazonaws.com/banner-tenant-landing.jpg";
 
-                    <BaseContainer className="search-bar-wrapper">
-                        <Paper
-                            component="form"
-                            className="search-bar"
-                        >
-                            <InputBase
-                                sx={{ ml: 1, flex: 1 }}
-                                className="search-bar-input"
-                                placeholder="Search for City, Address, budget"
-                                inputProps={{ 'aria-label': 'Search for City, Address, budget' }}
-                            />
-                            <Button
-                                color="primary"
-                                aria-label="directions"
-                                variant="contained"
-                                className="search-bar-button"
-                            >
-                                <SearchIcon />
-                            </Button>
-                        </Paper>
-                    </BaseContainer>
-                </HeroSection>
-            </HeroWrapper>
+  return (
+    <StyledPage>
+      <HeroWrapper>
+        <HeroSection>
+          <BaseContainer className="container">
+            <Headline01 className="hero-title">
+              Experience the ease of <span className="highlight">BKrental</span>{" "}
+              for seamless home discovery.
+            </Headline01>
+          </BaseContainer>
+          <BaseContainer className="container">
+            <SubHeadline01 className="hero-subtitle">
+              Discover houses and apartments for rent tailored to your needs and
+              budget.
+            </SubHeadline01>
+          </BaseContainer>
 
-            <BannerWrapper>
-                <h1>Experience the ease of  for seamless home discovery.</h1>
-            </BannerWrapper>
-            {/* </IntroductionWrapper> */}
-        </StyledPage>
-    )
+          <BaseContainer className="search-bar-wrapper">
+            <Paper component="form" className="search-bar">
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                className="search-bar-input"
+                placeholder="Search for City, Address, budget"
+                inputProps={{
+                  "aria-label": "Search for City, Address, budget",
+                }}
+              />
+              <Button
+                color="primary"
+                aria-label="directions"
+                variant="contained"
+                className="search-bar-button"
+              >
+                <SearchIcon />
+              </Button>
+            </Paper>
+          </BaseContainer>
+        </HeroSection>
+      </HeroWrapper>
+
+      <BannerWrapper>
+        <Image
+          src={bannerImageURL}
+          className="banner-img"
+          width={300}
+          height={300}
+        />
+      </BannerWrapper>
+    </StyledPage>
+  );
 }
 
 export default LandingPage;
