@@ -1,5 +1,5 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import Header from '@components/Header';
+import Header from '@/components/Header/Header';
 import ThemeRegistry from '@theme/ThemeRegistry';
 import './app.css';
 import { BaseGridContainer } from '@components/BaseComponents';

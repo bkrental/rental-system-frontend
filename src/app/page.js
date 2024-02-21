@@ -152,6 +152,7 @@ function LandingPage() {
         <Image
           src={bannerImageURL}
           className="banner-img"
+          alt="banner-img"
           width={300}
           height={300}
         />

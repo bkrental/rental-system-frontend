@@ -9,7 +9,12 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 const persistConfig = {
   key: 'root',
   storage,
+  timeout: 2000,
   whitelist: ['auth', 'config'],
+}
+
+const persistOptions = {
+  manualPersist: true
 }
 
 

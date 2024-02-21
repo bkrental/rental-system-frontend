@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
     name: 'auth',
@@ -10,29 +10,21 @@ const authSlice = createSlice({
     reducers: {
         setUserInfo: (state, action) => {
             console.log('setUserInfo payload', action.payload);
-            console.log('setUserInfo access_token', action.payload.access_token);
-            state = {
-                ...state,
-                user: action.payload.user,
-                accessToken: action.payload.access_token,
-                isAuth: true,
-            }
+            localStorage.setItem('accessToken', JSON.stringify(action.payload.access_token));
 
-            localStorage.setItem('accessToken', JSON.stringify(action.payload.access_token)); // Store user in localStorage
+            state.user = action.payload.user
+            state.accessToken = action.payload.access_token
+            state.isAuth = true
+            console.log("current:", current(state));
         },
         removeUserInfo: (state, action) => {
-            state = {
-                ...state,
-                user: null,
-                accessToken: null,
-                isAuth: false,
-            }
-
             localStorage.removeItem('accessToken'); // Remove user from localStorage
+            state.user = null
+            state.accessToken = null
+            state.isAuth = false
         }
     }
 });
 
 export const { setUserInfo, removeUserInfo } = authSlice.actions;
 export default authSlice.reducer;
-

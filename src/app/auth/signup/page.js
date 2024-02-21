@@ -103,7 +103,7 @@ function SignupPage() {
   const dispatch = useDispatch()
   const [signupInfo, setSignupInfo] = useState({
     name: '',
-    phoneNumber: '',
+    phone: '',
     email: '',
     password: ''
   })
@@ -120,7 +120,6 @@ function SignupPage() {
     e.preventDefault()
     try {
       const userData = await signup(signupInfo);
-      console.log('handleSignupSubmit', userData);
 
       if (userData.data) {
         dispatch(setUserInfo(userData.data.data));

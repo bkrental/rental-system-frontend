@@ -88,7 +88,6 @@ function LoginPage() {
     e.preventDefault();
     try {
       const userData = await login(loginInfo);
-      console.log("handleLoginSubmit", userData);
 
       if (userData.data) {
         dispatch(setUserInfo(userData.data.data));
@@ -137,7 +136,7 @@ function LoginPage() {
             required
             fullWidth
             name="password"
-            label="password"
+            label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
