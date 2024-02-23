@@ -1,5 +1,15 @@
+"use client"
 import React from 'react'
-import { StyledPage } from '@/components/BaseComponents'
+import { BaseGridContainer } from '@/components/BaseComponents'
+import isAuth from '@/components/isAuth'
+import styled from '@emotion/styled'
+
+const StyledPage = styled(BaseGridContainer)`
+    height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});
+    // background: ${({ theme }) => theme.palette.background.page};
+    background: blue;
+
+`
 
 function LandlordPage() {
     return (
@@ -9,4 +19,4 @@ function LandlordPage() {
     )
 }
 
-export default LandlordPage
+export default isAuth(LandlordPage)

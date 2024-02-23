@@ -2,13 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setUserInfo, removeUserInfo } from '@/redux/features/auth/authSlice';
 
 
-// console.log('process:', process.env.RENTAL_SERVICE_BACKEND_ENDPOINT);
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_RENTAL_SERVICE_BACKEND_ENDPOINT,
     // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-        console.log('prepareHeaders headers', process.env);
-        console.log('prepareHeaders baseurl', process.env.NEXT_PUBLIC_RENTAL_SERVICE_BACKEND_ENDPOINT);
         const token = getState().auth.accessToken;
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
@@ -35,6 +32,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             result = await baseQuery(args, api, extraOptions);
         } else {
             // if the refresh failed, log the user out
+            console.log('refresh failed');
             api.dispatch(removeUserInfo());
         }
     }
