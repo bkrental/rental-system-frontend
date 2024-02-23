@@ -10,6 +10,7 @@ const themeOptions = {
     },
     complementary: {
       main: "rgba(255, 247, 233, 1)",
+      black: "rgba(0, 0, 0, 0.5)",
     },
     accent: {
       main: "rgba(95, 157, 247, 1)",

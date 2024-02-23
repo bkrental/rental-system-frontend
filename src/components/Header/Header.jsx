@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import TenantLandlordOption from "@components/Header/TenantLandlordOption";
 import LoginOption from "@components/Header/LoginOption";
 import UserProfileOption from "@components/Header/UserProfileOption";
-import { Button, Grid, Box, Avatar } from "@mui/material";
+import { Box } from "@mui/material";
 import {
   BaseContainer,
   BaseLink,
