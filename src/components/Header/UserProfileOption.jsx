@@ -3,8 +3,8 @@ import { BaseContainer } from "@components/BaseComponents";
 import { Box, Avatar } from "@mui/material";
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
 
-function UserProfileOption({ handleLogout, user }) {
-  const avatarName = user ? user[0].toUpperCase() : "";
+function UserProfileOption({ handleLogout, user = null }) {
+  const avatarName = user ? user[0]?.toUpperCase() : "";
   return (
     <BaseContainer>
       <Box className="user-info-option">

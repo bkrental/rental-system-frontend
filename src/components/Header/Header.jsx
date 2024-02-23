@@ -30,7 +30,6 @@ const HeaderContainer = styled(BaseGridContainer)`
 const HeaderItem = styled(BaseContainer)`
   grid-column: span 12;
 
-  // background-color: red;
   display: flex;
   padding: 0;
   margin: 0;
@@ -41,7 +40,6 @@ const HeaderItem = styled(BaseContainer)`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    // background-color: blue;
     gap: 32px;
 
     .tenant-landlord-option {
@@ -63,7 +61,22 @@ const HeaderItem = styled(BaseContainer)`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: green;
+    gap: 12px;
+    // background-color: green;
+
+    login-option {
+      display: flex;
+      gap: 12px;
+
+      .login-btn{
+        background-color: blue;
+        color: ${({ theme }) => theme.palette.text.secondary};
+        &:hover, &.active{
+          background-color: ${({ theme }) => theme.palette.primary.main};
+          color: ${({ theme }) => theme.palette.text.active};
+        }
+      }
+    }
 `;
 
 function Header() {
@@ -71,8 +84,6 @@ function Header() {
   const router = useRouter();
   const userMode = useSelector((state) => state.config.userMode);
   const user = useSelector((state) => state.auth.user);
-  console.log("user", user?.name);
-  const avatarName = user?.name[0];
   const [isActive, setIsActive] = useState({
     tenant: true,
     landlord: false,
