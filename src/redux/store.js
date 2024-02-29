@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import configSlice from './features/config/configSlice'
 import authSlice from './features/auth/authSlice'
+import postSlice from './features/post/postSlice'
 import { apiSlice } from '@api/apiSlice'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-
 
 const persistConfig = {
   key: 'root',
@@ -22,6 +22,7 @@ const rootReducer = combineReducers({
   config: configSlice,
   [apiSlice.reducerPath]: apiSlice.reducer,
   auth: authSlice,
+  post: postSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

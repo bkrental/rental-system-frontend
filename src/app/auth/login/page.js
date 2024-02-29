@@ -77,7 +77,7 @@ function LoginPage() {
   });
   const [login, { isLoading, error }] = useLoginMutation();
   const [errMsg, setErrMsg] = useState('');
-
+  console.log('loginInfo:', loginInfo);
 
   useEffect(() => {
     setErrMsg('');
@@ -88,7 +88,7 @@ function LoginPage() {
     e.preventDefault();
     try {
       const userData = await login(loginInfo);
-
+      console.log('userData:', userData);
       if (userData.data) {
         dispatch(setUserInfo(userData.data.data));
         setLoginInfo({
