@@ -7,7 +7,6 @@ import { useGetPostsQuery } from "@/redux/features/post/postApiSlice";
 const StyledBox = styled(Box)`
   grid-area: 3 / 1 / 13 / 10;
   background: yellow;
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-row-gap: 36px;

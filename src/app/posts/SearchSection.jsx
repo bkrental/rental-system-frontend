@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import styled from "@emotion/styled";
 
 const StyledBox = styled(Box)`
-  grid-area: 1 / 1 / 3 / 10;
+  height: 100px;
   background: blue;
 `;
 

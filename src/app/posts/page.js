@@ -15,13 +15,38 @@ import PostsSection from './PostsSection.jsx';
 import SearchSection from './SearchSection.jsx';
 import styled from '@emotion/styled';
 
-const StyledPage = styled(BaseGridContainer)`
+const StyledPage = styled(BaseContainer)`
   background: ${({ theme }) => theme.palette.background.page};
-
-  grid-template-rows: repeat(12, 1fr);
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 32px;
   padding: 12px 64px; 
+  
+
+  @media (max-width: 910px) {
+    .left-section {
+      grid-column: 1 / 3;
+    }
+
+    .right-section {
+      display: none;
+    }
+  }
+
+  display: grid;
+  grid-template-columns: 1fr 270px;
+  grid-column-gap: 32px;
+  position: relative;
+  grid-row-gap: 1fr 270px;
+
+  .left-section {
+    height: 1000px
+  }
+
+  .right-section {
+    align-self: start;
+    position: fixed;
+    top: calc(12px + ${({ theme }) => theme.componentSize.header.height});
+    right: 64px;
+    
+  }
 `;
 
 
@@ -29,9 +54,13 @@ function PostsPage() {
 
   return (
     <StyledPage className="posts-container">
-      <SearchSection />
-      <PostsSection />
-      <FilterSection />
+      <Box className="left-section">
+        <SearchSection />
+        <PostsSection />
+      </Box>
+      <Box className="right-section">
+        <FilterSection />
+      </Box>
     </StyledPage>
   )
 }

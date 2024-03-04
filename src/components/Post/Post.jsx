@@ -14,7 +14,10 @@ import { BaseContainer } from "@components/BaseComponents";
 import { Style } from "@mui/icons-material";
 
 const StyledBox = styled(Box)`
-  height: 312px;
+  height: 100px;
+  .card_container {
+    height: 300px;
+  }
 `;
 
 function Post({ post, key }) {

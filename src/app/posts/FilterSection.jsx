@@ -7,7 +7,10 @@ const StyledBox = styled(Box)`
   background: green;
 
   // align-self: start;
-  // position: fixed;
+  height: calc(
+    100vh - 24px - ${({ theme }) => theme.componentSize.header.height}
+  );
+  // width: 270px;
 `;
 
 function FilterSection() {
