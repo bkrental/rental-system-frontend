@@ -10,7 +10,7 @@ const StyledBox = styled(Box)`
   height: calc(
     100vh - 24px - ${({ theme }) => theme.componentSize.header.height}
   );
-  // width: 270px;
+  width: 270px;
 `;
 
 function FilterSection() {
