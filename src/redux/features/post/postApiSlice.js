@@ -8,8 +8,14 @@ export const postApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         query,
       }),
-    })
+    }),
+    getPostbyId: builder.query({
+      query: (id) => ({
+        url: `/posts/${id}`,
+        method: "GET",
+      }),
+    }),
   })
 });
 
-export const { useGetPostsQuery } = postApiSlice;
+export const { useGetPostsQuery, useGetPostbyIdQuery } = postApiSlice;
