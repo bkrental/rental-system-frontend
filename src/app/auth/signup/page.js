@@ -1,5 +1,5 @@
-"use client"
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 import {
   Grid,
   Avatar,
@@ -9,24 +9,24 @@ import {
   Checkbox,
   Copyright,
   Box,
-} from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Headline01,
   Description01,
   BaseContainer,
   BaseGridContainer,
   BaseLink,
-} from '@components/BaseComponents';
-import styled from '@emotion/styled';
-import Link from 'next/link';
-import Image from 'next/image';
-import bannerAuth from '@public/banner-auth.svg';
-import { useRouter } from 'next/navigation';
+} from "@components/BaseComponents";
+import styled from "@emotion/styled";
+import Link from "next/link";
+import Image from "next/image";
+import bannerAuth from "@public/auth-banner.svg";
+import { useRouter } from "next/navigation";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo, removeUserInfo } from '@/redux/features/auth/authSlice';
-import { useSignupMutation } from '@/redux/features/auth/authApiSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo, removeUserInfo } from "@/redux/features/auth/authSlice";
+import { useSignupMutation } from "@/redux/features/auth/authApiSlice";
 
 const SignupContainer = styled(BaseGridContainer)`
   background: ${({ theme }) => theme.palette.background.page};
@@ -44,13 +44,12 @@ const SignupForm = styled(BaseContainer)`
     align-items: center;
     justify-content: center;
   }
-
-`
+`;
 
 const ImageSectionWrapper = styled(BaseContainer)`
   grid-column: 7 / 13;
   height: calc(100vh - ${({ theme }) => theme.componentSize.header.height});
-`
+`;
 
 const ImageSection = styled(BaseContainer)`
   grid-column: 7 / 13;
@@ -60,20 +59,20 @@ const ImageSection = styled(BaseContainer)`
     width: 80%;
     height: 80%;
   }
-`
+`;
 
 const HeadingSection = styled(BaseContainer)`
-  grid-row: 1 / 3  ;
+  grid-row: 1 / 3;
   grid-column: span 12;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   .signup-avatar {
     background-color: ${({ theme }) => theme.palette.primary.main};
   }
-`
+`;
 
 const InputSection = styled(BaseContainer)`
   grid-row: 3 / 10;
@@ -82,7 +81,7 @@ const InputSection = styled(BaseContainer)`
   .input {
     margin-top: 8px;
   }
-`
+`;
 
 const SubmitSection = styled(BaseContainer)`
   // grid-row: 11 / 13;
@@ -95,50 +94,45 @@ const SubmitSection = styled(BaseContainer)`
   .submit-button {
     margin-bottom: 8px;
   }
-`
-
+`;
 
 function SignupPage() {
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [signupInfo, setSignupInfo] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    password: ''
-  })
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+  });
   const [signup, { isLoading, error }] = useSignupMutation();
 
   const handleOnChange = (e) => {
     setSignupInfo({
       ...signupInfo,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSignupSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const userData = await signup(signupInfo);
 
       if (userData.data) {
         dispatch(setUserInfo(userData.data.data));
         setSignupInfo({
-          name: '',
-          phone: '',
-          email: '',
-          password: ''
-        })
-        router.push('/');
+          name: "",
+          phone: "",
+          email: "",
+          password: "",
+        });
+        router.push("/");
       }
-
+    } catch (error) {
+      console.error("handleSignupSubmit", error);
     }
-    catch (error) {
-      console.error('handleSignupSubmit', error)
-    }
-  }
-
-
+  };
 
   return (
     <SignupContainer className="signup-container">
@@ -149,9 +143,8 @@ function SignupPage() {
           </Headline01>
         </HeadingSection>
 
-
         <InputSection className="input-section">
-          <Box component="form" noValidate >
+          <Box component="form" noValidate>
             <TextField
               margin="normal"
               required
@@ -161,7 +154,7 @@ function SignupPage() {
               name="name"
               autoComplete="name"
               autoFocus
-              className='input'
+              className="input"
               onChange={handleOnChange}
             />
             <TextField
@@ -172,7 +165,7 @@ function SignupPage() {
               label="Phone Number"
               name="phone"
               autoComplete="phone-number"
-              className='input'
+              className="input"
               onChange={handleOnChange}
             />
             <TextField
@@ -183,7 +176,7 @@ function SignupPage() {
               label="Your Email"
               name="email"
               autoComplete="email"
-              className='input'
+              className="input"
               onChange={handleOnChange}
             />
             <TextField
@@ -195,16 +188,15 @@ function SignupPage() {
               type="password"
               id="password"
               autoComplete="current-password"
-              className='input'
+              className="input"
               onChange={handleOnChange}
             />
           </Box>
         </InputSection>
 
-
         <SubmitSection className="submit-section">
           <Button
-            className='submit-button'
+            className="submit-button"
             type="submit"
             fullWidth
             variant="contained"
@@ -212,10 +204,13 @@ function SignupPage() {
           >
             Sign In
           </Button>
-          <Grid container className='have-account-section' >
-            <Grid item >
+          <Grid container className="have-account-section">
+            <Grid item>
               <Description01 variant="body2">
-                {"Already have an account? "} <Link href="/auth/signup" variant="body2">{"Login"}</Link>
+                {"Already have an account? "}{" "}
+                <Link href="/auth/signup" variant="body2">
+                  {"Login"}
+                </Link>
               </Description01>
             </Grid>
           </Grid>
@@ -226,9 +221,9 @@ function SignupPage() {
       </SignupForm>
       <ImageSectionWrapper>
         <ImageSection>
-          <Image src={bannerAuth} className='banner-auth' alt="banner-auth" />
+          <Image src={bannerAuth} className="banner-auth" alt="banner-auth" />
         </ImageSection>
-      </ImageSectionWrapper >
+      </ImageSectionWrapper>
     </SignupContainer>
   );
 }

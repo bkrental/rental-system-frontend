@@ -5,10 +5,10 @@ import { changeUserMode } from "@redux/features/config/configSlice";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
-import Button from "@components/Button/Button";
+import Button from "@components/BaseComponents/Button";
 import Link from "next/link";
-import { H4, H6 } from "../Typography";
 import styles from "./Header.module.scss";
+import UserProfileOption from "./UserProfileOption";
 
 function Header() {
   const dispatch = useDispatch();
@@ -27,63 +27,44 @@ function Header() {
     router.push("/");
   };
 
+  const USER_MODES = ["tenant", "landlord"];
+
   return (
     <div className={styles.header}>
-      <div className={styles.headerLeft}>
-        <H4>
+      <div className="flex flex-grap-32">
+        <h5>
           <Link href="/">BKRental</Link>
-        </H4>
-        <div className={styles.headerModeGroup}>
-          <Button
-            onClick={(e) => handleChangeUserMode("tenant")}
-            active={userMode == "tenant"}
-          >
-            <H6>Tenant</H6>
-          </Button>
-          <Button
-            onClick={(e) => handleChangeUserMode("landlord")}
-            active={userMode == "landlord"}
-          >
-            <H6>Landlord</H6>
-          </Button>
-        </div>
+        </h5>
+
+        {user && (
+          <div className="flex">
+            {USER_MODES.map((mode) => (
+              <Button
+                key={mode}
+                variant={userMode == mode ? "default" : "text"}
+                color={userMode == mode ? "primary" : "dark"}
+                onClick={(e) => handleChangeUserMode(mode)}
+              >
+                {mode}
+              </Button>
+            ))}
+          </div>
+        )}
       </div>
 
-      {user ? (
-        <div className={styles.headerRight}>
-          <Button href="/login">
-            <H6>Login</H6>
+      {!user ? (
+        <div className="flex flex-gap-12">
+          <Button variant="outlined" href="/auth/login">
+            Login
           </Button>
-          <Button href="/signup">
-            <H6>Sign Up</H6>
+          <Button variant="outlined" href="/auth/signup">
+            Sign Up
           </Button>
         </div>
       ) : (
-        <div></div>
+        <UserProfileOption user="Cong Dat" />
       )}
     </div>
-    // <HeaderContainer container className="nav-bar container">
-    //   <HeaderItem>
-    //     <Box className="left-section">
-    //       <TitleTypo variant="h1">
-    //         <BaseLink href="/">BKrental</BaseLink>
-    //       </TitleTypo>
-    //       <TenantLandlordOption
-    //         handleBtnOnClick={handleChangeUSerMode}
-    //         isActive={isActive}
-    //         btnType={btnType}
-    //       />
-    //     </Box>
-
-    //     <Box className="right-section">
-    //       {user ? (
-    //         <UserProfileOption handleLogout={handleLogout} user={user} />
-    //       ) : (
-    //         <LoginOption />
-    //       )}
-    //     </Box>
-    //   </HeaderItem>
-    // </HeaderContainer>
   );
 }
 

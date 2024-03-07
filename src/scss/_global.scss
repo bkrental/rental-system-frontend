@@ -1,0 +1,144 @@
+@import "./_mixins.scss";
+@import "./_variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  line-height: 1.6rem;
+  font-family: "Open, sans-serif";
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.grid {
+  display: grid;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.btn {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 2.4rem;
+  text-transform: capitalize;
+
+  padding: 6px 16px;
+
+  border: none;
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  transition-duration: 0.15s, 0.15s, 0.15s, 0.15s;
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-timing-function: ease-in-out, ease-in-out, ease-in-out, ease-in-out;
+
+  // box-shadow: $btn-box-shadow;
+  @include button-mixin(default, $primary-color);
+
+  @each $variant in $btn-variants {
+    @each $color, $value in $theme-colors {
+      &-#{$variant}-#{$color} {
+        @include button-mixin($variant, $value);
+      }
+    }
+  }
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+
+  &-col {
+    flex-direction: column;
+  }
+
+  &-grap {
+    &-12 {
+      gap: 12px;
+    }
+
+    &-32 {
+      gap: 32px;
+    }
+  }
+}
+
+// Typography
+h1 {
+  font-size: 9.6rem;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 6rem;
+  font-weight: 900;
+}
+
+h3 {
+  font-size: 4.8rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 4.2rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 3.6rem;
+  font-weight: 700;
+}
+
+h6 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+// FORM
+.form {
+  &-group {
+    width: 450px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  &-icon-start {
+    position: relative;
+    z-index: 10;
+    left: 5px;
+  }
+
+  &-input {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    padding: 12px 16px 12px 36px;
+    outline: $primary-color;
+
+    font-size: 1.6rem;
+
+    border: 1px solid $light-grey-color;
+    border-radius: 6px;
+
+    transition: all 0.3s ease-in-out;
+
+    &:focus,
+    &:hover {
+      border: 1px solid $black-color;
+    }
+  }
+}

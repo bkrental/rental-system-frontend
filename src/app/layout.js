@@ -1,11 +1,9 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import Header from "@/components/Header/Header";
-import ThemeRegistry from "@theme/ThemeRegistry";
-// import './app.css';
-import "../styles/global.scss";
-import { BaseGridContainer } from "@components/BaseComponents";
 import StoreProvider from "@app/StoreProvider";
-import { Open_Sans, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
+import ThemeRegistry from "@/theme/ThemeRegistry";
+import "@scss/_global.scss";
 
 export const metadata = {
   title: "BKrental",
@@ -13,8 +11,8 @@ export const metadata = {
 };
 
 const roboto = Roboto({
-  weight: ["300", "500", "700", "900"],
   subsets: ["latin", "vietnamese"],
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 export default function RootLayout({ children }) {
@@ -22,13 +20,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning={true} className={roboto.className}>
         <AppRouterCacheProvider>
-          {/* <ThemeRegistry> */}
-          <StoreProvider>
-            {/* Header goes here */}
-            <Header />
-            {children}
-          </StoreProvider>
-          {/* </ThemeRegistry> */}
+          <ThemeRegistry>
+            <StoreProvider>
+              {/* Header goes here */}
+              <Header />
+              {children}
+            </StoreProvider>
+          </ThemeRegistry>
         </AppRouterCacheProvider>
       </body>
     </html>

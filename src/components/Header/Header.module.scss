@@ -1,27 +1,16 @@
-@import "@/styles/variables.scss";
+@import "@scss/variables.scss";
 
 .header {
   position: sticky;
   top: 0;
-  height: 80px;
+  height: 60px;
   background: $white-color;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding: 0 64px;
-
-  &Left,
-  &Right {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-
-  &Right {
-    gap: 12px;
-  }
+  padding: 0 32px;
 
   &ModeGroup {
     display: flex;
@@ -35,5 +24,38 @@
   a {
     color: $black-color;
     text-decoration: none;
+  }
+}
+
+.profile {
+  &Container {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 12px;
+    cursor: pointer;
+    background-color: $white-color;
+
+    border: 1px solid $light-grey-color;
+    border-radius: 50px;
+  }
+
+  &Menu {
+    font-size: 34px;
+  }
+
+  &Avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: $white-color;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: $black-color;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
