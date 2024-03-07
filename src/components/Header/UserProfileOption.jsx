@@ -30,20 +30,21 @@ const StyledBox = styled(Box)`
 function UserProfileOption({ handleLogout, user = null }) {
   const avatarName = user ? user[0]?.toUpperCase() : "";
   return (
-    <BaseContainer>
-      <StyledBox className="user-info-option">
-        <Button
-          className="user-info_btn"
-          onClick={handleLogout}
-          variant="outlined"
-          startIcon={<ViewHeadlineIcon className="user-info_menu" />}
-        >
-          <Avatar className="user-info_avatar" src={user.avatar}>
-            {avatarName}
-          </Avatar>
-        </Button>
-      </StyledBox>
-    </BaseContainer>
+    <div>Logout</div>
+    // <BaseContainer>
+    //   <StyledBox className="user-info-option">
+    //     <Button
+    //       className="user-info_btn"
+    //       onClick={handleLogout}
+    //       variant="outlined"
+    //       startIcon={<ViewHeadlineIcon className="user-info_menu" />}
+    //     >
+    //       <Avatar className="user-info_avatar" src={user.avatar}>
+    //         {avatarName}
+    //       </Avatar>
+    //     </Button>
+    //   </StyledBox>
+    // </BaseContainer>
   );
 }
 

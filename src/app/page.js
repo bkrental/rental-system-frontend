@@ -80,7 +80,8 @@ const HeroSection = styled(BaseContainer)`
         .search-bar-button {
             height: 100%;
             width: 72px;
-            border-left: 1px solid ${({ theme }) => theme.palette.text.secondary};
+            border-left: 1px solid ${({ theme }) =>
+              theme.palette.text.secondary};
             border-radius: 0 3px 3px 0;
         }
     }
@@ -108,6 +109,7 @@ function LandingPage() {
   const bannerImageURL =
     "https://datnguyen2409-bkrental-dev.s3.ap-southeast-1.amazonaws.com/banner-tenant-landing.jpg";
 
+  return <h1 className="heading">Hello, Next.js!</h1>;
   return (
     <StyledPage>
       <HeroWrapper>
