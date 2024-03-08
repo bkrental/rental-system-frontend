@@ -31,13 +31,13 @@ function Header() {
 
   return (
     <div className={styles.header}>
-      <div className="flex flex-grap-32">
+      <div className="flex flex-gap-32">
         <h5>
           <Link href="/">BKRental</Link>
         </h5>
 
         {user && (
-          <div className="flex">
+          <div className="flex flex-gap-12">
             {USER_MODES.map((mode) => (
               <Button
                 key={mode}

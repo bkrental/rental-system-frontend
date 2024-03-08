@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -7,7 +6,7 @@ import banner from "@public/auth-banner.svg";
 
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "@/redux/features/auth/authApiSlice";
-import styles from "@scss/LoginPage.module.scss";
+import styles from "@scss/AuthenticationPage.module.scss";
 import clsx from "clsx";
 import useFormInput from "@/hooks/useFormInput";
 import { setUserInfo } from "@/redux/features/auth/authSlice";
@@ -16,12 +15,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 function LoginPage() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
 
   const [phone, setPhone, phoneError, setPhoneError] = useFormInput("");
   const [password, setPassword, passwordError, setPasswordError] =
     useFormInput("");
-
-  const [login, { isLoading, isError }] = useLoginMutation();
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -37,26 +35,23 @@ function LoginPage() {
     }
 
     try {
-      const response = await login({ phone, password });
-      console.log(response);
-      console.log(error);
+      const response = await login({ phone, password }).unwrap();
 
-      dispatch(setUserInfo(response.data.data));
+      dispatch(setUserInfo(response.data));
       router.push("/");
     } catch (error) {
-      console.log(error);
-      setPasswordError(error.message);
+      setPasswordError(error.data.message);
     }
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container flex-center">
       {/* Banner */}
       <div className={styles.banner}>
         <Image priority={true} src={banner} alt="banner" />
       </div>
       {/* Login Form */}
-      <div className={styles.left}>
+      <div className={styles.right}>
         <div className={styles.formContainer}>
           <form onSubmit={handleLoginSubmit} className="form">
             <input

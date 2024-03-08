@@ -71,14 +71,18 @@ body {
 .flex {
   display: flex;
   flex-direction: row;
-  gap: 12px;
   align-items: center;
 
   &-col {
     flex-direction: column;
   }
 
-  &-grap {
+  &-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-gap {
     &-12 {
       gap: 12px;
     }
@@ -118,6 +122,20 @@ h5 {
 h6 {
   font-size: 2rem;
   font-weight: 500;
+}
+
+p {
+  font-size: 1.6rem;
+}
+
+.container {
+  display: flex;
+
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  margin: 0 auto;
+  padding: 0 32px;
+  background: $bg-gradient-color;
 }
 
 // FORM

@@ -3,7 +3,7 @@ import { setUserInfo, removeUserInfo } from "@/redux/features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_RENTAL_SERVICE_BACKEND_ENDPOINT,
-  // credentials: 'include',
+
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.accessToken;
     if (token) {
@@ -14,7 +14,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 // Create a new API with the baseQuery and the auth endpoints
-const baseQueryWithReauth = async (args, api, extraOptions) => {
+const baseQueryWithReAuthentication = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
   // if the result is an error, and the error is a 401, try to refresh the token
@@ -42,6 +42,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 };
 
 export const apiSlice = createApi({
-  baseQuery: baseQueryWithReauth,
+  baseQuery: baseQueryWithReAuthentication,
   endpoints: (builder) => ({}),
 });

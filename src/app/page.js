@@ -5,7 +5,7 @@ import styles from "@scss/LandingPage.module.scss";
 
 function LandingPage() {
   return (
-    <div className={styles.container}>
+    <div className="container">
       <div className={styles.hero}>
         <h3 className={styles.heroTitle}>
           Experience the ease of{" "}
