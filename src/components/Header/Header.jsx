@@ -62,7 +62,7 @@ function Header() {
           </Button>
         </div>
       ) : (
-        <UserProfileOption user="Cong Dat" />
+        <UserProfileOption onClick={handleLogout} user="Cong Dat" />
       )}
     </div>
   );

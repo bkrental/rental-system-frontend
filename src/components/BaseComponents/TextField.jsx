@@ -4,6 +4,7 @@ export default function TextField({
   value = "",
   iconStart,
   className,
+  ...props
 }) {
   return (
     <div className="form-group">
@@ -13,6 +14,7 @@ export default function TextField({
         value={value}
         className={`form-input ${className}`}
         placeholder={placeholder}
+        {...props}
       />
     </div>
   );

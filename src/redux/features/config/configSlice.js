@@ -1,8 +1,8 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userMode: "tenant",
-}
+};
 
 const headerSlice = createSlice({
   name: "header",
@@ -10,11 +10,9 @@ const headerSlice = createSlice({
   reducers: {
     changeUserMode: (state, action) => {
       state.userMode = action.payload;
-    }
-  }
+    },
+  },
 });
 
-export const {
-  changeUserMode
-} = headerSlice.actions;
+export const { changeUserMode } = headerSlice.actions;
 export default headerSlice.reducer;

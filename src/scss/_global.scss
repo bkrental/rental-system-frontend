@@ -53,6 +53,19 @@ body {
       }
     }
   }
+
+  &-xl {
+    font-size: 1.8rem;
+    padding: 12px 24px;
+  }
+
+  &-full {
+    width: 100%;
+  }
+}
+
+.mt-16 {
+  margin-top: 16px;
 }
 
 .flex {
@@ -109,36 +122,48 @@ h6 {
 
 // FORM
 .form {
-  &-group {
-    width: 450px;
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-
-  &-icon-start {
-    position: relative;
-    z-index: 10;
-    left: 5px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 16px;
 
   &-input {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    padding: 12px 16px 12px 36px;
-    outline: $primary-color;
-
+    width: 400px;
     font-size: 1.6rem;
 
+    margin-top: 16px;
+    padding: 18px 12px;
+
+    background-color: transparent;
+
     border: 1px solid $light-grey-color;
+    border-color: $secondary;
     border-radius: 6px;
+    outline: $primary-color;
 
     transition: all 0.3s ease-in-out;
+    box-shadow: rgba(182, 182, 182, 0.18) 0px 4px 10px 0px;
 
     &:focus,
     &:hover {
       border: 1px solid $black-color;
     }
+
+    &-error {
+      border: 1px solid $red-color;
+
+      &:focus,
+      &:hover {
+        border: 1px solid $red-color;
+      }
+    }
+  }
+
+  &-error {
+    width: 100%;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: $red-color;
   }
 }

@@ -3,8 +3,10 @@ $primary-color: rgba(255, 115, 29, 1);
 $black-color: rgba(0, 0, 0, 1);
 $white-color: rgba(255, 255, 255, 1);
 $grey-color: rgba(59, 65, 68, 1);
+$red-color: rgb(224, 60, 49);
 $light-grey-color: #d3d3d3;
 $dark-grey-color: #484848;
+$green-color: rgb(66, 183, 42);
 
 $bg-gradient-color: linear-gradient(
   180deg,
@@ -24,6 +26,8 @@ $theme-colors: (
   "secondary": $secondary,
   "dark": $black-color,
   "white": $white-color,
+  "danger": $red-color,
+  "success": $green-color,
 ) !default;
 
 $btn-variants: ("text", "outlined", "default") !default;
