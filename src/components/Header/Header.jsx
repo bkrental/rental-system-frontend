@@ -54,10 +54,10 @@ function Header() {
 
       {!user ? (
         <div className="flex flex-gap-12">
-          <Button variant="outlined" href="/auth/login">
+          <Button variant="outlined" href="/login">
             Login
           </Button>
-          <Button variant="outlined" href="/auth/signup">
+          <Button variant="outlined" href="/signup">
             Sign Up
           </Button>
         </div>

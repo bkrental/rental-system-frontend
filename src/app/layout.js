@@ -3,7 +3,6 @@ import Header from "@/components/Header/Header";
 import StoreProvider from "@app/StoreProvider";
 import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/theme/ThemeRegistry";
-import { useSearchParams } from "next/navigation";
 import "@scss/_global.scss";
 
 export const metadata = {
