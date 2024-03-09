@@ -1,38 +1,39 @@
 "use client";
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
-import styles from "@scss/LandingPage.module.scss";
+import "@scss/homepage.scss";
 
-function LandingPage() {
+function HomePage() {
   return (
-    <div className="container">
-      <div className={styles.hero}>
-        <h3 className={styles.heroTitle}>
+    <div className="home_container">
+      <div className="home_hero">
+        <h3 className="home_hero-title">
           Experience the ease of{" "}
-          <span className={styles.highlight}>BKrental</span> for seamless home
-          discovery.
+          <span className="home_text--highlight">BKrental</span> for seamless
+          home discovery.
         </h3>
 
-        <p className={styles.heroSubtitle}>
+        <p className="home_hero-subtitle">
           Discover houses and apartments for rent tailored to your needs and
           budget.
         </p>
 
-        <div className={styles.heroSearch}>
+        <div className="home_search">
           <input
             placeholder="Search for City, Address, Neighbourhood..."
-            className={styles.heroSearchInput}
-          ></input>
-          <button className={`btn ${styles.heroSearchBtn}`}>
+            className="home_search-input"
+          />
+          <button className="btn home_search-btn">
             <SearchIcon sx={{ fontSize: 24, color: "#000" }} />
           </button>
         </div>
       </div>
 
-      <div className={styles.banner}>
+      <div className="home_banner">
         <Image
+          priority={true}
           src="/banner.png"
-          className={styles.bannerImage}
+          className="home_banner-image"
           alt="banner-img"
           width={300}
           height={300}
@@ -42,4 +43,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default HomePage;

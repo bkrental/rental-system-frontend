@@ -1,36 +1,38 @@
-@import "@scss/variables.scss";
+@import "./variables";
 
 .header {
   position: sticky;
   top: 0;
   height: 60px;
-  background: $white-color;
-
+  background: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 0 32px;
-
   box-shadow: rgba(182, 182, 182, 0.18) 0px 4px 10px 0px;
 
-  &ModeGroup {
-    display: flex;
-    gap: 12px;
-
-    button {
-      width: 112px;
-    }
-  }
-
-  a {
+  &_logo {
     color: $black-color;
     text-decoration: none;
+  }
+
+  &_mode-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &_button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
   }
 }
 
 .profile {
-  &Container {
+  &_container {
     display: flex;
     align-items: center;
     padding: 8px 16px;
@@ -42,11 +44,7 @@
     border-radius: 50px;
   }
 
-  &Menu {
-    font-size: 34px;
-  }
-
-  &Avatar {
+  &_avatar {
     width: 34px;
     height: 34px;
     font-size: 1.6rem;

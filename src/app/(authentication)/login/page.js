@@ -1,72 +1,75 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
-import { useDispatch } from "react-redux";
-import { useLoginMutation } from "@/redux/features/auth/authApiSlice";
-import styles from "@scss/AuthenticationPage.module.scss";
-import clsx from "clsx";
-import useFormInput from "@/hooks/useFormInput";
-import { setUserInfo } from "@/redux/features/auth/authSlice";
 import AuthSubmitButton from "@/components/AuthSubmitButton";
+import useRedirectBack from "@/hooks/useRedirectBack";
+import { useLoginMutation } from "@/redux/features/auth/authApiSlice";
+import { setUserInfo } from "@/redux/features/auth/authSlice";
+import "@scss/authentication.scss";
+import clsx from "clsx";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
 
 function LoginPage() {
-  const router = useRouter();
   const dispatch = useDispatch();
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
+  const redirect = useRedirectBack();
 
-  const [phone, setPhone, phoneError, setPhoneError] = useFormInput("");
-  const [password, setPassword, passwordError, setPasswordError] =
-    useFormInput("");
-
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!phone) {
-      setPhoneError("Phone number is required");
-      return;
-    }
-
-    if (!password) {
-      setPasswordError("Password is required");
-      return;
-    }
-
+  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
-      const response = await login({ phone, password }).unwrap();
+      const response = await login(values).unwrap();
+      setSubmitting(false);
 
       dispatch(setUserInfo(response.data));
-      router.push("/");
+      redirect();
     } catch (error) {
-      setPasswordError(error.data.message);
+      console.log(error);
+      setFieldError("password", error.data.message);
     }
   };
 
   return (
-    <div className={styles.formContainer}>
-      <form onSubmit={handleLoginSubmit} className="form">
-        <input
-          placeholder="Phone Number*"
-          className={clsx("form-input", phoneError && "form-input-error")}
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        {phoneError && <p className="form-error">{phoneError}</p>}
-
-        <input
-          placeholder="Password*"
-          className={clsx("form-input", passwordError && "form-input-error")}
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {passwordError && <p className="form-error">{passwordError}</p>}
-        <AuthSubmitButton loading={isLoading}>Login</AuthSubmitButton>
-      </form>
-      <Link href="/" className={styles.forgotPassword}>
+    <div className="auth_form-container">
+      <Formik
+        initialValues={{ phone: "", password: "" }}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting, errors }) => (
+          <Form className="auth_form">
+            <Field
+              className={clsx(
+                "auth_form-input",
+                errors.phone && "auth_form-input--error"
+              )}
+              type="phone"
+              name="phone"
+              placeholder="Phone Number*"
+            />
+            <ErrorMessage
+              className="auth_form-message auth_form-message--error"
+              name="phone"
+            />
+            <Field
+              className={clsx(
+                "auth_form-input",
+                errors.password && "auth_form-input--error"
+              )}
+              type="password"
+              name="password"
+              placeholder="Password*"
+            />
+            <ErrorMessage
+              className="auth_form-message auth_form-message--error"
+              name="password"
+              component="p"
+            />
+            <AuthSubmitButton loading={isSubmitting}>Login</AuthSubmitButton>
+          </Form>
+        )}
+      </Formik>
+      <Link href="/" className="auth_form-message--forgot-password">
         Forgotten password?
       </Link>
-      <div className={styles.line}></div>
+      <div className="auth_form-seperator"></div>
       <Link href="/signup">
         <button className="btn btn-default-success btn-xl">
           Create new account

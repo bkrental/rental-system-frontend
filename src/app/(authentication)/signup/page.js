@@ -1,78 +1,94 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import styles from "@scss/AuthenticationPage.module.scss";
+import AuthSubmitButton from "@/components/AuthSubmitButton";
+import useRedirectBack from "@/hooks/useRedirectBack";
 import { useSignupMutation } from "@/redux/features/auth/authApiSlice";
 import { setUserInfo } from "@/redux/features/auth/authSlice";
-import AuthFormInput from "@/components/AuthFormInput";
-import AuthSubmitButton from "@/components/AuthSubmitButton";
-
-const EMPTY_FORM_DATA = { name: "", phone: "", email: "", password: "" };
-const PLACEHOLDERS = {
-  name: "Enter your name*",
-  phone: "Phone Number*",
-  email: "Email*",
-  password: "Password*",
-};
-
-const ERROR_MESSAGES = {
-  name: "Please enter your name",
-  phone: "Phone number is required",
-  email: "Email is required",
-  password: "Password is required",
-};
+import clsx from "clsx";
+import { ErrorMessage, Field, Formik, Form } from "formik";
+import Link from "next/link";
+import { useDispatch } from "react-redux";
 
 export default function SignUpPage() {
-  const router = useRouter();
   const dispatch = useDispatch();
-  const [signup, { isLoading }] = useSignupMutation();
+  const [signup] = useSignupMutation();
+  const redirect = useRedirectBack();
 
-  const [formData, setFormData] = useState(EMPTY_FORM_DATA);
-  const [errors, setErrors] = useState(EMPTY_FORM_DATA);
-
-  useEffect(() => {
-    setErrors(EMPTY_FORM_DATA);
-  }, [formData]);
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-
-    for (const key in formData) {
-      if (!formData[key]) {
-        setErrors({ ...errors, [key]: ERROR_MESSAGES[key] });
-        return;
-      }
-    }
-
+  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
-      const response = await signup(formData).unwrap();
+      console.log(values);
+      const response = await signup(values).unwrap();
+      setSubmitting(false);
       dispatch(setUserInfo(response.data));
-      router.push("/");
+      redirect();
     } catch (error) {
       console.log(error);
-      setErrors({ ...errors, password: error.data.message });
+      setFieldError("password", error.data.message);
     }
   };
 
   return (
-    <div className={styles.formContainer}>
-      <form onSubmit={handleSignup} className="form">
-        {Object.keys(formData).map((key) => (
-          <AuthFormInput
-            key={key}
-            placeholder={PLACEHOLDERS[key]}
-            value={formData[key]}
-            onChange={(e) =>
-              setFormData({ ...formData, [key]: e.target.value })
-            }
-            error={errors[key]}
-          />
-        ))}
-
-        <AuthSubmitButton loading={isLoading}>Sign Up</AuthSubmitButton>
-      </form>
+    <div className="auth_form-container">
+      <Formik
+        initialValues={{ name: "", phone: "", email: "", password: "" }}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting, errors }) => (
+          <Form className="auth_form">
+            <Field
+              className={clsx(
+                "auth_form-input",
+                errors.name && "auth_form-input--error"
+              )}
+              name="name"
+              placeholder="Enter your name*"
+            />
+            <ErrorMessage
+              className="auth_form-message auth_form-message--error"
+              name="name"
+            />
+            <Field
+              className={clsx(
+                "auth_form-input",
+                errors.phone && "auth_form-input--error"
+              )}
+              name="phone"
+              placeholder="Phone Number*"
+            />
+            <ErrorMessage
+              className="auth_form-message auth_form-message--error"
+              name="phone"
+              component="p"
+            />
+            <Field
+              className={clsx(
+                "auth_form-input",
+                errors.email && "auth_form-input--error"
+              )}
+              name="email"
+              placeholder="Email*"
+            />
+            <ErrorMessage
+              className="auth_form-message auth_form-message--error"
+              name="email"
+            />
+            <Field
+              className={clsx(
+                "auth_form-input",
+                errors.password && "auth_form-input--error"
+              )}
+              type="password"
+              name="password"
+              placeholder="Password*"
+            />
+            <ErrorMessage
+              className="auth_form-message auth_form-message--error"
+              name="password"
+              component="p"
+            />
+            <AuthSubmitButton loading={isSubmitting}>Sign Up</AuthSubmitButton>
+          </Form>
+        )}
+      </Formik>
 
       <p>
         Already have an account <Link href="/login">Login</Link>

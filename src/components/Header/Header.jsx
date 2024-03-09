@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@components/BaseComponents/Button";
 import Link from "next/link";
-import styles from "./Header.module.scss";
 import UserProfileOption from "./UserProfileOption";
+import "@scss/header.scss";
 
 function Header() {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ function Header() {
 
   const handleChangeUserMode = (userMode) => {
     dispatch(changeUserMode(userMode));
+    router.push(userMode == "tenant" ? "/" : "/landlord");
   };
 
   const handleLogout = () => {
@@ -30,30 +31,28 @@ function Header() {
   const USER_MODES = ["tenant", "landlord"];
 
   return (
-    <div className={styles.header}>
-      <div className="flex flex-gap-32">
-        <h5>
-          <Link href="/">BKRental</Link>
-        </h5>
+    <div className="header">
+      <div className="header_mode-group">
+        <Link className="header_logo" href="/">
+          <h5>BKRental</h5>
+        </Link>
 
-        {user && (
-          <div className="flex flex-gap-12">
-            {USER_MODES.map((mode) => (
-              <Button
-                key={mode}
-                variant={userMode == mode ? "default" : "text"}
-                color={userMode == mode ? "primary" : "dark"}
-                onClick={(e) => handleChangeUserMode(mode)}
-              >
-                {mode}
-              </Button>
-            ))}
-          </div>
-        )}
+        <div className="header_button-group">
+          {USER_MODES.map((mode) => (
+            <Button
+              key={mode}
+              variant={userMode == mode ? "default" : "text"}
+              color={userMode == mode ? "primary" : "dark"}
+              onClick={(e) => handleChangeUserMode(mode)}
+            >
+              {mode}
+            </Button>
+          ))}
+        </div>
       </div>
 
       {!user ? (
-        <div className="flex flex-gap-12">
+        <div className="header_button-group">
           <Button variant="outlined" href="/login">
             Login
           </Button>
