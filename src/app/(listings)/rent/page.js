@@ -8,7 +8,12 @@ import Link from "next/link";
 export default async function RentPage() {
   async function getProperties() {
     const res = await fetch(
-      `${process.env.RENTAL_SERVICE_BACKEND_ENDPOINT}/posts`
+      `${process.env.RENTAL_SERVICE_BACKEND_ENDPOINT}/posts`,
+      {
+        next: {
+          revalidate: 300,
+        },
+      }
     );
 
     if (!res.ok) {
