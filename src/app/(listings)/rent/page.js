@@ -71,7 +71,7 @@ export default async function RentPage() {
                 <div className="property_card-owner_avatar">CĐ</div>
                 <div className="property_card-owner_info">
                   <div className="property_card-owner_name">
-                    {owner.name == "Mogi Cralwer" ? "Mogi" : owner.name}
+                    {owner?.name || "Ẩn danh"}
                   </div>
                   <div className="property_card-published-time">
                     Đăng hôm nay
