@@ -1,0 +1,33 @@
+$primary-color: rgba(255, 115, 29, 1);
+
+$black-color: rgba(0, 0, 0, 1);
+$white-color: rgba(255, 255, 255, 1);
+$grey-color: rgba(59, 65, 68, 1);
+$red-color: rgb(224, 60, 49);
+$light-grey-color: #d3d3d3;
+$dark-grey-color: #484848;
+$green-color: rgb(66, 183, 42);
+
+$bg-gradient-color: linear-gradient(
+  180deg,
+  #ffe6b9 12.06%,
+  #fffbf3 67.57%,
+  #fff 72.83%
+);
+
+$btn-box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
+  rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+
+$primary: rgba(255, 115, 29, 1);
+$secondary: #6c757d;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "dark": $black-color,
+  "white": $white-color,
+  "danger": $red-color,
+  "success": $green-color,
+) !default;
+
+$btn-variants: ("text", "outlined", "default") !default;

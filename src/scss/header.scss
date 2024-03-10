@@ -1,0 +1,61 @@
+@import "./variables";
+
+.header {
+  position: sticky;
+  top: 0;
+  height: 60px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  box-shadow: rgba(182, 182, 182, 0.18) 0px 4px 10px 0px;
+
+  &_logo {
+    color: $black-color;
+    text-decoration: none;
+  }
+
+  &_mode-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &_button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+.profile {
+  &_container {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 12px;
+    cursor: pointer;
+    background-color: $white-color;
+
+    border: 1px solid $light-grey-color;
+    border-radius: 50px;
+  }
+
+  &_avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: $white-color;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: $black-color;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

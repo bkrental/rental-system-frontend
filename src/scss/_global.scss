@@ -1,0 +1,187 @@
+@import "./_mixins.scss";
+@import "./_variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  line-height: 1.6rem;
+  font-family: "Open, sans-serif";
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.grid {
+  display: grid;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+button {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 2.4rem;
+  text-transform: capitalize;
+
+  padding: 6px 16px;
+
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  transition-duration: 0.15s, 0.15s, 0.15s, 0.15s;
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-timing-function: ease-in-out, ease-in-out, ease-in-out, ease-in-out;
+}
+
+.btn {
+  @include button-mixin(default, $primary-color);
+
+  @each $variant in $btn-variants {
+    @each $color, $value in $theme-colors {
+      &-#{$variant}-#{$color} {
+        @include button-mixin($variant, $value);
+      }
+    }
+  }
+
+  &-xl {
+    font-size: 1.8rem;
+    padding: 12px 24px;
+  }
+
+  &-full {
+    width: 100%;
+  }
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &-col {
+    flex-direction: column;
+  }
+
+  &-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-gap {
+    &-12 {
+      gap: 12px;
+    }
+
+    &-32 {
+      gap: 32px;
+    }
+  }
+}
+
+// Typography
+h1 {
+  font-size: 9.6rem;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 6rem;
+  font-weight: 900;
+}
+
+h3 {
+  font-size: 4.8rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 4.2rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 3.6rem;
+  font-weight: 700;
+}
+
+h6 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+p {
+  font-size: 1.6rem;
+}
+
+.container {
+  display: flex;
+
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  margin: 0 auto;
+  padding: 0 32px;
+  background: $bg-gradient-color;
+}
+
+// FORM
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 16px;
+
+  &-input {
+    width: 400px;
+    font-size: 1.6rem;
+
+    margin-top: 16px;
+    padding: 18px 12px;
+
+    background-color: transparent;
+
+    border: 1px solid $light-grey-color;
+    border-color: $secondary;
+    border-radius: 6px;
+    outline: $primary-color;
+
+    transition: all 0.3s ease-in-out;
+    box-shadow: rgba(182, 182, 182, 0.18) 0px 4px 10px 0px;
+
+    &:focus,
+    &:hover {
+      border: 1px solid $black-color;
+    }
+
+    &-error {
+      border: 1px solid $red-color;
+
+      &:focus,
+      &:hover {
+        border: 1px solid $red-color;
+      }
+    }
+  }
+
+  &-error {
+    width: 100%;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: $red-color;
+  }
+}

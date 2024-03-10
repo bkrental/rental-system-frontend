@@ -1,0 +1,25 @@
+@mixin button-mixin($variant: default, $color) {
+  @if $variant == default {
+    background-color: $color;
+    color: #fff;
+  } @else if $variant == outlined {
+    background-color: transparent;
+    border: 1px solid $color;
+    color: $color;
+  } @else if $variant == text {
+    background-color: transparent;
+    color: $color;
+  }
+
+  &:hover {
+    @if $variant == default {
+      background-color: darken($color, 10%);
+    } @else if $variant == outlined {
+      background-color: $color;
+      color: #fff;
+    } @else if $variant == text {
+      background-color: $color;
+      color: #fff;
+    }
+  }
+}
