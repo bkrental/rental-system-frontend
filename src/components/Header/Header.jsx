@@ -38,8 +38,8 @@ function Header() {
       </Link>
 
       <div className="header_navbar">
-        <HeaderLink href="/posts?transaction=rent">Rent</HeaderLink>
-        <HeaderLink href="/rent?transaction=buy">Buy</HeaderLink>
+        <HeaderLink href="/rent">Rent</HeaderLink>
+        <HeaderLink href="/buy">Buy</HeaderLink>
       </div>
 
       {!user ? (
