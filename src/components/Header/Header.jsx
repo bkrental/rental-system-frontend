@@ -9,6 +9,7 @@ import Button from "@components/BaseComponents/Button";
 import Link from "next/link";
 import UserProfileOption from "./UserProfileOption";
 import "@scss/header.scss";
+import HeaderLink from "./HeaderLink";
 
 function Header() {
   const dispatch = useDispatch();
@@ -32,23 +33,13 @@ function Header() {
 
   return (
     <div className="header">
-      <div className="header_mode-group">
-        <Link className="header_logo" href="/">
-          <h5>BKRental</h5>
-        </Link>
+      <Link className="header_logo" href="/">
+        <h5>BKRental</h5>
+      </Link>
 
-        <div className="header_button-group">
-          {USER_MODES.map((mode) => (
-            <Button
-              key={mode}
-              variant={userMode == mode ? "default" : "text"}
-              color={userMode == mode ? "primary" : "dark"}
-              onClick={(e) => handleChangeUserMode(mode)}
-            >
-              {mode}
-            </Button>
-          ))}
-        </div>
+      <div className="header_navbar">
+        <HeaderLink href="/posts?transaction=rent">Rent</HeaderLink>
+        <HeaderLink href="/rent?transaction=buy">Buy</HeaderLink>
       </div>
 
       {!user ? (

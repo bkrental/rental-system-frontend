@@ -6,13 +6,14 @@
   height: 60px;
   background: #ffffff;
   display: flex;
+  gap: 48px;
   justify-content: space-between;
   align-items: center;
   padding: 0 32px;
   box-shadow: rgba(182, 182, 182, 0.18) 0px 4px 10px 0px;
 
   &_logo {
-    color: $black-color;
+    color: $primary-color;
     text-decoration: none;
   }
 
@@ -28,6 +29,30 @@
     flex-direction: row;
     align-items: center;
     gap: 12px;
+  }
+
+  &_navbar {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+    gap: 32px;
+
+    &-item {
+      font-size: 2rem;
+      line-height: 50px;
+      color: $black-color;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &--active {
+        font-weight: 500;
+      }
+    }
   }
 }
 
