@@ -2,25 +2,17 @@
 
 import { removeUserInfo } from "@redux/features/auth/authSlice";
 import { changeUserMode } from "@redux/features/config/configSlice";
+import "@scss/header.scss";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-
-import Button from "@components/BaseComponents/Button";
-import Link from "next/link";
-import UserProfileOption from "./UserProfileOption";
-import "@scss/header.scss";
 import HeaderLink from "./HeaderLink";
+import HeaderProfile from "./HeaderProfile";
 
 function Header() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const userMode = useSelector((state) => state.config.userMode);
   const user = useSelector((state) => state.auth.user);
-
-  const handleChangeUserMode = (userMode) => {
-    dispatch(changeUserMode(userMode));
-    router.push(userMode == "tenant" ? "/" : "/landlord");
-  };
 
   const handleLogout = () => {
     console.log("logout");
@@ -28,8 +20,6 @@ function Header() {
     dispatch(changeUserMode("tenant"));
     router.push("/");
   };
-
-  const USER_MODES = ["tenant", "landlord"];
 
   return (
     <div className="header">
@@ -42,17 +32,21 @@ function Header() {
         <HeaderLink href="/buy">Buy</HeaderLink>
       </div>
 
+      <Link className="header_link" href="/signup">
+        Post a property
+      </Link>
+
       {!user ? (
         <div className="header_button-group">
-          <Button variant="outlined" href="/login">
-            Login
-          </Button>
-          <Button variant="outlined" href="/signup">
+          <Link className="header_link header_link--primary" href="/login">
+            Log In
+          </Link>
+          <Link className="header_link header_link--primary" href="/signup">
             Sign Up
-          </Button>
+          </Link>
         </div>
       ) : (
-        <UserProfileOption onClick={handleLogout} user="Cong Dat" />
+        <HeaderProfile />
       )}
     </div>
   );

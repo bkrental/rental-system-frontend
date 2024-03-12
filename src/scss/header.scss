@@ -1,3 +1,4 @@
+@import "./mixins";
 @import "./variables";
 
 .header {
@@ -6,7 +7,6 @@
   height: 60px;
   background: #ffffff;
   display: flex;
-  gap: 48px;
   justify-content: space-between;
   align-items: center;
   padding: 0 32px;
@@ -28,7 +28,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 12px;
+    gap: 4px;
   }
 
   &_navbar {
@@ -37,6 +37,7 @@
     justify-content: flex-start;
     align-items: end;
     gap: 32px;
+    padding: 0 32px;
 
     &-item {
       font-size: 2rem;
@@ -45,46 +46,102 @@
       text-decoration: none;
       cursor: pointer;
 
-      &:hover {
-        color: $primary-color;
-      }
-
+      &:hover,
       &--active {
         font-weight: 500;
       }
     }
   }
-}
 
-.profile {
-  &_container {
-    display: flex;
-    align-items: center;
-    padding: 8px 16px;
-    gap: 12px;
-    cursor: pointer;
-    background-color: $white-color;
+  &_auth-btn {
+    @include button-mixin(text, $black-color);
 
-    border: 1px solid $light-grey-color;
-    border-radius: 50px;
+    font-size: 1.8rem;
+    border-radius: 8px;
+    text-decoration: none;
   }
 
-  &_avatar {
-    width: 34px;
-    height: 34px;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: $white-color;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: $black-color;
+  &_link {
+    font-size: 1.8rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: $black-color;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 8px;
 
+    &:hover {
+      background-color: $light-grey-color;
+    }
+
+    &--primary {
+      color: $white-color;
+      background-color: $primary-color;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    &--border {
+      border: 1px solid $dark-grey-color;
+    }
+  }
+
+  &_profile {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 4px 0 4px 6px;
+    cursor: pointer;
+    border: 1px solid #d3d3d3;
+    border-radius: 8px;
 
-    &--green {
-      background-color: darkcyan;
+    &-avatar {
+      width: 34px;
+      height: 34px;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: $white-color;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: $black-color;
+      margin-right: 8px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-dropdown {
+      display: flex;
+      flex-direction: column;
+      top: 40px;
+      right: -2px;
+      min-width: 200px;
+      position: absolute;
+      background-color: $white-color;
+      box-shadow: 0px 8px 20px rgba(182, 182, 182, 0.3);
+      border: 1px solid $light-grey-color;
+      border-radius: 8px;
+      padding: 8px 0;
+      transition: all 0.3s ease-in-out;
+
+      &-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 6px;
+
+        font-size: 1.5rem;
+        padding: 8px;
+
+        &:hover {
+          background-color: $light-grey-color;
+        }
+      }
     }
   }
 }

@@ -9,7 +9,7 @@ function HomePage() {
       <div className="home_hero">
         <h3 className="home_hero-title">
           Experience the ease of{" "}
-          <span className="home_text--highlight">BKrental</span> for seamless
+          <span className="home_text--highlight">BKRental</span> for seamless
           home discovery.
         </h3>
 
