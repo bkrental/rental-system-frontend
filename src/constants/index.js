@@ -7,3 +7,17 @@ export const SUPPORTED_PROPERTY_TYPES = {
   office: "Office",
   villa: "Villa",
 };
+
+export const DEFAULT_FILTER = {
+  keyword: "",
+  address: {
+    province: "Ho Chi Minh City",
+    district: "",
+    ward: "",
+  },
+  price: {
+    min: 0,
+    max: 0,
+  },
+  property_type: ["all", ...Object.keys(SUPPORTED_PROPERTY_TYPES)],
+};

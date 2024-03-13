@@ -1,21 +1,9 @@
-import { SUPPORTED_PROPERTY_TYPES } from "@/constants/";
+import { DEFAULT_FILTER, SUPPORTED_PROPERTY_TYPES } from "@/constants/";
 import { createSlice } from "@reduxjs/toolkit";
 
 const filterSlice = createSlice({
   name: "filter",
-  initialState: {
-    keyword: "",
-    address: {
-      province: "Ho Chi Minh City",
-      district: "District 10",
-      ward: "Ward 7",
-    },
-    price: {
-      min: 0,
-      max: 0,
-    },
-    property_type: [],
-  },
+  initialState: DEFAULT_FILTER,
 
   reducers: {
     setKeyword: (state, action) => {
@@ -29,7 +17,6 @@ const filterSlice = createSlice({
     },
     setPropertyType: (state, action) => {
       state.property_type = action.payload;
-      console.log(action.payload);
     },
     togglePropertyType: (state, action) => {
       const propertyType = action.payload;
@@ -42,6 +29,9 @@ const filterSlice = createSlice({
         state.property_type.push(propertyType);
       }
     },
+    clearFilter: () => {
+      return DEFAULT_FILTER;
+    },
   },
 });
 
@@ -51,5 +41,6 @@ export const {
   setPrice,
   setPropertyType,
   togglePropertyType,
+  clearFilter,
 } = filterSlice.actions;
 export default filterSlice.reducer;

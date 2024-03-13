@@ -3,7 +3,7 @@ import AddressDropdown from "@/components/Property/AddressDropdown";
 import PriceDropdown from "@/components/Property/PriceDropdown";
 import PropertyTypeDropdown from "@/components/Dropdown/PropertyTypeDropdown";
 import Select from "@/components/Select/Select";
-import { setKeyword } from "@/redux/features/filter/filterSlice";
+import { setKeyword, clearFilter } from "@/redux/features/filter/filterSlice";
 import { getPriceSelectLabel } from "@/utils/getPriceLabel";
 import { CachedOutlined, SearchOutlined } from "@mui/icons-material";
 import "@scss/listings.scss";
@@ -42,7 +42,7 @@ export default function PropertyLayout({ children }) {
             name="address"
             title="Address"
             DropdownComponent={AddressDropdown}
-            value={`${ward}, ${district}, ${province}`}
+            value={`${province}`}
           />
           <Select
             name="price"
@@ -56,9 +56,11 @@ export default function PropertyLayout({ children }) {
               <SearchOutlined sx={{ fontSize: 20 }} />
               Search
             </div>
-            <div className="property_topbar-form-btn property_topbar-form-btn--reset">
+            <div
+              onClick={() => dispatch(clearFilter())}
+              className="property_topbar-form-btn property_topbar-form-btn--reset"
+            >
               <CachedOutlined sx={{ fontSize: 20 }} />
-              {/* Reset */}
             </div>
           </div>
         </form>
