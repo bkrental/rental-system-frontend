@@ -1,25 +1,13 @@
 "use client";
 
-import { removeUserInfo } from "@redux/features/auth/authSlice";
-import { changeUserMode } from "@redux/features/config/configSlice";
 import "@scss/header.scss";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import HeaderLink from "./HeaderLink";
 import HeaderProfile from "./HeaderProfile";
 
 function Header() {
-  const dispatch = useDispatch();
-  const router = useRouter();
   const user = useSelector((state) => state.auth.user);
-
-  const handleLogout = () => {
-    console.log("logout");
-    dispatch(removeUserInfo());
-    dispatch(changeUserMode("tenant"));
-    router.push("/");
-  };
 
   return (
     <div className="header">

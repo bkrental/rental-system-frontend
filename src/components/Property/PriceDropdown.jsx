@@ -1,41 +1,33 @@
 "use client";
 
+import { setPrice } from "@/redux/features/filter/filterSlice";
+import { getPriceOptionLabel } from "@/utils/getPriceLabel";
 import { ArrowForwardOutlined } from "@mui/icons-material";
 import "@scss/properties.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const priceOptions = [
-  {
-    label: "All prices",
-    min: 0,
-    max: 0,
-  },
-  {
-    label: "Less than 1 milion VND",
-    min: 0,
-    max: 1,
-  },
-  {
-    min: 1,
-    max: 3,
-  },
-  {
-    min: 3,
-    max: 5,
-  },
-  {
-    min: 5,
-    max: 10,
-  },
-  {
-    min: 10,
-    max: 40,
-  },
+const suggestions = [
+  [0, 0],
+  [0, 1],
+  [1, 3],
+  [3, 5],
+  [5, 10],
+  [10, 40],
 ];
 
 export default function PriceDropdown() {
-  const [priceMin, setPriceMin] = useState(0);
-  const [priceMax, setPriceMax] = useState(0);
+  const dispatch = useDispatch();
+  const price = useSelector((state) => state.filter.price);
+  const [minPirceInputValue, setMinPriceInputValue] = useState(price.min);
+  const [maxPriceInputValue, setMaxPriceInputValue] = useState(price.max);
+
+  // Seperate the price input and the price redux state to handle the case when user input invalid price (price_min > price_max)
+  useEffect(() => {
+    const minPrice = Math.min(minPirceInputValue, maxPriceInputValue);
+    const maxPrice = Math.max(maxPriceInputValue, minPirceInputValue);
+    dispatch(setPrice({ min: minPrice, max: maxPrice }));
+  }, [minPirceInputValue, maxPriceInputValue]);
 
   return (
     <div className="property_dropdown property_dropdown--price">
@@ -44,32 +36,30 @@ export default function PriceDropdown() {
           placeholder="Min"
           className="property_dropdown-price-input"
           type="number"
-          value={priceMin}
-          onChange={(e) => setPriceMin(e.target.value)}
+          value={minPirceInputValue}
+          onChange={(e) => setMinPriceInputValue(e.target.value)}
         />
         <ArrowForwardOutlined sx={{ fontSize: 20 }} />
         <input
           placeholder="Max"
           className="property_dropdown-price-input"
           type="number"
-          value={priceMax}
-          onChange={(e) => setPriceMin(e.target.value)}
+          value={maxPriceInputValue}
+          onChange={(e) => setMaxPriceInputValue(e.target.value)}
         />
       </div>
 
       <div className="property_dropdown-price-select">
-        {priceOptions.map(({ label, min, max }) => (
+        {suggestions.map(([min, max]) => (
           <div
-            data-price-min={min}
-            data-price-max={max}
             key={`${min}-${max}`}
             className="property_dropdown-option"
             onClick={() => {
-              setPriceMin(min);
-              setPriceMax(max);
+              setMaxPriceInputValue(max);
+              setMinPriceInputValue(min);
             }}
           >
-            {label || `${min} - ${max} milion VND`}
+            {getPriceOptionLabel(min, max)}
           </div>
         ))}
       </div>

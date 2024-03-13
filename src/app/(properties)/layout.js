@@ -1,64 +1,23 @@
 "use client";
 import AddressDropdown from "@/components/Property/AddressDropdown";
 import PriceDropdown from "@/components/Property/PriceDropdown";
-import {
-  ArrowDownwardOutlined,
-  ArrowDropDownCircleOutlined,
-  ArrowDropDownOutlined,
-  RotateLeftOutlined,
-  SearchOutlined,
-  CachedOutlined,
-} from "@mui/icons-material";
+import PropertyTypeDropdown from "@/components/Dropdown/PropertyTypeDropdown";
+import Select from "@/components/Select/Select";
+import { setKeyword } from "@/redux/features/filter/filterSlice";
+import { getPriceSelectLabel } from "@/utils/getPriceLabel";
+import { CachedOutlined, SearchOutlined } from "@mui/icons-material";
 import "@scss/listings.scss";
-import clsx from "clsx";
-import { Field, Formik, Form } from "formik";
-import { useEffect, useRef, useState } from "react";
-
-const formSelectConfigs = [
-  {
-    name: "address",
-    title: "Address",
-    DropdownComponent: AddressDropdown,
-  },
-  {
-    name: "price",
-    title: "Price",
-    DropdownComponent: PriceDropdown,
-  },
-  {
-    name: "property_type",
-    title: "Property Type",
-    DropdownComponent: AddressDropdown,
-  },
-];
+import { useSelector, useDispatch } from "react-redux";
+import getPropertyTypeLabels from "@/utils/getPropertyTypesLabel";
 
 export default function PropertyLayout({ children }) {
-  const [dropdown, setDropdown] = useState("address");
-
-  const toggleDropdown = (dropdownName, opening) => {
-    if (dropdownName == opening) {
-      setDropdown("");
-      return;
-    }
-
-    setDropdown(dropdownName);
-  };
-
-  useEffect(() => {
-    // Turn off dropdown when click outside of the dropdown
-    const handleClickOutside = (e) => {
-      if (e.target.closest(".property_topbar-form-item")) {
-        return;
-      }
-      setDropdown("");
-    };
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  const {
+    keyword,
+    property_type,
+    address: { province, district, ward },
+    price: { min, max },
+  } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
 
   return (
     <div className="property_container">
@@ -66,33 +25,31 @@ export default function PropertyLayout({ children }) {
         <form className="property_topbar-form">
           <div className="property_topbar-form-keyword">
             <input
+              value={keyword}
               className="property_topbar-input"
               placeholder="Search by keyword, district or nearby location"
+              onChange={(e) => dispatch(setKeyword(e.target.value))}
             />
-            {/* <SearchOutlined
-              className="property_topbar-form-icon"
-              sx={{ fontSize: 25 }}
-            /> */}
           </div>
 
-          {formSelectConfigs.map(({ name, title, DropdownComponent }) => (
-            <div
-              key={name}
-              className={clsx(
-                "property_topbar-form-item",
-                name == dropdown && "property_topbar-form-item--active"
-              )}
-            >
-              <div onClick={(e) => toggleDropdown(name, dropdown)}>
-                <div className="property_topbar-select">{title}</div>
-                <ArrowDropDownOutlined
-                  className="property_topbar-form-icon"
-                  sx={{ fontSize: 25 }}
-                />
-              </div>
-              {dropdown == name && <DropdownComponent />}
-            </div>
-          ))}
+          <Select
+            name="property_type"
+            title="Property Type"
+            DropdownComponent={PropertyTypeDropdown}
+            value={getPropertyTypeLabels(property_type)}
+          />
+          <Select
+            name="address"
+            title="Address"
+            DropdownComponent={AddressDropdown}
+            value={`${ward}, ${district}, ${province}`}
+          />
+          <Select
+            name="price"
+            title="Price"
+            DropdownComponent={PriceDropdown}
+            value={getPriceSelectLabel(min, max)}
+          />
 
           <div className="property_topbar-form-action-btn">
             <div className="property_topbar-form-btn">
