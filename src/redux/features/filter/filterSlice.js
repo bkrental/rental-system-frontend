@@ -10,7 +10,7 @@ const filterSlice = createSlice({
       state.keyword = action.payload;
     },
     setAddress: (state, action) => {
-      state.address = action.payload;
+      state.address = Object.assign(state.address, action.payload);
     },
     setPrice: (state, action) => {
       state.price = Object.assign(state.price, action.payload);

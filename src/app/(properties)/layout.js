@@ -1,6 +1,6 @@
 "use client";
-import AddressDropdown from "@/components/Property/AddressDropdown";
-import PriceDropdown from "@/components/Property/PriceDropdown";
+import AddressDropdown from "@/components/Dropdown/AddressDropdown";
+import PriceDropdown from "@/components/Dropdown/PriceDropdown";
 import PropertyTypeDropdown from "@/components/Dropdown/PropertyTypeDropdown";
 import Select from "@/components/Select/Select";
 import { setKeyword, clearFilter } from "@/redux/features/filter/filterSlice";

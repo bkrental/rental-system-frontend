@@ -12,7 +12,7 @@ export const DEFAULT_FILTER = {
   keyword: "",
   address: {
     province: "Ho Chi Minh City",
-    district: "",
+    districts: [],
     ward: "",
   },
   price: {

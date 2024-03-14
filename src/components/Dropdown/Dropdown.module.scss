@@ -17,6 +17,7 @@
 }
 
 .option {
+  width: 100%;
   min-width: 200px;
   display: flex;
   align-items: center;
@@ -33,5 +34,83 @@
     width: 15px;
     height: 15px;
     accent-color: $primary-color;
+  }
+}
+
+.price {
+  &Select {
+    overflow-y: auto;
+  }
+
+  &Form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-bottom: 1px solid darken($light-grey-color, 20%);
+  }
+
+  &Input {
+    width: 100px;
+    font-size: 1.4rem;
+    padding: 8px 16px;
+    border: 1px solid $dark-grey-color;
+    border-radius: 8px;
+    text-align: center;
+    outline: none;
+  }
+}
+
+.address {
+  &Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 250px;
+
+    &Hidden {
+      display: none;
+    }
+  }
+
+  &Option {
+    width: 99%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.6rem;
+    padding: 8px;
+
+    &:hover {
+      background-color: $light-grey-color;
+    }
+
+    &Back {
+      background: darken($light-grey-color, 20%);
+      justify-content: flex-start;
+    }
+
+    &District {
+      justify-content: flex-start;
+      accent-color: $primary-color;
+      gap: 8px;
+    }
+  }
+
+  &Input {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 12px 16px;
+    border: 1px solid darken($light-grey-color, 20%);
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }

@@ -6,6 +6,7 @@ import { ArrowForwardOutlined } from "@mui/icons-material";
 import "@scss/properties.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styles from "./Dropdown.module.scss";
 
 const suggestions = [
   [0, 0],
@@ -30,11 +31,11 @@ export default function PriceDropdown() {
   }, [minPirceInputValue, maxPriceInputValue]);
 
   return (
-    <div className="property_dropdown property_dropdown--price">
-      <div className="property_dropdown-price-range">
+    <div className={styles.dropdown}>
+      <div className={styles.priceForm}>
         <input
           placeholder="Min"
-          className="property_dropdown-price-input"
+          className={styles.priceInput}
           type="number"
           value={minPirceInputValue}
           onChange={(e) => setMinPriceInputValue(e.target.value)}
@@ -42,18 +43,18 @@ export default function PriceDropdown() {
         <ArrowForwardOutlined sx={{ fontSize: 20 }} />
         <input
           placeholder="Max"
-          className="property_dropdown-price-input"
+          className={styles.priceInput}
           type="number"
           value={maxPriceInputValue}
           onChange={(e) => setMaxPriceInputValue(e.target.value)}
         />
       </div>
 
-      <div className="property_dropdown-price-select">
+      <div className={styles.priceSelect}>
         {suggestions.map(([min, max]) => (
           <div
             key={`${min}-${max}`}
-            className="property_dropdown-option"
+            className={styles.option}
             onClick={() => {
               setMaxPriceInputValue(max);
               setMinPriceInputValue(min);
