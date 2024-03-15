@@ -1,8 +1,6 @@
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import Header from "@/components/Header/Header";
 import StoreProvider from "@app/StoreProvider";
 import { Roboto } from "next/font/google";
-import ThemeRegistry from "@/theme/ThemeRegistry";
 import "@scss/_global.scss";
 
 export const metadata = {
@@ -19,15 +17,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={roboto.className}>
-        <AppRouterCacheProvider>
-          <ThemeRegistry>
-            <StoreProvider>
-              {/* Header goes here */}
-              <Header />
-              {children}
-            </StoreProvider>
-          </ThemeRegistry>
-        </AppRouterCacheProvider>
+        <StoreProvider>
+          {/* Header goes here */}
+          <Header />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );

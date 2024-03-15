@@ -1,0 +1,40 @@
+@import "@scss/variables.scss";
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border-bottom: 1px solid darken($light-grey-color, 20%);
+}
+
+.input {
+  width: 100px;
+  font-size: 1.4rem;
+  padding: 8px 16px;
+  border: 1px solid $dark-grey-color;
+  border-radius: 8px;
+  text-align: center;
+  outline: none;
+}
+
+.select {
+  height: 180px;
+  overflow-y: auto;
+}
+
+.option {
+  width: 100%;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.5rem;
+  padding: 8px 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $light-grey-color;
+  }
+}

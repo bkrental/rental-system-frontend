@@ -8,6 +8,7 @@ function UserProfileOption({ onClick, user = null }) {
     <div onClick={onClick} className="profile_container">
       <ViewHeadlineIcon sx={{ fontSize: 30 }} />
       <div className="profile_avatar">{avatarName}</div>
+      <div>Dat Nguyen</div>
     </div>
   );
 }
