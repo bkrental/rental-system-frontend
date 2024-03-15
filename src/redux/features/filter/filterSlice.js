@@ -10,6 +10,7 @@ const filterSlice = createSlice({
       state.keyword = action.payload;
     },
     setAddress: (state, action) => {
+      console.log(action.payload);
       state.address = Object.assign(state.address, action.payload);
     },
     setPrice: (state, action) => {
@@ -32,6 +33,19 @@ const filterSlice = createSlice({
     clearFilter: () => {
       return DEFAULT_FILTER;
     },
+
+    toggleDistrict: (state, action) => {
+      const district = action.payload;
+
+      console.log(district);
+      if (state.address.districts.includes(district)) {
+        state.address.districts = state.address.districts.filter(
+          (d) => d !== district && d !== "all"
+        );
+      } else {
+        state.address.districts.push(district);
+      }
+    },
   },
 });
 
@@ -41,6 +55,7 @@ export const {
   setPrice,
   setPropertyType,
   togglePropertyType,
+  toggleDistrict,
   clearFilter,
 } = filterSlice.actions;
 export default filterSlice.reducer;

@@ -5,7 +5,7 @@ import "@scss/properties.scss";
 import styles from "./Select.module.scss";
 import { useEffect, useRef, useState } from "react";
 
-export default function PriceSelect({ name, title, DropdownComponent, value }) {
+export default function Select({ name, title, DropdownComponent, value }) {
   const selectElement = useRef(null);
   const [isActive, setIsActive] = useState(false);
 

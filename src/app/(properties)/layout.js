@@ -1,14 +1,14 @@
 "use client";
-import AddressDropdown from "@/components/Dropdown/AddressDropdown";
-import PriceDropdown from "@/components/Dropdown/PriceDropdown";
-import PropertyTypeDropdown from "@/components/Dropdown/PropertyTypeDropdown";
+import AddressDropdown from "@/components/AddressDropdown";
+import PriceDropdown from "@/components/PriceDropdown";
+import PropertyTypeDropdown from "@/components/PropertyTypeDropdown";
 import Select from "@/components/Select/Select";
 import { setKeyword, clearFilter } from "@/redux/features/filter/filterSlice";
 import { getPriceSelectLabel } from "@/utils/getPriceLabel";
 import { CachedOutlined, SearchOutlined } from "@mui/icons-material";
 import "@scss/listings.scss";
 import { useSelector, useDispatch } from "react-redux";
-import getPropertyTypeLabels from "@/utils/getPropertyTypesLabel";
+import getPropertyTypeLabel from "@/utils/getPropertyTypeLabel";
 
 export default function PropertyLayout({ children }) {
   const {
@@ -36,13 +36,13 @@ export default function PropertyLayout({ children }) {
             name="property_type"
             title="Property Type"
             DropdownComponent={PropertyTypeDropdown}
-            value={getPropertyTypeLabels(property_type)}
+            value={getPropertyTypeLabel(property_type)}
           />
           <Select
             name="address"
             title="Address"
             DropdownComponent={AddressDropdown}
-            value={`${province}`}
+            value={`${province || "All"}`}
           />
           <Select
             name="price"

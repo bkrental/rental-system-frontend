@@ -5,6 +5,8 @@ function getPriceRangeType(min, max) {
     return "less";
   } else if (max === 0) {
     return "more";
+  } else if (min == max) {
+    return "equal";
   } else {
     return "between";
   }
@@ -25,6 +27,7 @@ export const getPriceSelectLabel = (min, max) => {
     all: "All",
     less: `≤ ${max} milion VND`,
     more: `≥ ${min} miliion VND`,
+    equal: `${min} million VND`,
     between: `${min} - ${max} milion VND`,
   };
 

@@ -1,4 +1,5 @@
 export const SUPPORTED_PROPERTY_TYPES = {
+  all: "All",
   house: "House",
   rooming_house: "Rooming House",
   dormitory: "Dormitory",
@@ -13,11 +14,10 @@ export const DEFAULT_FILTER = {
   address: {
     province: "Ho Chi Minh City",
     districts: [],
-    ward: "",
   },
   price: {
     min: 0,
     max: 0,
   },
-  property_type: ["all", ...Object.keys(SUPPORTED_PROPERTY_TYPES)],
+  property_type: "all",
 };

@@ -12,6 +12,7 @@
   border: 1px solid $light-grey-color;
   padding: 0 0 8px 0;
   transition: all 0.3s ease-in-out;
+  padding: 8px 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -22,7 +23,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   padding: 8px 16px;
   cursor: pointer;
 
@@ -67,8 +68,21 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    width: 250px;
+    align-items: center;
+    width: 350px;
+    margin-bottom: 8px;
+  }
+
+  &Menu {
+    width: 100%;
+    max-height: 180px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     &Hidden {
       display: none;
@@ -101,16 +115,87 @@
   }
 
   &Input {
-    width: 100%;
+    width: calc(100% - 16px);
     font-size: 1.4rem;
-    padding: 12px 16px;
+    padding: 8px 16px;
     border: 1px solid darken($light-grey-color, 20%);
-    border-radius: 12px;
+    border-radius: 5px;
     outline: none;
     cursor: pointer;
+    position: relative;
 
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    &Title {
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      color: $dark-grey-color;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &Value {
+      width: 100%;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: #2c2c2c;
+      font-weight: 600;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &Icon {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+      font-size: 1.6rem;
+      color: $dark-grey-color;
+      cursor: pointer;
+    }
+  }
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 4px 12px;
+  border-top: 1px solid $light-grey-color;
+
+  &Btn {
+    padding: 4px 12px;
+    border: 1px solid $dark-grey-color;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+
+    display: flex;
     align-items: center;
+    gap: 4px;
+
+    &:hover {
+      background-color: $light-grey-color;
+    }
+
+    &Primary {
+      background-color: $primary-color;
+      color: $white-color;
+      border-color: $primary-color;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
   }
 }
