@@ -9,12 +9,13 @@ import { CachedOutlined, SearchOutlined } from "@mui/icons-material";
 import "@scss/listings.scss";
 import { useSelector, useDispatch } from "react-redux";
 import getPropertyTypeLabel from "@/utils/getPropertyTypeLabel";
+import getAddressLabel from "@/utils/getAddressLabel";
 
 export default function PropertyLayout({ children }) {
   const {
     keyword,
     property_type,
-    address: { province, district, ward },
+    address: { province, districts },
     price: { min, max },
   } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function PropertyLayout({ children }) {
             name="address"
             title="Address"
             DropdownComponent={AddressDropdown}
-            value={`${province || "All"}`}
+            value={getAddressLabel({ province, districts })}
           />
           <Select
             name="price"
