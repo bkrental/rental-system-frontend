@@ -1,27 +1,25 @@
-import { SUPPORTED_PROPERTY_TYPES } from "@/constants";
-import getPropertyTypeLabel from "@/utils/getPropertyTypeLabel";
-import Dropdown from "../Dropdown";
-import styles from "./PropertyTypeDropdown.module.scss";
+import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
 import clsx from "clsx";
-const { useDispatch, useSelector } = require("react-redux");
-const { setPropertyType } = require("@/redux/features/filter/filterSlice");
+import Dropdown from "../Dropdown";
+import "./PropertyTypeDropdown.scss";
 
-export default function PropertyTypeDropdown() {
-  const dispatch = useDispatch();
-  const selected = useSelector((s) => s.filter.property_type);
-
+export default function PropertyTypeDropdown({
+  propertyType,
+  setPropertyType,
+}) {
   return (
     <Dropdown>
-      {Object.keys(SUPPORTED_PROPERTY_TYPES).map((type) => (
+      {SUPPORTED_PROPERTY_TYPES.map((propType) => (
         <div
-          key={type}
+          key={propType.value}
           className={clsx(
-            styles.option,
-            selected == type && styles.optionHighlight
+            "pt-dropdown-option",
+            propertyType.value === propType.value &&
+              "pt-dropdown-option--highlight"
           )}
-          onClick={() => dispatch(setPropertyType(type))}
+          onClick={() => setPropertyType(propType)}
         >
-          {getPropertyTypeLabel(type)}
+          {propType.label}
         </div>
       ))}
     </Dropdown>

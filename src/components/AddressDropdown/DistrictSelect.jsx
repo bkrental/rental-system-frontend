@@ -1,19 +1,15 @@
+"use client";
 import styles from "./AddressDropdown.module.scss";
 import AddressMenu from "./AddressMenu";
 
-export default function DistrictSelect({
-  options,
-  onChange,
-  selected,
-  active,
-}) {
+export default function DistrictSelect({ onChange, active, address }) {
   return (
     <AddressMenu active={active}>
-      {options.map((district) => (
+      {(address.province.Districts || []).map((district) => (
         <label className={styles.option} key={district.Id}>
           <input
             type="checkbox"
-            checked={selected.includes(district.Name)}
+            checked={address.districts.some((d) => d.Id === district.Id)}
             onChange={() => onChange(district)}
           />
           {district.Name}
