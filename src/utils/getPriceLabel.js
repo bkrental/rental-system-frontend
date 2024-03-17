@@ -22,7 +22,7 @@ export function getPriceOptionLabel(min, max) {
   return labels[getPriceRangeType(min, max)];
 }
 
-export const getPriceSelectLabel = (min, max) => {
+export const getPriceSelectLabel = ([min, max]) => {
   const labels = {
     all: "All",
     less: `≤ ${max} milion VND`,

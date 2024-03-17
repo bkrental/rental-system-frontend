@@ -87,4 +87,41 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  &_actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  &_button {
+    padding: 12px 16px;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    // border: 1px solid $dark-grey-color;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+
+    color: $white-color;
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+
+    &--reset {
+      color: $dark-grey-color;
+      background-color: $light-grey-color;
+
+      &:hover {
+        background-color: darken($light-grey-color, 10%);
+      }
+    }
+  }
 }
