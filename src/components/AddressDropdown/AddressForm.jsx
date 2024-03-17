@@ -1,3 +1,4 @@
+import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
 import styles from "./AddressDropdown.module.scss";
 import AddressMenu from "./AddressMenu";
 import OptionIcon from "./OptionIcon";
@@ -15,7 +16,7 @@ export default function AddressForm({
   const clearProvince = (e) => {
     e.stopPropagation();
     setTimeout(() => {
-      setAddress({ province: "", districts: [] });
+      setAddress({ province: { Name: "All", Id: "all" }, districts: [] });
       setActiveMenu("form");
     }, 0);
   };

@@ -14,7 +14,7 @@ export default function DropdownActions({
   const goBack = () => setTimeout(() => setActiveMenu("form"), 0);
   const reset = () => {
     if (activeMenu == "form" || activeMenu == "province") {
-      setAddress({ province: "", districts: [] });
+      setAddress({ province: { Id: "all", Name: "All" }, districts: [] });
     } else {
       setAddress({ districts: [] });
     }
