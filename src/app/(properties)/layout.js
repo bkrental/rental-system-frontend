@@ -9,15 +9,22 @@ import { CachedOutlined, SearchOutlined } from "@mui/icons-material";
 import "@scss/listings.scss";
 import { useSelector, useDispatch } from "react-redux";
 import getPropertyTypeLabel from "@/utils/getPropertyTypeLabel";
+import getAddressLabel from "@/utils/getAddressLabel";
+import { usePathname } from "next/navigation";
+import getQueryFromFilter from "@/utils/getQueryFromFilter";
+import Link from "next/link";
 
 export default function PropertyLayout({ children }) {
+  const filters = useSelector((s) => s.filter);
   const {
     keyword,
     property_type,
-    address: { province, district, ward },
+    address: { province, districts },
     price: { min, max },
-  } = useSelector((state) => state.filter);
+  } = filters;
   const dispatch = useDispatch();
+  const pathname = usePathname();
+  const queryString = getQueryFromFilter(filters);
 
   return (
     <div className="property_container">
@@ -42,7 +49,7 @@ export default function PropertyLayout({ children }) {
             name="address"
             title="Address"
             DropdownComponent={AddressDropdown}
-            value={`${province || "All"}`}
+            value={getAddressLabel({ province, districts })}
           />
           <Select
             name="price"
@@ -52,10 +59,13 @@ export default function PropertyLayout({ children }) {
           />
 
           <div className="property_topbar-form-action-btn">
-            <div className="property_topbar-form-btn">
+            <Link
+              href={pathname + queryString}
+              className="property_topbar-form-btn"
+            >
               <SearchOutlined sx={{ fontSize: 20 }} />
               Search
-            </div>
+            </Link>
             <div
               onClick={() => dispatch(clearFilter())}
               className="property_topbar-form-btn property_topbar-form-btn--reset"
