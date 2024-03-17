@@ -15,7 +15,7 @@ export default function AddressForm({
   const clearProvince = (e) => {
     e.stopPropagation();
     setTimeout(() => {
-      setAddress({ province: "", districts: [] });
+      setAddress({ province: { Name: "All", Id: "all" }, districts: [] });
       setActiveMenu("form");
     }, 0);
   };

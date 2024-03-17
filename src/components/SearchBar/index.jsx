@@ -9,6 +9,8 @@ import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
 import "./SearchBar.scss";
 import AddressDropdown from "../AddressDropdown";
 import setSearchParams from "@/utils/setSearchParams";
+import { CachedOutlined, SearchOutlined } from "@mui/icons-material";
+import { getPriceSelectLabel } from "@/utils/getPriceLabel";
 
 export default function SearchBar() {
   const pathname = usePathname();
@@ -22,8 +24,19 @@ export default function SearchBar() {
 
   const [price, setPrice] = useState([0, 0]);
   const [propertyType, setPropertyType] = useState(SUPPORTED_PROPERTY_TYPES[0]);
-  const [address, setAddress] = useState({ province: "All", districts: [] });
+  const [address, setAddress] = useState({
+    province: { Name: "All", Value: "all" },
+    districts: [],
+  });
   const [keyword, setKeyword] = useState(() => searchParams.get("q"));
+
+  const clearFilter = () => {
+    setPrice([0, 0]);
+    setPropertyType(SUPPORTED_PROPERTY_TYPES[0]);
+    setAddress({ province: { Name: "All", Value: "all" }, districts: [] });
+    setKeyword("");
+    replace(pathname);
+  };
 
   const onSubmit = useCallback(
     (e) => {
@@ -94,12 +107,25 @@ export default function SearchBar() {
       <div className="searchBar_selectContainer" ref={priceSelectRef}>
         <div onClick={togglePriceDD} className="searchBar_select">
           <div className="searchBar_selectName">Price</div>
-          <div className="searchBar_selectValue">{`${price[0]} - ${price[1]}`}</div>
+          <div className="searchBar_selectValue">
+            {getPriceSelectLabel(price)}
+          </div>
         </div>
         {isPriceDDOpened && <PriceDropdown price={price} setPrice={setPrice} />}
       </div>
 
-      <button type="submit">Submit</button>
+      <div className="searchBar_actions">
+        <button className="searchBar_button" type="submit">
+          <SearchOutlined sx={{ fontSize: 20 }} />
+          Search
+        </button>
+        <div
+          onClick={() => clearFilter()}
+          className="searchBar_button searchBar_button--reset"
+        >
+          <CachedOutlined sx={{ fontSize: 20 }} />
+        </div>
+      </div>
     </form>
   );
 }
