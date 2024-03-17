@@ -1,24 +1,22 @@
-import clsx from "clsx";
-import styles from "./AddressDropdown.module.scss";
 import {
   ArrowBackIos,
   CachedOutlined,
   SearchOutlined,
 } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { setAddress } from "@/redux/features/filter/filterSlice";
+import clsx from "clsx";
+import styles from "./AddressDropdown.module.scss";
 
-export default function DropdownActions({ activeMenu, setActiveMenu }) {
-  const dispatch = useDispatch();
-  const goBack = () => {
-    setTimeout(() => setActiveMenu("form"), 0);
-  };
-
+export default function DropdownActions({
+  setAddress,
+  activeMenu,
+  setActiveMenu,
+}) {
+  const goBack = () => setTimeout(() => setActiveMenu("form"), 0);
   const reset = () => {
     if (activeMenu == "form" || activeMenu == "province") {
-      dispatch(setAddress({ province: "", districts: [] }));
+      setAddress({ province: { Id: "all", Name: "All" }, districts: [] });
     } else {
-      dispatch(setAddress({ districts: [] }));
+      setAddress({ districts: [] });
     }
   };
 

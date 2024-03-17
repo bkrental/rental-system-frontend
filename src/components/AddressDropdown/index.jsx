@@ -1,49 +1,25 @@
 "use client";
-import {
-  setAddress,
-  toggleDistrict,
-} from "@/redux/features/filter/filterSlice";
-import { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import VN_ADDRESSES from "@/constants/address";
+import { useState } from "react";
 import Dropdown from "../Dropdown";
 import AddressForm from "./AddressForm";
 import DistrictSelect from "./DistrictSelect";
 import DropdownActions from "./DropdownActions";
 import ProvinceSelect from "./ProvinceSelect";
 
-export default function AddressDropdown() {
-  const dispatch = useDispatch();
-  const address = useSelector((s) => s.filter.address);
+export default function AddressDropdown({ address, setAddress }) {
   const [activeMenu, setActiveMenu] = useState("form");
-  const [provinceOptions, setProvinceOptions] = useState([]);
-  const province = useMemo(
-    () => provinceOptions.find((p) => p.Name === address.province),
-    [address.province, provinceOptions]
-  );
 
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json"
-    )
-      .then((res) => res.json())
-      .then((data) => setProvinceOptions(data.sort()))
-      .catch((err) => setProvinceOptions([]));
-  }, []);
+  const toggleDistrict = (district) => {
+    for (const selectedDistrict of address?.districts) {
+      if (selectedDistrict.Id === district.Id) {
+        const districts = address.districts.filter((d) => d.Id !== district.Id);
+        return setAddress((prev) => ({ ...prev, districts }));
+      }
+    }
 
-  const clearProvince = (e) => {
-    e.stopPropagation();
-    setTimeout(() => {
-      dispatch(setAddress({ province: "", districts: [] }));
-      setActiveMenu("form");
-    }, 0);
-  };
-
-  const clearDistricts = (e) => {
-    e.stopPropagation();
-    setTimeout(() => {
-      dispatch(setAddress({ ...address, districts: [] }));
-      setActiveMenu("form");
-    }, 0);
+    const districts = [...address.districts, district];
+    return setAddress((prev) => ({ ...prev, districts }));
   };
 
   return (
@@ -52,28 +28,30 @@ export default function AddressDropdown() {
         <AddressForm
           activeMenu={activeMenu}
           setActiveMenu={setActiveMenu}
-          province={province?.Name || ""}
-          districts={address.districts.join(", ") || ""}
-          clearProvinceValue={clearProvince}
-          clearDistrictsValue={clearDistricts}
+          provinceLabel={address.province?.Name || ""}
+          districtLabel={address.districts.map((d) => d.Name).join(", ") || ""}
+          setAddress={setAddress}
         />
         <ProvinceSelect
-          options={provinceOptions}
+          options={VN_ADDRESSES}
           active={activeMenu == "province"}
           onClick={(province) => {
-            dispatch(setAddress({ province: province.Name, districts: [] }));
+            setAddress({ province, districts: [] });
             setActiveMenu("form");
           }}
         />
         <DistrictSelect
           active={address.province && activeMenu == "districts"}
-          options={province?.Districts || []}
-          selected={address.districts}
-          onChange={(district) => dispatch(toggleDistrict(district.Name))}
+          address={address}
+          onChange={toggleDistrict}
         />
       </div>
 
-      <DropdownActions activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+      <DropdownActions
+        setAddress={setAddress}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
+      />
     </Dropdown>
   );
 }

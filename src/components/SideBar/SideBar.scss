@@ -1,0 +1,42 @@
+@import "@scss/variables.scss";
+
+.sideBar {
+  &_container {
+    width: 100%;
+  }
+
+  &_group {
+    border: 1px dotted darken($light-grey-color, 10%);
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin-bottom: 24px;
+
+    &Title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    &List {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      list-style: none;
+    }
+
+    &Item {
+      font-size: 1.4rem;
+      text-decoration: none;
+      color: $dark-grey-color;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 8px;
+      &:hover {
+        cursor: pointer;
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}

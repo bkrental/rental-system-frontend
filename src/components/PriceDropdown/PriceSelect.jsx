@@ -10,7 +10,7 @@ function PriceSelect({ options, onOptionSelect }) {
           className={styles.option}
           onClick={(e) => onOptionSelect(price)}
         >
-          {getPriceOptionLabel(price[0], price[1])}
+          {getPriceOptionLabel(price)}
         </div>
       ))}
     </div>
