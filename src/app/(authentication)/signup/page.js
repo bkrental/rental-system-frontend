@@ -3,6 +3,7 @@ import AuthSubmitButton from "@/components/AuthSubmitButton";
 import useRedirectBack from "@/hooks/useRedirectBack";
 import { useSignupMutation } from "@/redux/features/auth/authApiSlice";
 import { setUserInfo } from "@/redux/features/auth/authSlice";
+import { signUpSchema } from "@/schemas/authentication";
 import clsx from "clsx";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import Link from "next/link";
@@ -31,6 +32,9 @@ export default function SignUpPage() {
       <Formik
         initialValues={{ name: "", phone: "", email: "", password: "" }}
         onSubmit={handleSubmit}
+        validationSchema={signUpSchema}
+        validateOnChange={false}
+        validateOnMount={false}
       >
         {({ isSubmitting, errors }) => (
           <Form className="auth_form">
@@ -45,6 +49,7 @@ export default function SignUpPage() {
             <ErrorMessage
               className="auth_form-message auth_form-message--error"
               name="name"
+              component="p"
             />
             <Field
               className={clsx(
@@ -70,6 +75,7 @@ export default function SignUpPage() {
             <ErrorMessage
               className="auth_form-message auth_form-message--error"
               name="email"
+              component="p"
             />
             <Field
               className={clsx(
