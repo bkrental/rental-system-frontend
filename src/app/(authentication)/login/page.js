@@ -8,13 +8,18 @@ import "@scss/authentication.scss";
 import clsx from "clsx";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
+import { loginSchema } from "@/schemas/authentication";
 
 function LoginPage() {
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
   const redirect = useRedirectBack();
 
-  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
+  const handleSubmit = async (
+    values,
+    { setSubmitting, setFieldError, validate }
+  ) => {
+    validate(values);
     try {
       const response = await login(values).unwrap();
       setSubmitting(false);
@@ -31,6 +36,9 @@ function LoginPage() {
     <div className="auth_form-container">
       <Formik
         initialValues={{ phone: "", password: "" }}
+        validationSchema={loginSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, errors }) => (
@@ -47,6 +55,7 @@ function LoginPage() {
             <ErrorMessage
               className="auth_form-message auth_form-message--error"
               name="phone"
+              component="p"
             />
             <Field
               className={clsx(

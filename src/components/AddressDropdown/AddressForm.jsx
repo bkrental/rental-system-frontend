@@ -1,4 +1,3 @@
-import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
 import styles from "./AddressDropdown.module.scss";
 import AddressMenu from "./AddressMenu";
 import OptionIcon from "./OptionIcon";
