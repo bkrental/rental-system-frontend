@@ -16,7 +16,6 @@ export default function SignUpPage() {
 
   const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
-      console.log(values);
       const response = await signup(values).unwrap();
       setSubmitting(false);
       dispatch(setUserInfo(response.data));
