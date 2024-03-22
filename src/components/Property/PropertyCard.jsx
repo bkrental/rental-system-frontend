@@ -5,13 +5,22 @@ import "@scss/properties.scss";
 import "./PropertyCard.scss";
 import Image from "next/image";
 import Link from "next/link";
-import { FavoriteBorderRounded, HomeOutlined } from "@mui/icons-material";
+import {
+  FavoriteBorderRounded,
+  Favorite,
+  CropFree,
+  BedroomChildOutlined,
+  BathroomOutlined,
+  PlaceOutlined,
+  FavoriteOutlined,
+} from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
 
 export default function PropertyCard({
   property: {
     _id,
     address,
+    name,
     description,
     price,
     area,
@@ -21,6 +30,8 @@ export default function PropertyCard({
     bathrooms,
   },
 }) {
+  bedrooms = 1;
+  bathrooms = 1;
   const formatAddress = ({ street, district, province }) => {
     return `${street}, ${district}, ${province}`;
   };
@@ -38,29 +49,38 @@ export default function PropertyCard({
       </div>
 
       <div className="propertyCard_body">
+        <div className="propertyCard_address">
+          <PlaceOutlined sx={{ color: "red", fontSize: 20 }} />
+          {formatAddress(address)}
+        </div>
+
         <h3 className="propertyCard_title">
-          <Link href={`/rent/${_id}`}>{formatAddress(address)}</Link>
+          <Link href={`/rent/${_id}`}>{name}</Link>
         </h3>
 
         <div className="propertyCard_features">
+          <p className="propertyCard_price">{price + " triệu/tháng"}</p>
           <div className="propertyCard_features-item">
-            <p>{`${area} m2`}</p>
+            <CropFree />
+            <p>
+              {`${area} m`}
+              <sup>2</sup>
+            </p>
           </div>
           {Boolean(bedrooms) && (
             <div className="propertyCard_features-item">
-              <SingleBedIcon />
-              <p>{`${bedrooms} phòng ngủ`}</p>
+              <BedroomChildOutlined />
+              <p>{`${bedrooms} pn`}</p>
             </div>
           )}
           {Boolean(bathrooms) && (
             <div className="propertyCard_features-item">
-              <BathtubIcon />
-              <p>{`${1} phòng tắm`}</p>
+              <BathroomOutlined />
+              <p>{`${bathrooms} wc`}</p>
             </div>
           )}
         </div>
 
-        <p className="propertyCard_price">{price + " triệu/tháng"}</p>
         <p className="propertyCard_description">{description}</p>
       </div>
 
@@ -69,9 +89,9 @@ export default function PropertyCard({
         <div className="propertyCard_owner">{owner?.name || "Ẩn danh"}</div>
         <div className="propertyCard_publishedDate">Đăng hôm nay</div>
 
-        <FavoriteBorderRounded
+        <FavoriteBorderIcon
           className="propertyCard_favorite"
-          sx={{ fontSize: 25, fontWeight: 400, color: "grey" }}
+          sx={{ fontSize: 30, fontWeight: 400 }}
         />
       </div>
     </div>

@@ -1,11 +1,12 @@
-@import "@/scss/variables.scss";
-@import "@/scss/mixins.scss";
+@import "@/scss/_variables.scss";
+@import "@/scss/_mixins.scss";
 
 $card-width: 370px;
 $card-border-radius: 5px;
 $card-gap: 24px;
-$card-title-max-lines: 1;
-$card-description-max-lines: 3;
+$card-title-max-lines: 2;
+$card-description-max-lines: 2;
+$card-padding-x: 10px;
 
 .propertyCard {
   &_container {
@@ -37,15 +38,17 @@ $card-description-max-lines: 3;
   &_body {
     @include flex(column);
     flex: 1;
-    gap: 8px;
-    padding: 8px;
+    padding: 8px $card-padding-x;
   }
 
   &_title {
     position: relative;
-    font-size: 1.8rem;
-    line-height: 2.4rem;
+    font-size: 1.6rem;
+    line-height: 2rem;
     font-weight: 600;
+    min-height: 2lh;
+    margin-top: 6px;
+    margin-bottom: 8px;
 
     @include line-truncate($card-title-max-lines);
 
@@ -56,21 +59,28 @@ $card-description-max-lines: 3;
   }
 
   &_features {
-    @include flex();
+    width: 100%;
+    @include flex(row, flex-start, center);
     flex-wrap: wrap;
     gap: 16px;
+    margin-bottom: 12px;
 
     &-item {
       @include flex(row, flex-start, center);
-      gap: 2px;
-      font-size: 1.4rem;
+      gap: 4px;
+      color: $dark-grey-color;
+
+      & > p {
+        font-size: 1.4rem;
+      }
     }
   }
 
   &_price {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: $primary-color;
+    margin-right: 12px;
   }
 
   &_description {
@@ -79,11 +89,19 @@ $card-description-max-lines: 3;
     @include line-truncate($card-description-max-lines);
   }
 
+  &_address {
+    @include flex(row, flex-start, flex-end);
+    gap: 5px;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color: $dark-grey-color;
+  }
+
   &_footer {
     width: 100%;
     display: grid;
     border-top: 1px solid $light-grey-color;
-    padding: 0 8px;
+    padding: 0 $card-padding-x;
     grid-template-columns: 45px 1fr 50px;
     grid-template-rows: 25px 25px;
     grid-template-areas:
@@ -121,6 +139,10 @@ $card-description-max-lines: 3;
     align-self: center;
     justify-self: flex-end;
     cursor: pointer;
+    color: $dark-grey-color;
+    background-color: lighten($dark-grey-color, 65%);
+    padding: 5px;
+    border-radius: 8px;
 
     &--active {
       color: $primary-color;

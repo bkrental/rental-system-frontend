@@ -20,6 +20,15 @@ body {
   overflow-y: auto;
 }
 
+sup {
+  top: -0.5em;
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
 .grid {
   display: grid;
   max-width: 100%;

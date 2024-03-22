@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useDropdown from "@/hooks/useDropdown";
 import PriceDropdown from "../PriceDropdown";
@@ -18,6 +18,7 @@ export default function SearchBar() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
 
+  const formRef = useRef();
   const [elementRef, isOpened, toggleDropdown] = useDropdown();
   const [priceSelectRef, isPriceDDOpened, togglePriceDD] = useDropdown();
   const [addressSelectRef, isAddressDDOpened, toggleAddressDD] = useDropdown();
@@ -40,7 +41,7 @@ export default function SearchBar() {
 
   const onSubmit = useCallback(
     (e) => {
-      e.preventDefault();
+      if (e && e.preventDefault) e.preventDefault();
 
       const isValidKeyword = (keyword) => (keyword || "").trim().length > 0;
       const isValidPrice = (price) => price > 0;
@@ -69,9 +70,9 @@ export default function SearchBar() {
   );
 
   return (
-    <form onSubmit={onSubmit} className="searchBar_container">
+    <form ref={formRef} onSubmit={onSubmit} className="searchBar_container">
       <input
-        name="keyword"
+        name="q"
         placeholder="Enter the keyword to search for properties"
         className="searchBar_input"
         value={keyword}
@@ -82,12 +83,14 @@ export default function SearchBar() {
       <div className="searchBar_selectContainer" ref={elementRef}>
         <div onClick={toggleDropdown} className="searchBar_select">
           <div className="searchBar_selectName">Property Type</div>
+
           <div className="searchBar_selectValue">{propertyType.label}</div>
         </div>
         {isOpened && (
           <PropertyTypeDropdown
             propertyType={propertyType}
             setPropertyType={setPropertyType}
+            handleSubmit={onSubmit}
           />
         )}
       </div>
