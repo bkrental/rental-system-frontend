@@ -20,9 +20,12 @@ import {
   FavoriteOutlined,
   FavoriteBorder,
   IosShare,
+  BackupOutlined,
+  ChevronLeftOutlined,
 } from "@mui/icons-material";
 import OwnerCard from "@/components/OwnerCard/OwnerCard";
 import PhoneIcon from "@mui/icons-material/Phone";
+import Link from "next/link";
 
 export default async function PostDetailPage({ params }) {
   const post = await getPropertyDetail(params.slug);
@@ -52,6 +55,12 @@ export default async function PostDetailPage({ params }) {
 
   return (
     <div className="posts_container">
+      <div className="posts_breadcrumbs">
+        <Link href="/rent" className="posts_link">
+          <ChevronLeftOutlined sx={{ fontSize: 20 }} />
+          Back to Search
+        </Link>
+      </div>
       <div className="posts_content">
         <div className="posts_gallery">
           <Image
