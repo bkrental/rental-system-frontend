@@ -5,10 +5,10 @@ import "@scss/listings.scss";
 
 export default function PropertyLayout({ children }) {
   return (
-    <div className="property_container">
+    <div className="listings_container">
       <SearchBar />
-      <div className="property_listings">{children}</div>
-      <div className="property_sidebar">
+      <div className="listings_main">{children}</div>
+      <div className="listings_sidebar">
         <SideBar />
       </div>
     </div>

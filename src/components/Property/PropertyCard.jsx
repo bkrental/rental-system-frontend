@@ -1,20 +1,13 @@
-import BathtubIcon from "@mui/icons-material/Bathtub";
+import {
+  BathroomOutlined,
+  BedroomChildOutlined,
+  CropFree,
+  PlaceOutlined,
+} from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import SingleBedIcon from "@mui/icons-material/SingleBed";
-import "@scss/properties.scss";
-import "./PropertyCard.scss";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FavoriteBorderRounded,
-  Favorite,
-  CropFree,
-  BedroomChildOutlined,
-  BathroomOutlined,
-  PlaceOutlined,
-  FavoriteOutlined,
-} from "@mui/icons-material";
-import HomeIcon from "@mui/icons-material/Home";
+import "./PropertyCard.scss";
 
 export default function PropertyCard({
   property: {
@@ -54,9 +47,9 @@ export default function PropertyCard({
           {formatAddress(address)}
         </div>
 
-        <h3 className="propertyCard_title">
-          <Link href={`/rent/${_id}`}>{name}</Link>
-        </h3>
+        <h4 className="propertyCard_title">
+          <Link href={`/posts/${_id}`}>{name}</Link>
+        </h4>
 
         <div className="propertyCard_features">
           <p className="propertyCard_price">{price + " triệu/tháng"}</p>

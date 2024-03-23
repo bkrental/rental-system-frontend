@@ -61,24 +61,24 @@
       background-color: transparent;
 
       border: 1px solid $light-grey-color;
-      border-color: $secondary;
-      border-radius: 6px;
+      border-color: $input-color;
+      border-radius: $radius;
       outline: $primary-color;
 
       transition: all 0.3s ease-in-out;
-      box-shadow: rgba(182, 182, 182, 0.18) 0px 4px 10px 0px;
+      box-shadow: rgba(182, 182, 182, 0.18) 0px 2px 2px 0px;
 
       &:focus,
       &:hover {
-        border: 1px solid $black-color;
+        border: 1px solid $input-color;
       }
 
       &--error {
-        border: 1px solid $red-color;
+        border: 1px solid $destructive-color;
 
         &:focus,
         &:hover {
-          border: 1px solid $red-color;
+          border: 1px solid $destructive-color;
         }
       }
     }
@@ -91,7 +91,7 @@
 
       &--forgot-password {
         font-size: 1.6rem;
-        color: $secondary;
+        color: $secondary-foreground-color;
         text-decoration: none;
         transition: all 0.3s ease-in-out;
         margin-bottom: 6px;
@@ -101,7 +101,7 @@
       }
 
       &--error {
-        color: $red-color;
+        color: $destructive-color;
       }
     }
 
@@ -114,14 +114,20 @@
   }
 
   &_submit-btn {
-    @include button-mixin("default", $primary);
+    background-color: $primary-color;
+    color: $primary-foreground-color;
     width: 100%;
     margin-top: 16px;
     padding: 12px 24px;
     font-size: 1.8rem;
 
+    &:hover {
+      background-color: darken($primary-color, 5%);
+    }
+
     &--loading {
-      @include button-mixin("default", $secondary);
+      background-color: $secondary-color;
+      color: $secondary-foreground-color;
     }
   }
 }

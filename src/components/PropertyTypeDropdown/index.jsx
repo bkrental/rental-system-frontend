@@ -24,14 +24,14 @@ export default function PropertyTypeDropdown({
   }, [propertyType]);
 
   return (
-    <Dropdown>
+    <div className="propertyType_dropdown">
       {SUPPORTED_PROPERTY_TYPES.map((propType) => (
         <div
           key={propType.value}
           className={clsx(
-            "pt-dropdown-option",
+            "propertyType_option",
             propertyType.value === propType.value &&
-              "pt-dropdown-option--highlight"
+              "propertyType_option--highlight"
           )}
           onClick={() => handleOptionSelect(propType)}
         >
@@ -39,6 +39,6 @@ export default function PropertyTypeDropdown({
           {propType.label}
         </div>
       ))}
-    </Dropdown>
+    </div>
   );
 }

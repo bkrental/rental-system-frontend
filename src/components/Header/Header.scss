@@ -1,5 +1,5 @@
-@import "./mixins";
-@import "./variables";
+@import "@scss/_mixins.scss";
+@import "@scss/_variables.scss";
 
 .header {
   position: sticky;
@@ -17,14 +17,7 @@
     text-decoration: none;
   }
 
-  &_mode-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 32px;
-  }
-
-  &_button-group {
+  &_btnGroup {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -36,13 +29,14 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
-    gap: 32px;
+    gap: 6px;
     padding: 0 32px;
 
     &-item {
       font-size: 2rem;
-      line-height: 50px;
-      color: $black-color;
+      padding: 8px 16px;
+
+      color: $foreground-color;
       text-decoration: none;
       cursor: pointer;
 
@@ -53,18 +47,10 @@
     }
   }
 
-  &_auth-btn {
-    @include button-mixin(text, $black-color);
-
-    font-size: 1.8rem;
-    border-radius: 8px;
-    text-decoration: none;
-  }
-
   &_link {
     font-size: 1.8rem;
     padding: 8px 16px;
-    border-radius: 8px;
+    border-radius: $radius;
     color: $black-color;
     text-decoration: none;
     cursor: pointer;
@@ -76,7 +62,7 @@
     }
 
     &--primary {
-      color: $white-color;
+      color: $primary-foreground-color;
       background-color: $primary-color;
 
       &:hover {
@@ -104,7 +90,7 @@
       height: 34px;
       font-size: 1.6rem;
       font-weight: 600;
-      color: $white-color;
+      color: $foreground-color;
       border-radius: 50%;
       object-fit: cover;
       background-color: $black-color;
@@ -122,7 +108,7 @@
       right: -2px;
       min-width: 200px;
       position: absolute;
-      background-color: $white-color;
+      background-color: $foreground-color;
       box-shadow: 0px 8px 20px rgba(182, 182, 182, 0.3);
       border: 1px solid $light-grey-color;
       border-radius: 8px;

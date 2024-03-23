@@ -18,22 +18,18 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    row-gap: 12px;
+    row-gap: 24px;
 
     padding-right: 12px;
+  }
 
-    &-title {
-      font-size: 5rem;
-      line-height: 1.2;
-    }
+  &_title {
+    font-size: 5rem;
+    line-height: 1.2;
+  }
 
-    &-subtitle {
-      width: 100%;
-      font-size: 2rem;
-      line-height: 1.2;
-      font-weight: 700;
-      color: $grey-color;
-    }
+  &_subtitle {
+    color: $muted-foreground-color;
   }
 
   &_search {
@@ -44,21 +40,36 @@
     &-input {
       width: 85%;
       padding: 0px 16px;
-      background: $white-color;
+      background: $background-color;
+      font-size: 1.6rem;
 
-      font-size: 1.8rem;
-      border: 1px solid $black-color;
-      border-radius: 6px 0 0 6px;
+      border: 1px solid $border-color;
+      border-radius: $radius 0 0 $radius;
       outline: none;
       caret-color: $black-color;
+
+      transition-property: color, background-color, border-color,
+        text-decoration-color, fill, stroke;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 0.15s;
+
+      &:focus {
+        border: 2px solid $ring-color;
+      }
     }
 
-    &-btn {
+    &Btn {
       display: flex;
       justify-content: center;
       align-items: center;
 
-      border-radius: 0 6px 6px 0;
+      border-radius: 0 $radius $radius 0;
+      color: $primary-foreground-color;
+      background-color: $primary-color;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
     }
   }
 
@@ -69,16 +80,14 @@
     align-items: center;
     margin-top: 20px;
 
-    &-image {
+    &Image {
       width: 100%;
       height: 100%;
       border-radius: 16px;
     }
   }
-  &_text {
-    &--highlight {
-      font-size: 5.2rem;
-      color: $primary-color;
-    }
+
+  &_highlight {
+    color: $primary-color;
   }
 }
