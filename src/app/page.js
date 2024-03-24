@@ -7,24 +7,24 @@ function HomePage() {
   return (
     <div className="home_container">
       <div className="home_hero">
-        <h3 className="home_hero-title">
+        <h1>
           Experience the ease of{" "}
-          <span className="home_text--highlight">BKRental</span> for seamless
-          home discovery.
-        </h3>
+          <span className="home_highlight">BKRental</span> for seamless home
+          discovery.
+        </h1>
 
-        <p className="home_hero-subtitle">
+        <h4 className="home_subtitle">
           Discover houses and apartments for rent tailored to your needs and
           budget.
-        </p>
+        </h4>
 
         <div className="home_search">
           <input
             placeholder="Search for City, Address, Neighbourhood..."
             className="home_search-input"
           />
-          <button className="btn home_search-btn">
-            <SearchIcon sx={{ fontSize: 24, color: "#000" }} />
+          <button className="home_searchBtn">
+            <SearchIcon sx={{ fontSize: 24, color: "hsl(60, 9.1%, 97.8%)" }} />
           </button>
         </div>
       </div>
@@ -33,8 +33,8 @@ function HomePage() {
         <Image
           priority={true}
           src="/banner.png"
-          className="home_banner-image"
-          alt="banner-img"
+          className="home_bannerImage"
+          alt="The BKRental banner image"
           width={300}
           height={300}
         />

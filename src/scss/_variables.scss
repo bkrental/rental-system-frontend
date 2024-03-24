@@ -1,13 +1,6 @@
-$primary-color: rgba(255, 115, 29, 1);
-
 $black-color: rgba(0, 0, 0, 1);
-$white-color: rgba(255, 255, 255, 1);
-$grey-color: rgba(59, 65, 68, 1);
-$red-color: rgb(224, 60, 49);
 $light-grey-color: #f4f4f4;
 $dark-grey-color: #484848;
-$grey-color: #6c757d;
-$green-color: rgb(66, 183, 42);
 
 $bg-gradient-color: linear-gradient(
   180deg,
@@ -19,16 +12,23 @@ $bg-gradient-color: linear-gradient(
 $btn-box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
   rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 
-$primary: rgba(255, 115, 29, 1);
-$secondary: #6c757d;
-
-$theme-colors: (
-  "primary": $primary,
-  "secondary": $secondary,
-  "dark": $black-color,
-  "white": $white-color,
-  "danger": $red-color,
-  "success": $green-color,
-) !default;
-
-$btn-variants: ("text", "outlined", "default") !default;
+$background-color: hsl(0, 0%, 100%);
+$foreground-color: hsl(20, 14.3%, 4.1%);
+$card-color: hsl(0, 0%, 100%);
+$card-foreground-color: hsl(20, 14.3%, 4.1%);
+$popover-color: hsl(0, 0%, 100%);
+$popover-foreground-color: hsl(20, 14.3%, 4.1%);
+$primary-color: hsl(24.6, 95%, 53.1%);
+$primary-foreground-color: hsl(60, 9.1%, 97.8%);
+$secondary-color: hsl(60, 4.8%, 95.9%);
+$secondary-foreground-color: hsl(24, 9.8%, 10%);
+$muted-color: hsl(60, 4.8%, 95.9%);
+$muted-foreground-color: hsl(25, 5.3%, 44.7%);
+$accent-color: hsl(60, 4.8%, 95.9%);
+$accent-foreground-color: hsl(24, 9.8%, 10%);
+$destructive-color: hsl(0, 84.2%, 60.2%);
+$destructive-foreground-color: hsl(60, 9.1%, 97.8%);
+$border-color: hsl(20, 5.9%, 90%);
+$input-color: hsl(20, 5.9%, 90%);
+$ring-color: hsl(24.6, 95%, 53.1%);
+$radius: 0.5rem;

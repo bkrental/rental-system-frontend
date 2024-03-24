@@ -1,7 +1,7 @@
-import "@scss/header.scss";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import "./Header.scss";
 
 export default function HeaderLink({ href, children }) {
   const pathname = usePathname();

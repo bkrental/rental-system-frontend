@@ -8,7 +8,7 @@ export default function AuthSubmitButton({ loading, children, ...props }) {
       type="submit"
     >
       {loading ? (
-        <ClipLoader loading={loading} color="#fff" size={20} />
+        <ClipLoader loading={loading} color="#000" size={20} />
       ) : (
         children
       )}

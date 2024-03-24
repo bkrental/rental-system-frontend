@@ -1,9 +1,21 @@
-@import "@scss/variables.scss";
+@import "@scss/_variables.scss";
+@import "@scss/_mixins.scss";
 
-.pt-dropdown {
-  &-option {
+.propertyType {
+  &_dropdown {
+    @include dropdown();
+
+    max-height: 220px;
+    border-bottom-left-radius: $radius;
+    border-bottom-right-radius: $radius;
+    padding-bottom: 12px;
+
+    @include custom-scrollbar();
+  }
+
+  &_option {
     width: 100%;
-    min-width: 200px;
+    min-width: 250px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -12,7 +24,8 @@
     cursor: pointer;
 
     &:hover {
-      background-color: $light-grey-color;
+      background-color: $secondary-color;
+      color: $secondary-foreground-color;
     }
 
     &--highlight {

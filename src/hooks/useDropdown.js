@@ -6,21 +6,21 @@ export default function useDropdown() {
 
   const toggleDropdown = () => setIsOpened((prev) => !prev);
 
+  const handleClickOutside = (e) => {
+    if (elementRef.current.contains(e.target)) {
+      return;
+    }
+
+    toggleDropdown();
+  };
+
   useEffect(() => {
     if (!isOpened || !elementRef.current) return;
-
-    const handleClickOutside = (e) => {
-      if (elementRef.current.contains(e.target)) {
-        return;
-      }
-
-      toggleDropdown();
-    };
 
     document.addEventListener("click", handleClickOutside);
 
     return () => document.removeEventListener("click", handleClickOutside);
-  });
+  }, [elementRef, isOpened]);
 
   return [elementRef, isOpened, toggleDropdown];
 }

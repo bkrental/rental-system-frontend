@@ -1,0 +1,177 @@
+@import "@/scss/_variables.scss";
+@import "@/scss/_mixins.scss";
+
+$card-width: 300px;
+$card-border-radius: 5px;
+$card-gap: 24px;
+$card-title-max-lines: 2;
+$card-description-max-lines: 2;
+$card-padding-x: 10px;
+
+.propertyCard {
+  &_list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 24px;
+  }
+
+  &_container {
+    @include flex(column);
+    width: calc(50% - #{$card-gap / 2});
+    height: 500px;
+    gap: 8px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    color: $card-foreground-color;
+    background-color: $card-color;
+    box-shadow: 0px 4px 6px 0px rgba(44, 44, 44, 0.04);
+  }
+
+  &_header {
+    width: 100%;
+    height: 250px;
+    position: relative;
+  }
+
+  &_thumbnail {
+    height: 200px;
+    background-color: $light-grey-color;
+    z-index: 1;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  &_body {
+    @include flex(column);
+    flex: 1;
+    padding: 8px $card-padding-x;
+  }
+
+  &_title {
+    position: relative;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 600;
+    min-height: 2lh;
+    margin-top: 6px;
+    margin-bottom: 8px;
+
+    @include line-truncate($card-title-max-lines);
+
+    & > a {
+      color: $black-color;
+      text-decoration: none;
+    }
+  }
+
+  &_features {
+    width: 100%;
+    @include flex(row, flex-start, center);
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 12px;
+
+    &-item {
+      @include flex(row, flex-start, center);
+      gap: 4px;
+      color: $dark-grey-color;
+
+      & > p {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  &_price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-right: 12px;
+  }
+
+  &_description {
+    font-size: 1.4rem;
+    // color: $card-foreground-color;
+    // color: $muted-foreground-color;
+    color: $secondary-foreground-color;
+    @include line-truncate($card-description-max-lines);
+  }
+
+  &_address {
+    @include flex(row, flex-start, flex-end);
+    gap: 5px;
+    font-size: 1.3rem;
+    line-height: 2rem;
+    color: $dark-grey-color;
+  }
+
+  &_footer {
+    width: 100%;
+    display: grid;
+    border-top: 1px solid $light-grey-color;
+    padding: 4px $card-padding-x;
+    grid-template-columns: 45px 1fr 50px;
+    grid-template-rows: 25px 25px;
+    grid-template-areas:
+      "avatar owner favorite"
+      "avatar date  favorite";
+  }
+
+  &_avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    color: $primary-foreground-color;
+    background-color: $primary-color;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 600;
+    @include flex(row, center, center);
+    grid-area: avatar;
+    align-self: center;
+    justify-self: flex-start;
+  }
+
+  &_owner {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    font-weight: 600;
+    grid-area: owner;
+    align-self: self-end;
+    @include line-truncate(1);
+  }
+
+  &_favorite {
+    grid-area: favorite;
+    align-self: center;
+    justify-self: flex-end;
+    cursor: pointer;
+    background-color: $popover-color;
+    color: $popover-foreground-color;
+    padding: 5px;
+    border-radius: $radius;
+    border: 1px solid $input-color;
+
+    &:hover {
+      background-color: $accent-color;
+      color: $accent-foreground-color;
+    }
+
+    &--active {
+      color: $primary-color;
+    }
+  }
+
+  &_publishedDate {
+    font-size: 1.2rem;
+    line-height: 20px;
+    color: $muted-foreground-color;
+    grid-area: date;
+    align-self: self-start;
+    @include line-truncate(1);
+  }
+}

@@ -1,14 +1,19 @@
-import BathtubIcon from "@mui/icons-material/Bathtub";
+import {
+  BathroomOutlined,
+  BedroomChildOutlined,
+  CropFree,
+  PlaceOutlined,
+} from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import SingleBedIcon from "@mui/icons-material/SingleBed";
-import "@scss/properties.scss";
 import Image from "next/image";
 import Link from "next/link";
+import "./PropertyCard.scss";
 
 export default function PropertyCard({
   property: {
     _id,
     address,
+    name,
     description,
     price,
     area,
@@ -18,66 +23,69 @@ export default function PropertyCard({
     bathrooms,
   },
 }) {
+  bedrooms = 1;
+  bathrooms = 1;
   const formatAddress = ({ street, district, province }) => {
     return `${street}, ${district}, ${province}`;
   };
 
   return (
-    <div className="property_card" key={_id}>
-      <div className="property_card-header">
+    <div className="propertyCard_container" key={_id}>
+      <div className="propertyCard_header">
         <Image
-          className="property_card-image"
+          className="propertyCard_thumbnail"
           src={thumbnail}
           fill
-          objectFit="cover"
           alt="property image"
+          sizes="100%"
         />
       </div>
 
-      <div className="property_card-body">
-        <h3 className="property_card-title">
-          <Link href={`/rent/${_id}`}>{formatAddress(address)}</Link>
-        </h3>
+      <div className="propertyCard_body">
+        <div className="propertyCard_address">
+          <PlaceOutlined sx={{ color: "red", fontSize: 20 }} />
+          {formatAddress(address)}
+        </div>
 
-        <div className="property_card-features">
-          <div className="property_card-features_item">
-            <p>{`${area} m2`}</p>
+        <h4 className="propertyCard_title">
+          <Link href={`/posts/${_id}`}>{name}</Link>
+        </h4>
+
+        <div className="propertyCard_features">
+          <p className="propertyCard_price">{price + " triệu/tháng"}</p>
+          <div className="propertyCard_features-item">
+            <CropFree />
+            <p>
+              {`${area} m`}
+              <sup>2</sup>
+            </p>
           </div>
           {Boolean(bedrooms) && (
-            <div className="property_card-features_item">
-              <SingleBedIcon />
-              <p>{`${bedrooms} phòng ngủ`}</p>
+            <div className="propertyCard_features-item">
+              <BedroomChildOutlined />
+              <p>{`${bedrooms} pn`}</p>
             </div>
           )}
           {Boolean(bathrooms) && (
-            <div className="property_card-features_item">
-              <BathtubIcon />
-              <p>{`${1} phòng tắm`}</p>
+            <div className="propertyCard_features-item">
+              <BathroomOutlined />
+              <p>{`${bathrooms} wc`}</p>
             </div>
           )}
         </div>
 
-        <p className="property_card-price">{price + " triệu/tháng"}</p>
-
-        <p className="property_card-description">{description}</p>
+        <p className="propertyCard_description">{description}</p>
       </div>
 
-      <div className="property_card-footer">
-        <div className="property_card-owner">
-          <div className="property_card-owner_avatar">CĐ</div>
-          <div className="property_card-owner_info">
-            <div className="property_card-owner_name">
-              {owner?.name || "Ẩn danh"}
-            </div>
-            <div className="property_card-published-time">Đăng hôm nay</div>
-          </div>
-        </div>
+      <div className="propertyCard_footer">
+        <div className="propertyCard_avatar">CĐ</div>
+        <div className="propertyCard_owner">{owner?.name || "Ẩn danh"}</div>
+        <div className="propertyCard_publishedDate">Đăng hôm nay</div>
 
-        <div className="property_card-favourite">
-          <FavoriteBorderIcon
-            sx={{ fontSize: 25, fontWeight: 400, color: "grey" }}
-          />
-        </div>
+        <FavoriteBorderIcon
+          className="propertyCard_favorite"
+          sx={{ fontSize: 30, fontWeight: 400 }}
+        />
       </div>
     </div>
   );

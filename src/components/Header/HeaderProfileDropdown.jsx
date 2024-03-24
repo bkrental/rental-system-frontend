@@ -1,12 +1,12 @@
 import { removeUserInfo } from "@/redux/features/auth/authSlice";
 import {
-  HomeOutlined,
-  PersonOutlineOutlined,
-  LockClockOutlined,
   ExitToAppOutlined,
+  HomeOutlined,
+  LockClockOutlined,
+  PersonOutlineOutlined,
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function HeaderProfileDropDown() {
   const router = useRouter();

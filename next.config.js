@@ -15,6 +15,10 @@ module.exports = {
         protocol: "https",
         hostname: "cloud.mogi.vn",
       },
+      {
+        protocol: "https",
+        hostname: "a0.muscache.com",
+      },
     ],
   },
 };

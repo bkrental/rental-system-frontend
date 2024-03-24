@@ -11,7 +11,6 @@ export async function getPropertiesWithQueryString(queryString) {
   const baseURL = `${process.env.RENTAL_SERVICE_BACKEND_ENDPOINT}/posts`;
   const res = await fetch(baseURL + queryString);
 
-  console.log(baseURL + queryString);
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
   }

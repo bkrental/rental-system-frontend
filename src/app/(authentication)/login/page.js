@@ -15,11 +15,7 @@ function LoginPage() {
   const [login] = useLoginMutation();
   const redirect = useRedirectBack();
 
-  const handleSubmit = async (
-    values,
-    { setSubmitting, setFieldError, validate }
-  ) => {
-    validate(values);
+  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
       const response = await login(values).unwrap();
       setSubmitting(false);
