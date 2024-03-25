@@ -9,7 +9,9 @@ export default async function getProperties(searchParams) {
 
 export async function getPropertiesWithQueryString(queryString) {
   const baseURL = `${process.env.RENTAL_SERVICE_BACKEND_ENDPOINT}/posts`;
-  const res = await fetch(baseURL + queryString);
+  const res = await fetch(baseURL + queryString, {
+    next: { revalidate: 20 },
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
