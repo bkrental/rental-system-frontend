@@ -2,12 +2,16 @@
 @import "@scss/_mixins.scss";
 
 .posts {
+  &_wrapper {
+    width: 100%;
+    background: linear-gradient(#fff7e9, #fff);
+  }
   &_container {
     display: flex;
     flex-direction: column;
     width: 1200px;
-    padding: 0 32px;
-    margin: 16px auto;
+    padding: 16px 32px;
+    margin: 0 auto;
   }
 
   &_breadcrumbs {
@@ -221,6 +225,7 @@
     border: 1px solid $border-color;
     border-radius: $radius;
     box-shadow: 0px 4px 6px 0px rgba(44, 44, 44, 0.04);
+    background-color: $card-color;
     position: sticky;
     position: -webkit-sticky; /* Safari */
     top: 80px;

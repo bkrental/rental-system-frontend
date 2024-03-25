@@ -49,99 +49,92 @@ export default async function PostDetailPage({ params }) {
   ];
 
   return (
-    <div className="posts_container">
-      <div className="posts_breadcrumbs">
-        <Link href="/rent" className="posts_link">
-          <ChevronLeftOutlined sx={{ fontSize: 20 }} />
-          Back to Search
-        </Link>
-      </div>
-
-      <h1 className="posts_title">{post.name}</h1>
-      <p className="posts_address">{formatAddress(post.address)}</p>
-
-      <div className="posts_gallery">
-        <PropertyImage src={post.thumbnail} />
-        <PropertyImage src={post.images[0]} />
-        <PropertyImage src={post.images[1]} />
-        <PropertyImage src={post.images[2]} />
-      </div>
-
-      <div className="posts_body">
-        {/* LEFT */}
-        <div className="posts_left">
-          {/* Overview */}
-          <div className="posts_info">
-            <h4 className="posts_summary">{getPostSummary(post)}</h4>
-            <p className="posts_price">{post.price + " triệu/tháng"}</p>
-            <div className="posts_actions">
-              <div className="posts_action">
-                <IosShare sx={{ fontSize: 20 }} />
-                Share
-              </div>
-              <div className="posts_action">
-                <FavoriteBorder sx={{ fontSize: 20 }} />
-                Save
-              </div>
-            </div>
-          </div>
-
-          {/* Features */}
-          <div className="posts_feature">
-            <h4 style={{ fontWeight: 500 }}>Home Highlights</h4>
-            <div className="posts_featureList">
-              {features.map((feature) => (
-                <div className="posts_featureItem" key={feature.label}>
-                  <p className="posts_featureLabel">
-                    {feature.icon && <feature.icon sx={{ fontSize: 20 }} />}
-                    {feature.label}
-                  </p>
-                  <p className="posts_featureValue">{feature.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Description */}
-          <div className="posts_description">
-            <h4>Home Description</h4>
-            <p>{post.description}</p>
-
-            <div className="posts_descriptionButton">
-              Show more <ChevronRightOutlined />
-            </div>
-          </div>
-
-          {/* Map */}
-          <div className="posts_location">
-            <h4>See on map</h4>
-            <p>{formatAddress(post.address)}</p>
-            <iframe
-              className="posts_map"
-              loading="lazy"
-              allowfullscreen
-              referrerpolicy="no-referrer-when-downgrade"
-              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAP_API_KEY}
-            &q=${post.address.street},${post.address.district},${post.address.province}&zoom=18`}
-            ></iframe>
-          </div>
+    <div className="posts_wrapper">
+      <div className="posts_container">
+        <div className="posts_breadcrumbs">
+          <Link href="/rent" className="posts_link">
+            <ChevronLeftOutlined sx={{ fontSize: 20 }} />
+            Back to Search
+          </Link>
         </div>
-
-        {/* RIGHT */}
-        <div className="posts_right">
-          {/* Owner Card */}
-          <div className="posts_card">
-            <OwnerCard owner={post.owner} />
-
-            <div className="posts_cardActions">
-              <button className="posts_cardButton posts_cardButton--active">
-                <PhoneIcon sx={{ fontSize: 25 }} />
-                {post.contact.phone}
-              </button>
-              <button className="posts_cardButton">
-                <MessageOutlined sx={{ fontSize: 20 }} />
-                Send message
-              </button>
+        <h1 className="posts_title">{post.name}</h1>
+        <p className="posts_address">{formatAddress(post.address)}</p>
+        <div className="posts_gallery">
+          <PropertyImage src={post.thumbnail} />
+          <PropertyImage src={post.images[0]} />
+          <PropertyImage src={post.images[1]} />
+          <PropertyImage src={post.images[2]} />
+        </div>
+        <div className="posts_body">
+          {/* LEFT */}
+          <div className="posts_left">
+            {/* Overview */}
+            <div className="posts_info">
+              <h4 className="posts_summary">{getPostSummary(post)}</h4>
+              <p className="posts_price">{post.price + " triệu/tháng"}</p>
+              <div className="posts_actions">
+                <div className="posts_action">
+                  <IosShare sx={{ fontSize: 20 }} />
+                  Share
+                </div>
+                <div className="posts_action">
+                  <FavoriteBorder sx={{ fontSize: 20 }} />
+                  Save
+                </div>
+              </div>
+            </div>
+            {/* Features */}
+            <div className="posts_feature">
+              <h4 style={{ fontWeight: 500 }}>Home Highlights</h4>
+              <div className="posts_featureList">
+                {features.map((feature) => (
+                  <div className="posts_featureItem" key={feature.label}>
+                    <p className="posts_featureLabel">
+                      {feature.icon && <feature.icon sx={{ fontSize: 20 }} />}
+                      {feature.label}
+                    </p>
+                    <p className="posts_featureValue">{feature.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Description */}
+            <div className="posts_description">
+              <h4>Home Description</h4>
+              <p>{post.description}</p>
+              <div className="posts_descriptionButton">
+                Show more <ChevronRightOutlined />
+              </div>
+            </div>
+            {/* Map */}
+            <div className="posts_location">
+              <h4>See on map</h4>
+              <p>{formatAddress(post.address)}</p>
+              <iframe
+                className="posts_map"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+                src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAP_API_KEY}
+              &q=${post.address.street},${post.address.district},${post.address.province}&zoom=18`}
+              ></iframe>
+            </div>
+          </div>
+          {/* RIGHT */}
+          <div className="posts_right">
+            {/* Owner Card */}
+            <div className="posts_card">
+              <OwnerCard owner={post.owner} />
+              <div className="posts_cardActions">
+                <button className="posts_cardButton posts_cardButton--active">
+                  <PhoneIcon sx={{ fontSize: 25 }} />
+                  {post.contact.phone}
+                </button>
+                <button className="posts_cardButton">
+                  <MessageOutlined sx={{ fontSize: 20 }} />
+                  Send message
+                </button>
+              </div>
             </div>
           </div>
         </div>
