@@ -1,5 +1,6 @@
 import Header from "@/components/Header/Header";
 import StoreProvider from "@app/StoreProvider";
+import ThemeProvider from "@app/ThemeProvider";
 import { Roboto } from "next/font/google";
 import "@scss/_global.scss";
 
@@ -17,11 +18,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={roboto.className}>
-        <StoreProvider>
-          {/* Header goes here */}
-          <Header />
-          {children}
-        </StoreProvider>
+        <ThemeProvider>
+          <StoreProvider>
+            <Header />
+            {children}
+          </StoreProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
