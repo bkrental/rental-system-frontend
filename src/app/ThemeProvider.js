@@ -1,4 +1,5 @@
 "use client";
+import { grey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -6,6 +7,7 @@ const theme = createTheme({
     primary: {
       main: "hsl(24.6, 95%, 53.1%)",
       contrastText: "#fff",
+      // dark: grey[900],
     },
     secondary: {
       main: "#f44336",

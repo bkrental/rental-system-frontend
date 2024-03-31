@@ -5,10 +5,6 @@ import Stack from "@mui/material/Stack";
 import { useState } from "react";
 
 export default function PropertyList({ properties }) {
-  if (!properties || properties.length === 0) {
-    return <p>There is no property suitable with your requirements</p>;
-  }
-
   const pageSize = 6;
   const totalPages = Math.ceil(properties.length / pageSize);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +15,9 @@ export default function PropertyList({ properties }) {
 
   const startIndex = (currentPage - 1) * pageSize;
 
+  if (!properties || properties.length === 0) {
+    return <p>There is no property suitable with your requirements</p>;
+  }
   return (
     <Stack spacing={2} alignItems="center" mb={3}>
       <Stack spacing={2} direction="row" useFlexGap flexWrap="wrap">
