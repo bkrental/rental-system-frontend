@@ -53,7 +53,6 @@ export default function PropertyCard({
         sx={{ width: "100%", height: 230, objectFit: "contain" }}
         title={name}
       />
-
       <CardContent>
         <Box display="flex" mb={1} gap={1}>
           <Chip
@@ -81,7 +80,6 @@ export default function PropertyCard({
         >
           {formatAddress(address)}
         </Typography>
-
         <Typography
           variant="body1"
           sx={{ fontWeight: 600, fontSize: "1.25rem" }}
@@ -90,18 +88,15 @@ export default function PropertyCard({
         >
           {price + " triệu/tháng"}
         </Typography>
-
         <Box display="flex" alignItems="center" gap={3} mb={1}>
           <Box display="flex" alignItems="center">
             <SingleBedOutlinedIcon sx={{ fontSize: 20, marginRight: 0.5 }} />
             <Typography variant="body1">{`${bedrooms} pn`}</Typography>
           </Box>
-
           <Box display="flex" alignItems="center">
             <ShowerOutlinedIcon sx={{ fontSize: 20, marginRight: 0.5 }} />
             <Typography variant="body1">{`${bathrooms} wc`}</Typography>
           </Box>
-
           <Box display="flex" alignItems="center">
             <CropFreeOutlined sx={{ fontSize: 20, marginRight: 0.5 }} />
             <Typography variant="body1">
@@ -110,12 +105,10 @@ export default function PropertyCard({
             </Typography>
           </Box>
         </Box>
-
         <Typography variant="body2" paragraph sx={{ ...lineTruncate(2) }}>
           {description}
         </Typography>
       </CardContent>
-
       <Divider />
       <CardHeader
         sx={{ paddingX: 2, paddingY: 1 }}

@@ -11,6 +11,7 @@ export default function PropertyList({ properties }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const startIndex = (currentPage - 1) * pageSize;
