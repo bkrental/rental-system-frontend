@@ -9,11 +9,7 @@ const persistConfig = {
   key: "root",
   storage,
   timeout: 2000,
-  whitelist: ["auth", "config"],
-};
-
-const persistOptions = {
-  manualPersist: true,
+  whitelist: ["auth", "config", "createPost"],
 };
 
 const rootReducer = combineReducers({

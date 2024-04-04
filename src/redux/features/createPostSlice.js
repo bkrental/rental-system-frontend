@@ -3,13 +3,12 @@ import { createSlice, current } from "@reduxjs/toolkit";
 const createPostSlice = createSlice({
   name: "createPost",
   initialState: {
-    basicInfo: {
-      propertyType: null,
-      transactionType: "sale",
-      location: { lat: null, lng: null },
-      displayedAddress: "",
-      address: { province: "", city: "", ward: "", street: "" },
-    },
+    // Basic info
+    propertyType: null,
+    transactionType: "sale",
+    address: null,
+    displayedAddress: "",
+
     postInfo: {
       title: "",
       description: "",
@@ -28,6 +27,15 @@ const createPostSlice = createSlice({
     setPropertyType: (state, action) => {
       state.propertyType = action.payload;
     },
+
+    setAddress: (state, action) => {
+      state.address = action.payload;
+    },
+
+    setDisplayedAddress: (state, action) => {
+      state.displayedAddress = action.payload;
+    },
+
     setBasicInfo: (state, action) => {
       const {
         propertyType,
@@ -59,6 +67,11 @@ const createPostSlice = createSlice({
   },
 });
 
-export const { setPostInfo, setPropertyType, setTransactionType } =
-  createPostSlice.actions;
+export const {
+  setPostInfo,
+  setPropertyType,
+  setTransactionType,
+  setDisplayedAddress,
+  setAddress,
+} = createPostSlice.actions;
 export default createPostSlice.reducer;
