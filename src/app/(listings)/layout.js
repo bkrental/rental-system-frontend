@@ -1,16 +1,24 @@
 "use client";
 import SearchBar from "@/components/SearchBar";
 import SideBar from "@/components/SideBar";
-import "@scss/listings.scss";
+import { Container } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 export default function PropertyLayout({ children }) {
   return (
-    <div className="listings_container">
-      <SearchBar />
-      <div className="listings_main">{children}</div>
-      <div className="listings_sidebar">
-        <SideBar />
-      </div>
-    </div>
+    <Container sx={{ mt: 2 }}>
+      <Grid container spacing={2} columns={10}>
+        <Grid item xs={10}>
+          <SearchBar />
+        </Grid>
+
+        <Grid item xs={7}>
+          {children}
+        </Grid>
+        <Grid item xs={3}>
+          <SideBar />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }

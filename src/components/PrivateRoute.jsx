@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 
 export default function PrivateRoute(Component) {
-  return function ProtectedComponent() {
+  return function ProtectedComponent(props) {
     const router = useRouter();
     const pathname = usePathname();
     const accessToken = useSelector((state) => state.auth.accessToken);
@@ -20,6 +20,6 @@ export default function PrivateRoute(Component) {
     if (!accessToken)
       return <ClipLoader loading={true} color="#fff" size={20} />;
 
-    return <Component />;
+    return <Component {...props} />;
   };
 }

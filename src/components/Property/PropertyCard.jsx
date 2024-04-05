@@ -1,13 +1,29 @@
-import {
-  BathroomOutlined,
-  BedroomChildOutlined,
-  CropFree,
-  PlaceOutlined,
-} from "@mui/icons-material";
+import { CropFreeOutlined, GradeOutlined } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import Image from "next/image";
+import ShowerOutlinedIcon from "@mui/icons-material/ShowerOutlined";
+import SingleBedOutlinedIcon from "@mui/icons-material/SingleBedOutlined";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import CardMedia from "@mui/material/CardMedia";
+import { deepOrange } from "@mui/material/colors";
 import Link from "next/link";
-import "./PropertyCard.scss";
+
+const lineTruncate = (line = 1) => ({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  WebkitLineClamp: `${line}`,
+  WebkitBoxOrient: "vertical",
+});
 
 export default function PropertyCard({
   property: {
@@ -21,6 +37,7 @@ export default function PropertyCard({
     owner,
     bedrooms,
     bathrooms,
+    property_type,
   },
 }) {
   bedrooms = 1;
@@ -30,63 +47,87 @@ export default function PropertyCard({
   };
 
   return (
-    <div className="propertyCard_container" key={_id}>
-      <div className="propertyCard_header">
-        <Image
-          className="propertyCard_thumbnail"
-          src={thumbnail}
-          fill
-          alt="property image"
-          sizes="100%"
-        />
-      </div>
-
-      <div className="propertyCard_body">
-        <div className="propertyCard_address">
-          <PlaceOutlined sx={{ color: "red", fontSize: 20 }} />
+    <Card variant="outlined" sx={{ maxWidth: 390 }} key={_id}>
+      <CardMedia
+        image={thumbnail}
+        sx={{ width: "100%", height: 230, objectFit: "contain" }}
+        title={name}
+      />
+      <CardContent>
+        <Box display="flex" mb={1} gap={1}>
+          <Chip
+            size="small"
+            icon={<GradeOutlined />}
+            label="Tin mới"
+            color="blue"
+          />
+          <Chip size="small" label="Phòng trọ" />
+        </Box>
+        <Typography
+          variant="h4"
+          component={Link}
+          href={`/posts/${_id}`}
+          gutterBottom
+          sx={{
+            fontSize: "1rem",
+            lineHeight: 1.25,
+            fontWeight: 600,
+            textDecoration: "none",
+            color: "text.primary",
+            textWrap: "stable",
+            ...lineTruncate(1),
+          }}
+        >
           {formatAddress(address)}
-        </div>
-
-        <h4 className="propertyCard_title">
-          <Link href={`/posts/${_id}`}>{name}</Link>
-        </h4>
-
-        <div className="propertyCard_features">
-          <p className="propertyCard_price">{price + " triệu/tháng"}</p>
-          <div className="propertyCard_features-item">
-            <CropFree />
-            <p>
-              {`${area} m`}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: 600, fontSize: "1.25rem" }}
+          color="primary"
+          gutterBottom
+        >
+          {price + " triệu/tháng"}
+        </Typography>
+        <Box display="flex" alignItems="center" gap={3} mb={1}>
+          <Box display="flex" alignItems="center">
+            <SingleBedOutlinedIcon sx={{ fontSize: 20, marginRight: 0.5 }} />
+            <Typography variant="body1">{`${bedrooms} pn`}</Typography>
+          </Box>
+          <Box display="flex" alignItems="center">
+            <ShowerOutlinedIcon sx={{ fontSize: 20, marginRight: 0.5 }} />
+            <Typography variant="body1">{`${bathrooms} wc`}</Typography>
+          </Box>
+          <Box display="flex" alignItems="center">
+            <CropFreeOutlined sx={{ fontSize: 20, marginRight: 0.5 }} />
+            <Typography variant="body1">
+              {area + "m"}
               <sup>2</sup>
-            </p>
-          </div>
-          {Boolean(bedrooms) && (
-            <div className="propertyCard_features-item">
-              <BedroomChildOutlined />
-              <p>{`${bedrooms} pn`}</p>
-            </div>
-          )}
-          {Boolean(bathrooms) && (
-            <div className="propertyCard_features-item">
-              <BathroomOutlined />
-              <p>{`${bathrooms} wc`}</p>
-            </div>
-          )}
-        </div>
-
-        <p className="propertyCard_description">{description}</p>
-      </div>
-
-      <div className="propertyCard_footer">
-        <div className="propertyCard_avatar">CĐ</div>
-        <div className="propertyCard_owner">{owner?.name || "Ẩn danh"}</div>
-        <div className="propertyCard_publishedDate">Đăng hôm nay</div>
-
-        <FavoriteBorderIcon
-          className="propertyCard_favorite"
-          sx={{ fontSize: 30, fontWeight: 400 }}
-        />
-      </div>
-    </div>
+            </Typography>
+          </Box>
+        </Box>
+        <Typography variant="body2" paragraph sx={{ ...lineTruncate(2) }}>
+          {description}
+        </Typography>
+      </CardContent>
+      <Divider />
+      <CardHeader
+        sx={{ paddingX: 2, paddingY: 1 }}
+        avatar={
+          <Avatar
+            sx={{ bgcolor: deepOrange[500], width: 32, height: 32 }}
+            aria-label={owner?.name || "Ẩn danh"}
+            alt={owner?.name || "Ẩn danh"}
+            src={owner?.avatar}
+          />
+        }
+        action={
+          <IconButton aria-label="add to favorites">
+            <FavoriteBorderIcon />
+          </IconButton>
+        }
+        title={owner?.name || "Ẩn danh"}
+        subheader="Đăng hôm nay"
+      />
+    </Card>
   );
 }

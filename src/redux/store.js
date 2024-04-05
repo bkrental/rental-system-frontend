@@ -3,21 +3,19 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import authSlice from "./features/auth/authSlice";
+import createPostSlice from "./features/createPostSlice";
 
 const persistConfig = {
   key: "root",
   storage,
   timeout: 2000,
-  whitelist: ["auth", "config"],
-};
-
-const persistOptions = {
-  manualPersist: true,
+  whitelist: ["auth", "config", "createPost"],
 };
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
   auth: authSlice,
+  createPost: createPostSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

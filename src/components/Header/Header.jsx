@@ -19,7 +19,7 @@ function Header() {
         <HeaderLink href="/buy">Buy</HeaderLink>
       </div>
 
-      <Link className="header_link" href="/signup">
+      <Link className="header_link" href="/landlord/publish">
         Post a property
       </Link>
 

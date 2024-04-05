@@ -24,16 +24,16 @@
 
   &_name {
     grid-area: name;
-    font-size: 1.8rem;
-    line-height: 2.4rem;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
     font-weight: 500;
     color: $secondary-foreground-color;
   }
 
   &_joined {
     grid-area: joined;
-    font-size: 1.3rem;
-    line-height: 1.8rem;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     color: $muted-foreground-color;
   }
 }
