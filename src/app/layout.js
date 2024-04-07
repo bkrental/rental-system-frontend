@@ -3,7 +3,6 @@ import StoreProvider from "@app/StoreProvider";
 import ThemeProvider from "@app/ThemeProvider";
 import { Roboto } from "next/font/google";
 import "@scss/_global.scss";
-import ScriptProvider from "./ScriptProvider";
 
 export const metadata = {
   title: "BKrental",
@@ -25,14 +24,12 @@ export default function RootLayout({ children }) {
         ></link>
       </head>
       <body suppressHydrationWarning={true} className={roboto.className}>
-        {/* <ScriptProvider> */}
         <ThemeProvider>
           <StoreProvider>
             <Header />
             {children}
           </StoreProvider>
         </ThemeProvider>
-        {/* </ScriptProvider> */}
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 "use client";
 import { InputLabel, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
 
 export default function PostInfoForm() {
   return (

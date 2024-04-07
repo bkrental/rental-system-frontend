@@ -36,7 +36,10 @@ export default function BasicInfoForm() {
     usePlaceAutocomplete();
 
   const addressGeocode = useMemo(() => {
-    const { lng, lat } = addressDetails?.geometry?.location;
+    const { lng, lat } = addressDetails?.geometry?.location || {
+      lng: 106.660172,
+      lat: 10.762622,
+    };
     return [lng, lat];
   }, [addressDetails]);
 
