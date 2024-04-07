@@ -3,6 +3,7 @@ import StoreProvider from "@app/StoreProvider";
 import ThemeProvider from "@app/ThemeProvider";
 import { Roboto } from "next/font/google";
 import "@scss/_global.scss";
+import ScriptProvider from "./ScriptProvider";
 
 export const metadata = {
   title: "BKrental",
@@ -17,13 +18,21 @@ const roboto = Roboto({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js/dist/goong-js.css"
+          rel="stylesheet"
+        ></link>
+      </head>
       <body suppressHydrationWarning={true} className={roboto.className}>
+        {/* <ScriptProvider> */}
         <ThemeProvider>
           <StoreProvider>
             <Header />
             {children}
           </StoreProvider>
         </ThemeProvider>
+        {/* </ScriptProvider> */}
       </body>
     </html>
   );

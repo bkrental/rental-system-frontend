@@ -1,5 +1,6 @@
 "use client";
 import GoogleMap from "@/components/GoogleMap/GoogleMap";
+import Map from "@/components/Map/Map";
 import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
 import usePlaceAutocomplete from "@/hooks/usePlaceAutocomplete";
 import usePlaceDetails from "@/hooks/usePlaceDetails";
@@ -140,7 +141,7 @@ export default function BasicInfoForm() {
 
       <InputLabel sx={{ mt: 2 }}>See on the map</InputLabel>
       <Box height="500px">
-        <GoogleMap
+        <Map
           zoom={18}
           center={addressGeocode || { lat: 10.762622, lng: 106.660172 }}
         />

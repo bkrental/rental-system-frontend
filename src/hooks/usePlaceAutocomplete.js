@@ -7,8 +7,7 @@ export default function usePlaceAutocomplete() {
 
   useEffect(() => {
     const getAddressOptions = debounce(async () => {
-      const BASE_URL = process.env.NEXT_PUBLIC_LOCATION_SERVICE_ENDPOINT;
-      const response = await fetch(`${BASE_URL}/autocomplete?input=${input}`);
+      const response = await fetch(`/api/places/autocomplete?input=${input}`);
       const data = await response.json();
       setOptions(data?.predictions || []);
     }, 500);
