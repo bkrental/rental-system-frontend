@@ -22,7 +22,7 @@ export function createMap(config) {
   const map = new goongJs.Map({
     container: "map",
     style: "https://tiles.goong.io/assets/goong_light_v2.json",
-    zoom: 12,
+    zoom: 20,
     center: [107.6416527, 11.295036],
     ...config,
   });
@@ -30,19 +30,18 @@ export function createMap(config) {
   return map;
 }
 
-export default function Map({ center, zoom = 10 }) {
+export default function Map({ center = [107.6416527, 11.295036], zoom = 10 }) {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    const { lng, lat } = center;
     if (!mapRef.current) {
       mapRef.current = createMap({
-        center: [lng ?? 107.6416527, lat ?? 11.295036],
+        center,
       });
     }
 
-    mapRef.current.flyTo({ center: [lng, lat], zoom: 15 });
-    const marker = createMarker(mapRef.current, [lng, lat]);
+    mapRef.current.flyTo({ center, zoom: 15 });
+    const marker = createMarker(mapRef.current, center);
 
     return () => {
       marker.remove();
