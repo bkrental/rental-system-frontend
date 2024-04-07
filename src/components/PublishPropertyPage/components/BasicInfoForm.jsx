@@ -1,5 +1,5 @@
 "use client";
-import GoogleMap from "@/components/GoogleMap/GoogleMap";
+import Map from "@/components/Map/Map";
 import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
 import usePlaceAutocomplete from "@/hooks/usePlaceAutocomplete";
 import usePlaceDetails from "@/hooks/usePlaceDetails";
@@ -34,10 +34,14 @@ export default function BasicInfoForm() {
   const addressDetails = usePlaceDetails(address);
   const [addressInput, setAddressInput, addressOptions] =
     usePlaceAutocomplete();
-  const addressGeocode = useMemo(
-    () => addressDetails?.geometry?.location,
-    [addressDetails]
-  );
+
+  const addressGeocode = useMemo(() => {
+    const { lng, lat } = addressDetails?.geometry?.location || {
+      lng: 106.660172,
+      lat: 10.762622,
+    };
+    return [lng, lat];
+  }, [addressDetails]);
 
   useEffect(() => {
     if (!addressDetails) return;
@@ -140,10 +144,7 @@ export default function BasicInfoForm() {
 
       <InputLabel sx={{ mt: 2 }}>See on the map</InputLabel>
       <Box height="500px">
-        <GoogleMap
-          zoom={18}
-          center={addressGeocode || { lat: 10.762622, lng: 106.660172 }}
-        />
+        <Map zoom={18} center={addressGeocode || [106.660172, 10.762622]} />
       </Box>
     </Paper>
   );

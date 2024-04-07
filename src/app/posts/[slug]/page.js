@@ -1,4 +1,5 @@
 import getPropertyDetail from "@/actions/getPropertyDetail";
+import Map from "@/components/Map/Map";
 import OwnerCard from "@/components/OwnerCard/OwnerCard";
 import PropertyImage from "@/components/PropertyImage/PropertyImage";
 import formatAddress from "@/utils/formatAddress";
@@ -110,14 +111,10 @@ export default async function PostDetailPage({ params }) {
             <div className="posts_location">
               <h4>See on map</h4>
               <p>{formatAddress(post.address)}</p>
-              <iframe
-                className="posts_map"
-                loading="lazy"
-                allowfullscreen
-                referrerpolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAP_API_KEY}
-              &q=${post.address.street},${post.address.district},${post.address.province}&zoom=18`}
-              ></iframe>
+
+              {post?.location?.coordinates && (
+                <Map center={post?.location?.coordinates} />
+              )}
             </div>
           </div>
           {/* RIGHT */}
