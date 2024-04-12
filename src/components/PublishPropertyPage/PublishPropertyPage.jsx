@@ -38,9 +38,10 @@ function PublishPostPage() {
       <StepBar steps={steps} activeStep={activeStep} />
 
       {steps.map(
-        ({ Component }, index) =>
+        ({ Component, label }, index) =>
           activeStep === index && (
             <Component
+              key={label}
               next={goNext}
               back={goBack}
               activeStep={activeStep}
