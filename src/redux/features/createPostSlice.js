@@ -3,12 +3,14 @@ import { createSlice, current } from "@reduxjs/toolkit";
 const createPostSlice = createSlice({
   name: "createPost",
   initialState: {
-    // Basic info
-    propertyType: null,
-    transactionType: "sale",
-    address: null,
-    displayedAddress: "",
-
+    basicInfo: {
+      addressId: null,
+      transactionType: "sale",
+      displayedAddress: "",
+      propertyType: "house",
+      location: [],
+      addressCompound: {},
+    },
     postInfo: {
       title: "",
       description: "",
@@ -20,37 +22,18 @@ const createPostSlice = createSlice({
     },
   },
   reducers: {
-    setTransactionType: (state, action) => {
-      state.transactionType = action.payload;
+    updateBasicInfoForm: (state, action) => {
+      state.basicInfo = { ...state.basicInfo, ...action.payload };
     },
 
-    setPropertyType: (state, action) => {
-      state.propertyType = action.payload;
+    updatePostInfoForm: (state, action) => {
+      state.postInfo = { ...state.postInfo, ...action.payload };
     },
 
-    setAddress: (state, action) => {
-      state.address = action.payload;
+    updatePropertyInfo: (state, action) => {
+      state.propertyInfo = { ...state.propertyInfo, ...action.payload };
     },
 
-    setDisplayedAddress: (state, action) => {
-      state.displayedAddress = action.payload;
-    },
-
-    setBasicInfo: (state, action) => {
-      const {
-        propertyType,
-        transactionType,
-        location,
-        address,
-        displayedAddress,
-      } = action.payload;
-
-      state.propertyType = propertyType;
-      state.transactionType = transactionType;
-      state.location = location;
-      state.address = address;
-      state.displayedAddress = displayedAddress;
-    },
     setPostInfo: (state, action) => {
       const { title, description } = action.payload;
       state.title = title;
@@ -67,11 +50,6 @@ const createPostSlice = createSlice({
   },
 });
 
-export const {
-  setPostInfo,
-  setPropertyType,
-  setTransactionType,
-  setDisplayedAddress,
-  setAddress,
-} = createPostSlice.actions;
+export const { updateBasicInfoForm, updatePostInfoForm, updatePropertyInfo } =
+  createPostSlice.actions;
 export default createPostSlice.reducer;

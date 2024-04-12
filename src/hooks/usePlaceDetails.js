@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-export default function usePlaceDetails(address) {
+export default function usePlaceDetails(addressId) {
   const [addressDetails, setAddressDetails] = useState(null);
 
   useEffect(() => {
     const getAddressDetails = async () => {
-      if (!address || !address?.place_id) return;
+      if (!addressId) return;
 
-      const url = `/api/places/details?place_id=${address.place_id}&more_compound=true`;
+      const url = `/api/places/details?place_id=${addressId}&more_compound=true`;
       const response = await fetch(url.toString());
       const data = await response.json();
 
@@ -17,7 +17,7 @@ export default function usePlaceDetails(address) {
     getAddressDetails().then((data) => {
       setAddressDetails(data);
     });
-  }, [address]);
+  }, [addressId]);
 
   return addressDetails;
 }
