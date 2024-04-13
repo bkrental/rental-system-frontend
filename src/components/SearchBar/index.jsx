@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useDropdown from "@/hooks/useDropdown";
 import PriceDropdown from "../PriceDropdown";
 import PropertyTypeDropdown from "../PropertyTypeDropdown";
-import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
+import { PROPERTY_TYPE_DETAILS } from "@/constants/propertyTypes";
 import "./SearchBar.scss";
 import AddressDropdown from "../AddressDropdown";
 import setSearchParams from "@/utils/setSearchParams";
@@ -24,7 +24,7 @@ export default function SearchBar() {
   const [addressSelectRef, isAddressDDOpened, toggleAddressDD] = useDropdown();
 
   const [price, setPrice] = useState([0, 0]);
-  const [propertyType, setPropertyType] = useState(SUPPORTED_PROPERTY_TYPES[0]);
+  const [propertyType, setPropertyType] = useState(PROPERTY_TYPE_DETAILS[0]);
   const [address, setAddress] = useState({
     province: { Name: "All", Value: "all" },
     districts: [],
@@ -33,7 +33,7 @@ export default function SearchBar() {
 
   const clearFilter = () => {
     setPrice([0, 0]);
-    setPropertyType(SUPPORTED_PROPERTY_TYPES[0]);
+    setPropertyType(PROPERTY_TYPE_DETAILS[0]);
     setAddress({ province: { Name: "All", Value: "all" }, districts: [] });
     setKeyword("");
     replace(pathname);

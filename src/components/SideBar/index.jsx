@@ -1,5 +1,5 @@
 import { PRICE_SUGGESTIONS } from "@/constants/price";
-import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
+import { PROPERTY_TYPE_DETAILS } from "@/constants/propertyTypes";
 import { getPriceOptionLabel } from "@/utils/getPriceLabel";
 import {
   Box,
@@ -33,7 +33,7 @@ export default function SideBar() {
         </Typography>
 
         <List dense="dense">
-          {SUPPORTED_PROPERTY_TYPES.slice(1).map((propertyType) => (
+          {PROPERTY_TYPE_DETAILS.slice(1).map((propertyType) => (
             <MenuItem
               key={propertyType.value}
               LinkComponent={Link}

@@ -1,4 +1,4 @@
-import { SUPPORTED_PROPERTY_TYPES } from "@/constants/propertyTypes";
+import { PROPERTY_TYPE_DETAILS } from "@/constants/propertyTypes";
 import clsx from "clsx";
 import Dropdown from "../Dropdown";
 import "./PropertyTypeDropdown.scss";
@@ -25,7 +25,7 @@ export default function PropertyTypeDropdown({
 
   return (
     <div className="propertyType_dropdown">
-      {SUPPORTED_PROPERTY_TYPES.map((propType) => (
+      {PROPERTY_TYPE_DETAILS.map((propType) => (
         <div
           key={propType.value}
           className={clsx(

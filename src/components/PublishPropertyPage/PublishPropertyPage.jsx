@@ -1,11 +1,13 @@
 "use client";
-import { Container } from "@mui/material";
-import { useMemo, useState } from "react";
+import { Container, Fade, Grow, Typography, Zoom } from "@mui/material";
+import { useCallback, useMemo, useState } from "react";
 import BasicInfoForm from "./components/BasicInfoForm";
 import PostInfoForm from "./components/PostInfoForm";
 import PropertyInfoForm from "./components/PropertyInfoForm";
 import StepActions from "./components/StepActions";
 import StepBar from "./components/StepBar";
+import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 
 function PublishPostPage() {
   const [activeStep, setActiveStep] = useState(0);
@@ -19,12 +21,10 @@ function PublishPostPage() {
       {
         label: "Post Information",
         Component: PostInfoForm,
-        complete: (data) => console.log("step 2 complete"),
       },
       {
         label: "Property Information",
         Component: PropertyInfoForm,
-        complete: () => console.log("step 3 complete"),
       },
     ],
     []
@@ -38,16 +38,17 @@ function PublishPostPage() {
       <StepBar steps={steps} activeStep={activeStep} />
 
       {steps.map(
-        ({ Component, complete }, index) =>
-          index === activeStep && <Component key={index} complete={complete} />
+        ({ Component, label }, index) =>
+          activeStep === index && (
+            <Component
+              key={label}
+              next={goNext}
+              back={goBack}
+              activeStep={activeStep}
+              steps={steps}
+            />
+          )
       )}
-
-      <StepActions
-        steps={steps}
-        activeStep={activeStep}
-        next={goNext}
-        back={goBack}
-      />
     </Container>
   );
 }
