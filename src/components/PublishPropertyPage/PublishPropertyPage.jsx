@@ -1,54 +1,65 @@
 "use client";
-import { Container, Fade, Grow, Typography, Zoom } from "@mui/material";
-import { useCallback, useMemo, useState } from "react";
-import BasicInfoForm from "./components/BasicInfoForm";
-import PostInfoForm from "./components/PostInfoForm";
-import PropertyInfoForm from "./components/PropertyInfoForm";
-import StepActions from "./components/StepActions";
-import StepBar from "./components/StepBar";
-import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { initialSteps } from "@/redux/features/createPostSlice";
+import { getCurrentStep, getSteps } from "@/redux/selectors";
+import { Container, Typography, Zoom } from "@mui/material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ProgressBar from "../ProgressBar/ProgressBar";
+import LocationSelect from "./components/LocationSelect";
+import PropertyTypeSelect from "./components/PropertyTypeSelect";
+import TransactionTypeSelect from "./components/TransactionTypeSelect";
 
 function PublishPostPage() {
-  const [activeStep, setActiveStep] = useState(0);
+  const dispatch = useDispatch();
+  const currentStep = useSelector(getCurrentStep);
+  const steps = useSelector(getSteps);
 
-  const steps = useMemo(
-    () => [
-      {
-        label: "Basic Information",
-        Component: BasicInfoForm,
-      },
-      {
-        label: "Post Information",
-        Component: PostInfoForm,
-      },
-      {
-        label: "Property Information",
-        Component: PropertyInfoForm,
-      },
-    ],
-    []
-  );
+  const stepConfigs = [
+    {
+      title: "What do you want to do?",
+      description: "Please select the transaction type",
+      Component: TransactionTypeSelect,
+    },
+    {
+      title: "Which of these best describes your place?",
+      description: "Select the type of property",
+      Component: PropertyTypeSelect,
+    },
+    {
+      title: "Where your property is located?",
+      description: "Select the location of the property",
+      Component: LocationSelect,
+    },
+  ];
 
-  const goNext = () => setActiveStep((prev) => prev + 1);
-  const goBack = () => setActiveStep((prev) => prev - 1);
+  useEffect(() => {
+    dispatch(initialSteps(stepConfigs.length));
+  }, []);
 
   return (
     <Container maxWidth="md">
-      <StepBar steps={steps} activeStep={activeStep} />
+      {stepConfigs.map(({ Component, title, description }, index) => (
+        <Zoom
+          in={currentStep === index}
+          key={Component.name}
+          sx={{ display: currentStep === index ? "block" : "none" }}
+          unmountOnExit
+        >
+          <Container maxWidth="sm">
+            <Typography component="h1" variant="h4" mt={4}>
+              {title}
+            </Typography>
 
-      {steps.map(
-        ({ Component, label }, index) =>
-          activeStep === index && (
-            <Component
-              key={label}
-              next={goNext}
-              back={goBack}
-              activeStep={activeStep}
-              steps={steps}
-            />
-          )
-      )}
+            <Typography variant="subtitle2" pb={3} pt={1}>
+              {description}
+            </Typography>
+
+            <Component />
+          </Container>
+        </Zoom>
+      ))}
+
+      <ProgressBar steps={steps} currentStep={currentStep} />
     </Container>
   );
 }

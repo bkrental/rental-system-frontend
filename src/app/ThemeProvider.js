@@ -17,6 +17,12 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
+  typography: {
+    h4: {
+      fontWeight: 600,
+      color: grey[900],
+    },
+  },
 });
 
 export default function Provider({ children }) {

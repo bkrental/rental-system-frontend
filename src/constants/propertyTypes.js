@@ -70,12 +70,6 @@ export const PROPERTY_TYPE_VALUES = PROPERTY_TYPE_DETAILS.map(
 );
 
 export const PROPERTY_TYPES = {
-  all: {
-    value: "all",
-    label: "All",
-    viLabel: "Tất cả nhà đất",
-    Icon: null,
-  },
   house: {
     value: "house",
     label: "House",

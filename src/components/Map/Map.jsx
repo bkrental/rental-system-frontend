@@ -8,6 +8,7 @@ export function createMarker(map, lngLat, options) {
   if (!map instanceof goongJs.Map) return;
   const marker = new goongJs.Marker(options)
     .setLngLat(lngLat ?? [107.6416527, 11.295036])
+    .setDraggable(true)
     .addTo(map);
 
   return marker;
@@ -30,23 +31,26 @@ export function createMap(config) {
   return map;
 }
 
-export default function Map({ center = [107.6416527, 11.295036], zoom = 10 }) {
+export default function Map({ center, zoom = 10, onDragEnd = () => {} }) {
   const mapRef = useRef(null);
 
   useEffect(() => {
     if (!mapRef.current) {
       mapRef.current = createMap({
-        center,
+        center: center ?? [107.6416527, 11.295036],
       });
     }
 
-    mapRef.current.flyTo({ center, zoom: 15 });
+    mapRef.current.flyTo({ center, zoom: 15, maxDuration: 500 });
     const marker = createMarker(mapRef.current, center);
+    marker.on("dragend", (e) => {
+      onDragEnd(marker.getLngLat());
+    });
 
     return () => {
       marker.remove();
     };
   }, [center]);
 
-  return <div id="map" style={{ height: "500px" }}></div>;
+  return <div id="map" style={{ height: "100%" }}></div>;
 }
