@@ -11,8 +11,8 @@ const createPostSlice = createSlice({
     propertyType: "house",
     addressId: null,
 
-    address: {},
-    location: {},
+    address: null,
+    location: null,
 
     basicInfo: {
       addressId: null,

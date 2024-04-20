@@ -17,6 +17,7 @@ import {
   TextField,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { isNull } from "lodash";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -98,7 +99,7 @@ export default function LocationSelect() {
         search result
       </FormHelperText>
 
-      <Fade in={address}>
+      <Fade in={!isNull(address)}>
         <Box mt={2}>
           <CustomInputLabel htmlFor="display-address">
             Display address
