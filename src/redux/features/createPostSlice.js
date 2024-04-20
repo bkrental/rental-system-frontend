@@ -14,6 +14,9 @@ const createPostSlice = createSlice({
     address: null,
     location: null,
 
+    title: "",
+    description: "",
+
     basicInfo: {
       addressId: null,
       transactionType: "sale",
@@ -65,41 +68,22 @@ const createPostSlice = createSlice({
     setLocation: (state, action) => {
       state.location = action.payload;
     },
+    setTitle: (state, action) => {
+      state.title = action.payload;
+    },
+    setDescription: (state, action) => {
+      state.description = action.payload;
+    },
     updateAddress: (state, action) => {
       state.address = Object.assign(state.address, action.payload);
     },
     updateBasicInfoForm: (state, action) => {
       state.basicInfo = { ...state.basicInfo, ...action.payload };
     },
-
-    updatePostInfoForm: (state, action) => {
-      state.postInfo = { ...state.postInfo, ...action.payload };
-    },
-
-    updatePropertyInfo: (state, action) => {
-      state.propertyInfo = { ...state.propertyInfo, ...action.payload };
-    },
-
-    setPostInfo: (state, action) => {
-      const { title, description } = action.payload;
-      state.title = title;
-      state.description = description;
-    },
-
-    setPropertyInfo: (state, action) => {
-      const { bedrooms, bathrooms, area } = action.payload;
-
-      state.bedrooms = bedrooms;
-      state.bathrooms = bathrooms;
-      state.area = area;
-    },
   },
 });
 
 export const {
-  updateBasicInfoForm,
-  updatePostInfoForm,
-  updatePropertyInfo,
   setTransactionType,
   setPropertyType,
   setAddressId,
@@ -110,5 +94,7 @@ export const {
   setAddress,
   updateAddress,
   setLocation,
+  setTitle,
+  setDescription,
 } = createPostSlice.actions;
 export default createPostSlice.reducer;
