@@ -1,12 +1,11 @@
 "use client";
-import ProgressBar from "@/components/ProgressBar/ProgressBar";
 import { PROPERTY_TYPES } from "@/constants/propertyTypes";
 import {
   setIsStepCompleted,
   setPropertyType,
 } from "@/redux/features/createPostSlice";
 import { getPropertyType } from "@/redux/selectors";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect } from "react";
@@ -33,7 +32,7 @@ const boxSelectedStyles = {
   backgroundColor: grey[200],
 };
 
-export default function PropertyTypeSelect() {
+export default function PropertyTypeForm() {
   const dispatch = useDispatch();
   const propertyType = useSelector(getPropertyType);
 

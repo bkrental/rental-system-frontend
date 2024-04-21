@@ -6,7 +6,7 @@ import { Stack, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function DescriptionInputForm() {
+export default function PostDescriptionForm() {
   const dispatch = useDispatch();
   const description = useSelector((state) => state.createPost.description);
 

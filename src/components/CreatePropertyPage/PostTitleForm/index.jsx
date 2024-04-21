@@ -4,7 +4,7 @@ import { Alert, TextField, Stack } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function TitleInputForm() {
+export default function PostTitleForm() {
   const dispatch = useDispatch();
   const title = useSelector((state) => state.createPost.title);
 

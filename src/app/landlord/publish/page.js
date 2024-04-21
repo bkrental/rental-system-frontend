@@ -1,3 +1,3 @@
-import PublishPropertyPage from "@components/PublishPropertyPage/PublishPropertyPage";
+import CreatePropertyPage from "@/components/CreatePropertyPage";
 
-export default PublishPropertyPage;
+export default CreatePropertyPage;
