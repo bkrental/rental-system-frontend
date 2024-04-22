@@ -29,7 +29,7 @@ const CustomInputLabel = styled(InputLabel)(() => {
   };
 });
 
-export default function LocationSelect() {
+export default function PropertyAddressForm() {
   const dispatch = useDispatch();
   const address = useSelector((s) => s.createPost.address);
   const location = useSelector((s) => s.createPost.location);

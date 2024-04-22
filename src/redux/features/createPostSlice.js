@@ -14,23 +14,10 @@ const createPostSlice = createSlice({
     address: null,
     location: null,
 
-    basicInfo: {
-      addressId: null,
-      transactionType: "sale",
-      displayedAddress: "",
-      propertyType: "house",
-      location: [],
-      addressCompound: {},
-    },
-    postInfo: {
-      title: "",
-      description: "",
-    },
-    propertyInfo: {
-      bedrooms: 0,
-      bathrooms: 0,
-      area: 0,
-    },
+    title: "",
+    description: "",
+
+    images: [],
   },
   reducers: {
     initialSteps: (state, action) => {
@@ -65,41 +52,36 @@ const createPostSlice = createSlice({
     setLocation: (state, action) => {
       state.location = action.payload;
     },
+    setTitle: (state, action) => {
+      state.title = action.payload;
+    },
+    setDescription: (state, action) => {
+      state.description = action.payload;
+    },
     updateAddress: (state, action) => {
       state.address = Object.assign(state.address, action.payload);
     },
-    updateBasicInfoForm: (state, action) => {
-      state.basicInfo = { ...state.basicInfo, ...action.payload };
+    setImages: (state, action) => {
+      state.images = action.payload;
     },
 
-    updatePostInfoForm: (state, action) => {
-      state.postInfo = { ...state.postInfo, ...action.payload };
+    addSingleImage: (state, action) => {
+      state.images = [...state.images, action.payload];
     },
 
-    updatePropertyInfo: (state, action) => {
-      state.propertyInfo = { ...state.propertyInfo, ...action.payload };
+    removeSingleImage: (state, action) => {
+      state.images = state.images.filter(
+        (image) => image.id !== action.payload
+      );
     },
 
-    setPostInfo: (state, action) => {
-      const { title, description } = action.payload;
-      state.title = title;
-      state.description = description;
-    },
-
-    setPropertyInfo: (state, action) => {
-      const { bedrooms, bathrooms, area } = action.payload;
-
-      state.bedrooms = bedrooms;
-      state.bathrooms = bathrooms;
-      state.area = area;
+    addMultipleImages: (state, action) => {
+      state.images = [...state.images, ...action.payload];
     },
   },
 });
 
 export const {
-  updateBasicInfoForm,
-  updatePostInfoForm,
-  updatePropertyInfo,
   setTransactionType,
   setPropertyType,
   setAddressId,
@@ -110,5 +92,10 @@ export const {
   setAddress,
   updateAddress,
   setLocation,
+  setTitle,
+  setDescription,
+  addSingleImage,
+  addMultipleImages,
+  removeSingleImage,
 } = createPostSlice.actions;
 export default createPostSlice.reducer;

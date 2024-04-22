@@ -1,25 +1,16 @@
-import ProgressBar from "@/components/ProgressBar/ProgressBar";
 import {
   setIsStepCompleted,
   setTransactionType,
-  updateBasicInfoForm,
 } from "@/redux/features/createPostSlice";
-import {
-  Typography,
-  Container,
-  Stack,
-  Box,
-  Icon,
-  SvgIcon,
-} from "@mui/material";
+import { getTransactionType } from "@/redux/selectors";
+import { Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Grid from "@mui/material/Unstable_Grid2";
-import { useDispatch, useSelector } from "react-redux";
 import HouseRentSvg from "@public/house_rent.svg";
 import HouseSaleSvg from "@public/house_sale.svg";
 import Image from "next/image";
-import { getTransactionType } from "@/redux/selectors";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const boxStyles = {
   minHeight: 60,
@@ -42,7 +33,7 @@ const boxSelectedStyles = {
   backgroundColor: grey[200],
 };
 
-export default function TransactionTypeSelect({}) {
+export default function TransactionTypeForm({}) {
   const dispatch = useDispatch();
   const transactionType = useSelector(getTransactionType);
 
