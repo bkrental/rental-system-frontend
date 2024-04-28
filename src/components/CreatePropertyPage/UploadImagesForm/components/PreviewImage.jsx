@@ -1,10 +1,10 @@
-import { addImages, addSingleImage } from "@/redux/features/createPostSlice";
+import { addSingleImage } from "@/redux/features/createPostSlice";
 import { DeleteOutline } from "@mui/icons-material";
 import { Box, IconButton, styled } from "@mui/material";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import LoadingOverlay, { UploadErrorOverlay } from "./ImageOverlay";
+import { LoadingOverlay, UploadErrorOverlay } from "./ImageOverlay";
 
 const ImageWrapper = styled(Box)(() => ({
   position: "relative",
@@ -76,8 +76,8 @@ export default function PreviewImage({ image, onRemove }) {
       >
         <DeleteOutline />
       </IconButton>
-      {loading && <LoadingOverlay />}
 
+      <LoadingOverlay loading={loading} />
       <UploadErrorOverlay error={error} />
     </ImageWrapper>
   );

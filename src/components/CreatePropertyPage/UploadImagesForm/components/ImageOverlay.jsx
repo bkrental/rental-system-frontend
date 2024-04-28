@@ -19,11 +19,13 @@ const OverlayContainer = styled(Stack)(() => ({
   alignItems: "center",
 }));
 
-export default function LoadingOverlay() {
+export function LoadingOverlay({ loading }) {
   return (
-    <OverlayContainer>
-      <CircularProgress size={80} />
-    </OverlayContainer>
+    loading && (
+      <OverlayContainer>
+        <CircularProgress size={80} />
+      </OverlayContainer>
+    )
   );
 }
 
