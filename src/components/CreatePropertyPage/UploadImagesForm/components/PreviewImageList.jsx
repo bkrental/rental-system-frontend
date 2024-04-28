@@ -21,7 +21,7 @@ export default function PreviewImageList({ images, setImages }) {
   return (
     <Grid container columns={2} spacing={2}>
       {images.map((image, index) => (
-        <Grid key={image.id} xs={index == 0 ? 2 : 1}>
+        <Grid key={image.id} md={index == 0 ? 2 : 1} xs={2}>
           <PreviewImage
             image={image}
             onRemove={() => handleRemoveImage(image.id)}

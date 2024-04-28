@@ -32,7 +32,19 @@ export default function ProgressBar({ currentStep, steps }) {
   const isStepCompleted = useSelector(
     (s) => s.createPost.isCurrentStepCompleted
   );
-  const next = () => dispatch(goNext());
+  const next = () => {
+    const isSubmit = currentStep === steps - 1;
+
+    if (isSubmit) {
+      const event = new CustomEvent("next", {
+        detail: { step: currentStep, isSubmit: currentStep === steps - 1 },
+      });
+      window.dispatchEvent(event);
+      return;
+    }
+
+    dispatch(goNext());
+  };
   const back = () => dispatch(goBack());
 
   return (

@@ -11,6 +11,7 @@ import PropertyAddressForm from "./PropertyAddressForm";
 import PropertyTypeForm from "./PropertyTypeForm";
 import TransactionTypeForm from "./TransactionTypeForm";
 import UploadImagesForm from "./UploadImagesForm";
+import PropertyDetailsForm from "./PropertyDetailsForm";
 
 const CREATE_PROPERTY_STEPS = [
   {
@@ -45,6 +46,12 @@ const CREATE_PROPERTY_STEPS = [
     description:
       "You'll need 5 photos to get started. You can add more or make changes later.",
     Component: UploadImagesForm,
+  },
+  {
+    title: "Provide some details about your property",
+    description:
+      "Tell us more about your property, such as the number of bedrooms, bathrooms, and the area of the property.",
+    Component: PropertyDetailsForm,
   },
 ];
 
