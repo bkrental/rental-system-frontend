@@ -1,6 +1,12 @@
 "use client";
 import { grey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Poppins, Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700", "900"],
+  subsets: ["latin-ext"],
+});
 
 const theme = createTheme({
   palette: {
@@ -18,6 +24,7 @@ const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: roboto.style.fontFamily,
     h4: {
       fontWeight: 600,
       color: grey[900],
