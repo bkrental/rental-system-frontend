@@ -1,8 +1,6 @@
 import { goBack, goNext } from "@/redux/features/createPostSlice";
 import { Box, Button, Stack, styled } from "@mui/material";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
+import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
 import { grey } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,9 +27,7 @@ export default function ProgressBar({ currentStep, steps }) {
   const dispatch = useDispatch();
   const progress = (currentStep / steps) * 100;
 
-  const isStepCompleted = useSelector(
-    (s) => s.createPost.isCurrentStepCompleted
-  );
+  const isStepCompleted = useSelector((s) => s.createPost.isCurrentStepCompleted);
   const next = () => {
     const isSubmit = currentStep === steps - 1;
 
@@ -59,12 +55,7 @@ export default function ProgressBar({ currentStep, steps }) {
         >
           Back
         </Button>
-        <Button
-          size="large"
-          variant="contained"
-          onClick={next}
-          disabled={!isStepCompleted}
-        >
+        <Button size="large" variant="contained" onClick={next} disabled={!isStepCompleted}>
           {currentStep === steps - 1 ? "Submit" : "Next"}
         </Button>
       </Stack>

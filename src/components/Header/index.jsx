@@ -2,7 +2,7 @@
 import NextLink from "next/link";
 import { useSelector } from "react-redux";
 // import HeaderLink from "./HeaderLink";
-import { Avatar, Button, Link, Stack, Typography } from "@mui/material";
+import { Avatar, Button, Link, Stack, styled, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
@@ -13,6 +13,21 @@ const HeaderLink = ({ children, ...props }) => (
     {children}
   </Link>
 );
+
+const HeaderWrapper = styled(Stack)(({ theme }) => ({
+  height: "60px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: theme.spacing(4),
+  paddingTop: 0,
+  paddingBottom: 0,
+  position: "sticky",
+  top: 0,
+  zIndex: 1000,
+  backgroundColor: "white",
+}));
 
 function Header() {
   const router = useRouter();
@@ -30,13 +45,7 @@ function Header() {
   };
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-      px={4}
-      py={1}
-    >
+    <HeaderWrapper>
       <Stack direction="row" spacing={3} alignItems="center">
         <HeaderLink href="/" sx={{ fontSize: 28, fontWeight: 600, width: 120 }}>
           BKRental
@@ -84,7 +93,7 @@ function Header() {
         )}
       </Stack>
       <AccountMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
-    </Stack>
+    </HeaderWrapper>
   );
 }
 

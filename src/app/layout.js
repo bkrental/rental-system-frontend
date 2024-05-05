@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 import StoreProvider from "@app/StoreProvider";
 import ThemeProvider from "@app/ThemeProvider";
-import { Roboto } from "next/font/google";
 import "@scss/_global.scss";
+import { Roboto } from "next/font/google";
 
 export const metadata = {
   title: "BKrental",

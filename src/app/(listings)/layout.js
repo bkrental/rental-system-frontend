@@ -6,13 +6,13 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 export default function PropertyLayout({ children }) {
   return (
-    <Container sx={{ mt: 2 }}>
-      <Grid container spacing={2} columns={10}>
-        <Grid item xs={10}>
+    <Container maxWidth="xl" sx={{ mt: 2 }}>
+      <Grid container spacing={2} columns={12}>
+        <Grid item xs={12}>
           <SearchBar />
         </Grid>
 
-        <Grid item xs={7}>
+        <Grid item xs={9}>
           {children}
         </Grid>
         <Grid item xs={3}>

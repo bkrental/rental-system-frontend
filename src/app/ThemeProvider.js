@@ -25,6 +25,10 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
+    button: {
+      textTransform: "none",
+      fontWeight: "normal",
+    },
     h4: {
       fontWeight: 600,
       color: grey[900],

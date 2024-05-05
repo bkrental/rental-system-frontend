@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 export default function AccountMenu({ anchorEl, open, handleClose }) {
   const router = useRouter();
   const dispatch = useDispatch();
+
   const logout = () => {
     router.push("/");
     dispatch(removeUserInfo());
@@ -28,7 +29,7 @@ export default function AccountMenu({ anchorEl, open, handleClose }) {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem onClick={handleClose}>
+      <MenuItem onClick={() => router.push("/landlord")}>
         <ListItemIcon>
           <HomeOutlined sx={{ fontSize: 18 }} />
         </ListItemIcon>
