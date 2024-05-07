@@ -65,9 +65,7 @@ export const PROPERTY_TYPE_DETAILS = [
   },
 ];
 
-export const PROPERTY_TYPE_VALUES = PROPERTY_TYPE_DETAILS.map(
-  (propType) => propType.value
-);
+export const PROPERTY_TYPE_VALUES = PROPERTY_TYPE_DETAILS.map((propType) => propType.value);
 
 export const PROPERTY_TYPES = {
   house: {
@@ -76,8 +74,8 @@ export const PROPERTY_TYPES = {
     viLabel: "Nhà riêng",
     Icon: HomeOutlined,
   },
-  rooming_house: {
-    value: "rooming_house",
+  room: {
+    value: "room",
     label: "Rooming House",
     viLabel: "Nhà trọ, phòng trọ",
     Icon: HolidayVillageOutlined,

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -7,9 +7,12 @@ import {
   MenuItem,
   Checkbox,
   ListItemText,
+  useMediaQuery,
 } from "@mui/material";
 import { PROPERTY_TYPES } from "@/constants/propertyTypes";
-import { ArrayParam, useQueryParam, withDefault } from "use-query-params";
+import { ArrayParam, StringParam, useQueryParam, withDefault } from "use-query-params";
+import { useSearchParams } from "next/navigation";
+import _ from "lodash";
 
 const ITEM_HEIGHT = 42;
 const ITEM_PADDING_TOP = 40;
@@ -23,17 +26,18 @@ const MenuProps = {
 };
 
 const PropertyTypeSelect = () => {
-  const [propertyTypes, setPropertyTypes] = useQueryParam(
-    "pt",
-    withDefault(ArrayParam, [])
+  const [propertyTypesQuery, setPropertyTypesQuery] = useQueryParam("pt", withDefault(ArrayParam, []));
+  const propertyTypes = useMemo(() =>
+    propertyTypesQuery ? _.intersection(Object.keys(PROPERTY_TYPES), propertyTypesQuery) : []
   );
+  // const searchParam = useSearchParams();
+  // const [propertyTypes, setPropertyTypes] = useState(searchParam.get("pt") ?? []);
+  // const [_, setPropertyTypeQuery] = useQueryParam("pt", withDefault(StringParam, ""));
 
   const handleChange = (e) => {
     const propertyTypes = e.target.value;
 
-    setPropertyTypes(
-      typeof propertyTypes === "string" ? value.split(",") : propertyTypes
-    );
+    setPropertyTypesQuery(typeof propertyTypes == "string" ? propertyTypes : propertyTypes);
   };
 
   return (
@@ -42,13 +46,13 @@ const PropertyTypeSelect = () => {
         multiple
         displayEmpty
         size="small"
-        renderValue={(selected) =>
-          selected.length === 0
+        renderValue={(selected) => {
+          return selected.length === 0
             ? "Any Property Type"
             : selected.length === 1
-            ? PROPERTY_TYPES[selected[0]].label
-            : `Property Types (${selected.length})`
-        }
+            ? PROPERTY_TYPES[selected[0]]?.label
+            : `Property Types (${selected.length})`;
+        }}
         value={propertyTypes}
         onChange={handleChange}
         input={<OutlinedInput />}

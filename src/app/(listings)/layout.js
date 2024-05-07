@@ -8,16 +8,12 @@ export default function PropertyLayout({ children }) {
   return (
     <Container maxWidth="xl" sx={{ mt: 2 }}>
       <Grid container spacing={2} columns={12}>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <SearchBar />
         </Grid>
 
-        <Grid item xs={9}>
-          {children}
-        </Grid>
-        <Grid item xs={3}>
-          <SideBar />
-        </Grid>
+        <Grid xs={9}>{children}</Grid>
+        <Grid xs={3}>{/* <SideBar /> */}</Grid>
       </Grid>
     </Container>
   );

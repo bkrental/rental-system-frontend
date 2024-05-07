@@ -1,40 +1,18 @@
 import { apiSlice } from "@api/apiSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { persistReducer, persistStore } from "redux-persist";
-import storageSession from "redux-persist/lib/storage/session";
 import authSlice from "./features/auth/authSlice";
 import createPostSlice from "./features/createPostSlice";
-
-const persistConfig = {
-  key: "root",
-  storage: storageSession,
-  timeout: 2000,
-  whitelist: ["auth", "config", "createPost"],
-};
+import { propertyApi } from "./features/properties/propertyApi";
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
+  [propertyApi.reducerPath]: propertyApi.reducer,
   auth: authSlice,
   createPost: createPostSlice,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [
-          "persist/PERSIST",
-          "persist/REHYDRATE",
-          "persist/PURGE",
-          "persist/FLUSH",
-        ],
-      },
-    }).concat(apiSlice.middleware);
-  },
-  devTools: true,
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware).concat(propertyApi.middleware),
 });
-
-export const persistor = persistStore(store);

@@ -1,15 +1,16 @@
 "use client";
-import { persistor, store } from "@redux/store";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
+import { ThemeProvider } from "@mui/material";
+import { store } from "@redux/store";
 import NextAdapterApp from "next-query-params/app";
+import { Provider } from "react-redux";
 import { QueryParamProvider } from "use-query-params";
+import theme from "./theme";
 
-export default function StoreProvider({ children }) {
+export default function AppProviders({ children }) {
   return (
     <Provider store={store}>
       <QueryParamProvider adapter={NextAdapterApp} options={{ enableBatching: true }}>
-        <PersistGate persistor={persistor}>{children}</PersistGate>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </QueryParamProvider>
     </Provider>
   );

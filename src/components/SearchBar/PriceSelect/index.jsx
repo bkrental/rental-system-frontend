@@ -111,7 +111,9 @@ export default function PriceSelect() {
 
           <Box height={170} sx={{ overflowY: "scroll" }}>
             {PRICE_SUGGESTIONS.map((range) => (
-              <MenuItem onClick={() => handlePriceSelect(range)}>{getPriceOptionLabel(range)}</MenuItem>
+              <MenuItem key={range.toString()} onClick={() => handlePriceSelect(range)}>
+                {getPriceOptionLabel(range)}
+              </MenuItem>
             ))}
           </Box>
 

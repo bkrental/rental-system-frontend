@@ -1,50 +1,54 @@
 "use client";
 import PropertyList from "@/components/PropertyList";
-import { useEffect, useState } from "react";
+import useGetPropertyTypes from "@/hooks/useGetPropertyTypes";
+import { useGetPropertiesQuery } from "@/redux/features/properties/propertyApi";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 
 export default function BuyPage() {
-  const [properties, setProperties] = useState([]);
   const pageSize = 10;
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useQueryParam(
-    "page",
-    withDefault(NumberParam, 1)
-  );
+  const [currentPage, setCurrentPage] = useQueryParam("page", withDefault(NumberParam, 1));
 
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0 });
   };
 
-  useEffect(() => {
-    const getProperties = async () => {
-      const baseURL = process.env.NEXT_PUBLIC_RENTAL_SERVICE_BACKEND_ENDPOINT;
-      const res = await fetch(
-        `${baseURL}/posts?page=${currentPage}&limit=${pageSize}`
-      );
+  const searchParam = useSearchParams();
+  const propertyTypes = useGetPropertyTypes();
 
-      if (!res.ok) {
-        console.error("Failed to fetch properties");
-        return;
+  const supportedQuery = ["bp", "tp", "ba", "ta"];
+  const queryObj = useMemo(() => {
+    const res = {};
+    searchParam.forEach((value, key) => {
+      if (supportedQuery.includes(key)) {
+        res[key] = value;
       }
-
-      const { data, pagination } = await res.json();
-      return [data, pagination];
-    };
-
-    getProperties().then(([posts, pagination]) => {
-      setProperties(posts);
-      setTotalPages(pagination.total_pages);
     });
-  }, [currentPage]);
+    console.log(res);
+    return res;
+  }, [searchParam]);
+
+  const { data, error, isLoading } = useGetPropertiesQuery({
+    page: currentPage,
+    limit: pageSize,
+    pt: propertyTypes,
+    transaction_type: "rent",
+    ...queryObj,
+  });
+
+  console.log(error);
 
   return (
-    <PropertyList
-      properties={properties}
-      totalPages={totalPages}
-      currentPage={currentPage}
-      handlePageChange={handlePageChange}
-    />
+    <>
+      {isLoading && <h1>Loading</h1>}
+      <PropertyList
+        properties={data?.properties}
+        totalPages={data?.pagination?.total_pages ?? 0}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      />
+    </>
   );
 }
