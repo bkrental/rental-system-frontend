@@ -5,6 +5,7 @@ import { StringParam, useQueryParam } from "use-query-params";
 import PriceSelect from "./PriceSelect";
 import PropertyTypeSelect from "./PropertyTypeSelect";
 import "./SearchBar.scss";
+import AreaSelect from "./AreaSelect";
 
 export default function SearchBar() {
   const [keyword, setKeyword] = useQueryParam("q", StringParam);
@@ -21,6 +22,7 @@ export default function SearchBar() {
 
       <PropertyTypeSelect />
       <PriceSelect />
+      <AreaSelect />
     </Stack>
   );
 }
