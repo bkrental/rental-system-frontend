@@ -2,17 +2,7 @@ import { CropFreeOutlined, GradeOutlined } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShowerOutlinedIcon from "@mui/icons-material/ShowerOutlined";
 import SingleBedOutlinedIcon from "@mui/icons-material/SingleBedOutlined";
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Chip,
-  Divider,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Card, CardContent, CardHeader, Chip, Divider, IconButton, Typography } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import { deepOrange } from "@mui/material/colors";
 import Link from "next/link";
@@ -26,19 +16,7 @@ const lineTruncate = (line = 1) => ({
 });
 
 export default function PropertyCard({
-  property: {
-    _id,
-    address,
-    name,
-    description,
-    price,
-    area,
-    thumbnail,
-    owner,
-    bedrooms,
-    bathrooms,
-    property_type,
-  },
+  property: { _id, address, name, description, price, area, thumbnail, owner, bedrooms, bathrooms, property_type },
 }) {
   bedrooms = 1;
   bathrooms = 1;
@@ -48,19 +26,10 @@ export default function PropertyCard({
 
   return (
     <Card variant="outlined" sx={{ maxWidth: 390 }} key={_id}>
-      <CardMedia
-        image={thumbnail}
-        sx={{ width: "100%", height: 230, objectFit: "contain" }}
-        title={name}
-      />
+      <CardMedia image={thumbnail} sx={{ width: "100%", height: 230, objectFit: "contain" }} title={name} />
       <CardContent>
         <Box display="flex" mb={1} gap={1}>
-          <Chip
-            size="small"
-            icon={<GradeOutlined />}
-            label="Tin mới"
-            color="blue"
-          />
+          <Chip size="small" icon={<GradeOutlined />} label="Tin mới" color="blue" />
           <Chip size="small" label="Phòng trọ" />
         </Box>
         <Typography
@@ -80,12 +49,7 @@ export default function PropertyCard({
         >
           {formatAddress(address)}
         </Typography>
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: 600, fontSize: "1.25rem" }}
-          color="primary"
-          gutterBottom
-        >
+        <Typography variant="body1" sx={{ fontWeight: 600, fontSize: "1.25rem" }} color="primary" gutterBottom>
           {price + " triệu/tháng"}
         </Typography>
         <Box display="flex" alignItems="center" gap={3} mb={1}>

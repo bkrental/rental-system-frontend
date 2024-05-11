@@ -1,8 +1,6 @@
-import getProperties from "@/actions/getProperties";
-import PropertyList from "@/components/PropertyList";
+"use client";
+import GetPropertiesPage from "@/components/GetPropertiesPage";
 
-export default async function RentPage({ searchParams }) {
-  const properties = await getProperties(searchParams);
-
-  return <PropertyList properties={properties} />;
+export default function BuyPage() {
+  return <GetPropertiesPage transaction_type="rent" />;
 }
