@@ -40,33 +40,19 @@ function LoginPage() {
         {({ isSubmitting, errors }) => (
           <Form className="auth_form">
             <Field
-              className={clsx(
-                "auth_form-input",
-                errors.phone && "auth_form-input--error"
-              )}
+              className={clsx("auth_form-input", errors.phone && "auth_form-input--error")}
               type="phone"
               name="phone"
               placeholder="Phone Number*"
             />
-            <ErrorMessage
-              className="auth_form-message auth_form-message--error"
-              name="phone"
-              component="p"
-            />
+            <ErrorMessage className="auth_form-message auth_form-message--error" name="phone" component="p" />
             <Field
-              className={clsx(
-                "auth_form-input",
-                errors.password && "auth_form-input--error"
-              )}
+              className={clsx("auth_form-input", errors.password && "auth_form-input--error")}
               type="password"
               name="password"
               placeholder="Password*"
             />
-            <ErrorMessage
-              className="auth_form-message auth_form-message--error"
-              name="password"
-              component="p"
-            />
+            <ErrorMessage className="auth_form-message auth_form-message--error" name="password" component="p" />
             <AuthSubmitButton loading={isSubmitting}>Login</AuthSubmitButton>
           </Form>
         )}
@@ -76,9 +62,7 @@ function LoginPage() {
       </Link>
       <div className="auth_form-seperator"></div>
       <Link href="/signup">
-        <button className="btn btn-default-success btn-xl">
-          Create new account
-        </button>
+        <button className="btn btn-default-success btn-xl">Create new account</button>
       </Link>
     </div>
   );

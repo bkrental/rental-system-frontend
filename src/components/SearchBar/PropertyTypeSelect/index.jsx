@@ -1,18 +1,8 @@
-import React, { useCallback, useMemo, useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  OutlinedInput,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  useMediaQuery,
-} from "@mui/material";
 import { PROPERTY_TYPES } from "@/constants/propertyTypes";
-import { ArrayParam, StringParam, useQueryParam, withDefault } from "use-query-params";
-import { useSearchParams } from "next/navigation";
+import { Checkbox, FormControl, ListItemText, MenuItem, OutlinedInput, Select } from "@mui/material";
 import _ from "lodash";
+import { useMemo } from "react";
+import { ArrayParam, useQueryParam, withDefault } from "use-query-params";
 
 const ITEM_HEIGHT = 42;
 const ITEM_PADDING_TOP = 40;
@@ -30,9 +20,6 @@ const PropertyTypeSelect = () => {
   const propertyTypes = useMemo(() =>
     propertyTypesQuery ? _.intersection(Object.keys(PROPERTY_TYPES), propertyTypesQuery) : []
   );
-  // const searchParam = useSearchParams();
-  // const [propertyTypes, setPropertyTypes] = useState(searchParam.get("pt") ?? []);
-  // const [_, setPropertyTypeQuery] = useQueryParam("pt", withDefault(StringParam, ""));
 
   const handleChange = (e) => {
     const propertyTypes = e.target.value;

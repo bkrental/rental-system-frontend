@@ -1,6 +1,7 @@
 import Image from "next/image";
 import banner from "@public/auth-banner.svg";
 import "@scss/authentication.scss";
+import { Suspense } from "react";
 
 export default function AuthLayout({ children }) {
   return (
@@ -9,7 +10,9 @@ export default function AuthLayout({ children }) {
         <Image priority={true} src={banner} alt="banner" />
       </div>
 
-      <div className="auth_content">{children}</div>
+      <div className="auth_content">
+        <Suspense>{children}</Suspense>
+      </div>
     </div>
   );
 }

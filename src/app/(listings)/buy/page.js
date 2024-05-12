@@ -1,6 +1,9 @@
-"use client";
-import GetPropertiesPage from "@/components/GetPropertiesPage";
+import dynamic from "next/dynamic";
+
+const PropertiesPage = dynamic(() => import("@/components/GetPropertiesPage"), {
+  ssr: false,
+});
 
 export default function BuyPage() {
-  return <GetPropertiesPage transaction_type="buy" />;
+  return <PropertiesPage transaction_type="buy" />;
 }

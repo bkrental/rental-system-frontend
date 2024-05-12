@@ -3,11 +3,12 @@ import PropertyList from "./components/PropertyList";
 import useGetPropertyTypes from "@/hooks/useGetPropertyTypes";
 import { useGetPropertiesQuery } from "@/redux/features/properties/propertyApi";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import Map from "@/components/GetPropertiesPage/components/Map";
 import { Box, styled } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import FullscreenLoading from "../FullscreenLoading";
 
 const MapContainer = styled(Box)(({ theme }) => ({
   position: "sticky",
@@ -25,7 +26,7 @@ export default function GetPropertiesPage({ transaction_type = "rent" }) {
 
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0 });
+    // window.scrollTo({ top: 0 });
   };
 
   const searchParam = useSearchParams();
@@ -68,13 +69,16 @@ export default function GetPropertiesPage({ transaction_type = "rent" }) {
   return (
     <Grid container>
       <Grid xs={12} sm={6} md={7}>
-        {isLoading && <h1>Loading</h1>}
-        <PropertyList
-          properties={data?.properties}
-          totalPages={data?.pagination?.total_pages ?? 0}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
+        {isLoading ? (
+          <FullscreenLoading loading={isLoading} />
+        ) : (
+          <PropertyList
+            properties={data?.properties}
+            totalPages={data?.pagination?.total_pages ?? 0}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
+        )}
       </Grid>
       <Grid xs={12} sm={6} md={5} sx={{ position: "relative" }}>
         <MapContainer>
