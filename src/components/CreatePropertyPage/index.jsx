@@ -1,7 +1,7 @@
 "use client";
 import { initialSteps } from "@/redux/features/createPostSlice";
 import { getCurrentStep, getSteps } from "@/redux/selectors";
-import { Box, Container, Typography, Zoom } from "@mui/material";
+import { Box, Container, Typography, Zoom, Stack } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PostDescriptionForm from "./PostDescriptionForm";
@@ -31,8 +31,7 @@ const CREATE_PROPERTY_STEPS = [
   },
   {
     title: "Let's give your post a title!",
-    description:
-      "Short titles work best. Have fun with it—you can always change it later.",
+    description: "Short titles work best. Have fun with it—you can always change it later.",
     Component: PostTitleForm,
   },
   {
@@ -43,8 +42,7 @@ const CREATE_PROPERTY_STEPS = [
   },
   {
     title: "Add some photos of your property",
-    description:
-      "You'll need 5 photos to get started. You can add more or make changes later.",
+    description: "You'll need 5 photos to get started. You can add more or make changes later.",
     Component: UploadImagesForm,
   },
   {
@@ -65,32 +63,31 @@ export default function CreatePropertyPage() {
   }, []);
 
   return (
-    <Container>
-      <Box pb={6}>
-        {CREATE_PROPERTY_STEPS.map(
-          ({ Component, title, description }, index) => (
-            <Zoom
-              in={currentStep === index}
-              key={Component.name}
-              sx={{ display: currentStep === index ? "block" : "none" }}
-              unmountOnExit
-            >
-              <Container maxWidth="md">
-                <Typography component="h1" variant="h4" mt={4}>
-                  {title}
-                </Typography>
-                <Typography variant="subtitle2" pb={3} pt={1}>
-                  {description}
-                </Typography>
-                <Component />
-              </Container>
-            </Zoom>
-          )
-        )}
+    <Stack direction="column" sx={{ width: "100%", height: "calc(100vh - 60px)", overflow: "auto" }}>
+      <Box>
+        {CREATE_PROPERTY_STEPS.map(({ Component, title, description }, index) => (
+          <Zoom
+            in={currentStep === index}
+            key={Component.name}
+            sx={{ display: currentStep === index ? "block" : "none" }}
+            unmountOnExit
+          >
+            <Container maxWidth="md">
+              <Typography component="h1" variant="h4" mt={4}>
+                {title}
+              </Typography>
+              <Typography variant="subtitle2" pb={3} pt={1}>
+                {description}
+              </Typography>
+              <Component />
+            </Container>
+          </Zoom>
+        ))}
       </Box>
 
+      <Box sx={{ flex: 1 }}></Box>
+
       <ProgressBar steps={steps} currentStep={currentStep} />
-      <Box height="50px"></Box>
-    </Container>
+    </Stack>
   );
 }

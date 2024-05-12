@@ -1,21 +1,8 @@
 "use client";
 import { useCreatePostMutation } from "@/redux/features/createPost/createPostApi";
-import {
-  setArea,
-  setBathrooms,
-  setBedrooms,
-  setIsStepCompleted,
-} from "@/redux/features/createPostSlice";
+import { setArea, setBathrooms, setBedrooms, setIsStepCompleted } from "@/redux/features/createPostSlice";
 import FullscreenLoading from "@components/FullscreenLoading";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { isNumber } from "lodash";
 import { useRouter } from "next/navigation";
@@ -54,6 +41,7 @@ export default function PropertyDetailsForm() {
           ward: createPostData?.address?.compound?.commune ?? "unknown",
           street: createPostData?.address?.street ?? "unknown",
         },
+        displayed_address: createPostData?.displayedAddress,
         location: {
           type: "Point",
           coordinates: createPostData?.location,
@@ -80,11 +68,7 @@ export default function PropertyDetailsForm() {
   }, []);
 
   useEffect(() => {
-    if (
-      isNumber(bedrooms * 1) &&
-      isNumber(bathrooms * 1) &&
-      isNumber(area * 1)
-    ) {
+    if (isNumber(bedrooms * 1) && isNumber(bathrooms * 1) && isNumber(area * 1)) {
       dispatch(setIsStepCompleted(true));
     } else {
       dispatch(setIsStepCompleted(false));
@@ -123,21 +107,14 @@ export default function PropertyDetailsForm() {
 
       <FullscreenLoading loading={loading} />
 
-      <Dialog
-        open={isErrorPopupOpen}
-        onClose={() => setIsErrorPopupOpen(false)}
-      >
+      <Dialog open={isErrorPopupOpen} onClose={() => setIsErrorPopupOpen(false)}>
         <DialogTitle>Fail to create the property</DialogTitle>
         <DialogContent>
           <DialogContentText>{error}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => router.push("/")}>Back to home</Button>
-          <Button
-            variant="contained"
-            onClick={() => setIsErrorPopupOpen(false)}
-            color="primary"
-          >
+          <Button variant="contained" onClick={() => setIsErrorPopupOpen(false)} color="primary">
             Try again
           </Button>
         </DialogActions>

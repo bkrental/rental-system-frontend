@@ -1,21 +1,8 @@
 "use client";
 import Map from "@/components/Map/Map";
 import usePlaceAutocomplete from "@/hooks/usePlaceAutocomplete";
-import {
-  setAddress,
-  setIsStepCompleted,
-  setLocation,
-} from "@/redux/features/createPostSlice";
-import {
-  Autocomplete,
-  Box,
-  Divider,
-  Fade,
-  FormHelperText,
-  InputLabel,
-  styled,
-  TextField,
-} from "@mui/material";
+import { setAddress, setDisplayedAddress, setIsStepCompleted, setLocation } from "@/redux/features/createPostSlice";
+import { Autocomplete, Box, Divider, Fade, FormHelperText, InputLabel, styled, TextField } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { isNull } from "lodash";
 import { useEffect } from "react";
@@ -33,6 +20,7 @@ export default function PropertyAddressForm() {
   const dispatch = useDispatch();
   const address = useSelector((s) => s.createPost.address);
   const location = useSelector((s) => s.createPost.location);
+  const displayedAddress = useSelector((s) => s.createPost.displayedAddress);
   const [addressInput, setAddressInput, suggestions] = usePlaceAutocomplete();
 
   const handleAddressChange = (_, address) => {
@@ -49,6 +37,7 @@ export default function PropertyAddressForm() {
     };
 
     if (address?.place_id) {
+      dispatch(setDisplayedAddress(address.description));
       getLocation(address.place_id)
         .then((location) => {
           const { lng, lat } = location;
@@ -72,9 +61,7 @@ export default function PropertyAddressForm() {
 
   return (
     <Box position="relative">
-      <CustomInputLabel htmlFor="address-autocomplete">
-        Address Quick Search
-      </CustomInputLabel>
+      <CustomInputLabel htmlFor="address-autocomplete">Address Quick Search</CustomInputLabel>
       <Autocomplete
         size="small"
         id="address-autocomplete"
@@ -89,32 +76,26 @@ export default function PropertyAddressForm() {
         }}
         options={suggestions}
         getOptionLabel={(option) => option.description}
-        isOptionEqualToValue={(option, value) =>
-          option.place_id === value.place_id
-        }
+        isOptionEqualToValue={(option, value) => option.place_id === value.place_id}
         renderInput={(params) => <TextField {...params} variant="outlined" />}
       />
       <FormHelperText id="address-autocomplete-helper">
-        The address infromation below is automatically generated based on your
-        search result
+        The address infromation below is automatically generated based on your search result
       </FormHelperText>
 
       <Fade in={!isNull(address)}>
         <Box mt={2}>
-          <CustomInputLabel htmlFor="display-address">
-            Display address
-          </CustomInputLabel>
+          <CustomInputLabel htmlFor="display-address">Display address</CustomInputLabel>
           <TextField
             id="display-address"
             size="small"
             hiddenLabel
             variant="outlined"
-            value={address?.description ?? ""}
+            value={displayedAddress}
+            onChange={(e) => dispatch(setDisplayedAddress(e.target.value))}
             fullWidth
           />
-          <FormHelperText>
-            This is the address that will be displayed to the tenants
-          </FormHelperText>
+          <FormHelperText>This is the address that will be displayed to the tenants</FormHelperText>
 
           <Divider sx={{ mt: 2 }} />
           <Box height="500px" width="100%" mt={2} pb={4}>

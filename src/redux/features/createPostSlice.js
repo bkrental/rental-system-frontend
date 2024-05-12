@@ -12,6 +12,7 @@ const createPostSlice = createSlice({
     addressId: null,
 
     address: null,
+    displayedAddress: "",
     location: null,
 
     title: "",
@@ -22,7 +23,7 @@ const createPostSlice = createSlice({
     bedrooms: 0,
     bathrooms: 0,
     area: 0,
-    price: 0
+    price: 0,
   },
   reducers: {
     initialSteps: (state, action) => {
@@ -54,6 +55,9 @@ const createPostSlice = createSlice({
     setAddress: (state, action) => {
       state.address = action.payload;
     },
+    setDisplayedAddress: (state, action) => {
+      state.displayedAddress = action.payload;
+    },
     setLocation: (state, action) => {
       state.location = action.payload;
     },
@@ -75,9 +79,7 @@ const createPostSlice = createSlice({
     },
 
     removeSingleImage: (state, action) => {
-      state.images = state.images.filter(
-        (image) => image.id !== action.payload
-      );
+      state.images = state.images.filter((image) => image.id !== action.payload);
     },
 
     addMultipleImages: (state, action) => {
@@ -117,5 +119,6 @@ export const {
   setArea,
   setBedrooms,
   setBathrooms,
+  setDisplayedAddress,
 } = createPostSlice.actions;
 export default createPostSlice.reducer;

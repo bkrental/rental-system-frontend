@@ -15,12 +15,11 @@ const CustomLinearProgress = styled(LinearProgress)(() => ({
 }));
 
 const Container = styled(Box)(() => ({
-  position: "fixed",
+  position: "sticky",
   bottom: 0,
   left: 0,
-  right: 0,
-  backgroundColor: "#fff",
-  zIndex: 2,
+  righkgroundColor: "#fff",
+  zIndex: 1000,
 }));
 
 export default function ProgressBar({ currentStep, steps }) {

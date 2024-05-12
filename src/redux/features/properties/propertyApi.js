@@ -1,3 +1,4 @@
+import { transformPropertiesResponse } from "@/redux/transform";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const propertyApi = createApi({
@@ -9,10 +10,7 @@ export const propertyApi = createApi({
         url: "/posts",
         params: { ...queryObject },
       }),
-      transformResponse: (response) => ({
-        properties: response?.data,
-        pagination: response?.pagination,
-      }),
+      transformResponse: transformPropertiesResponse,
     }),
   }),
 });
