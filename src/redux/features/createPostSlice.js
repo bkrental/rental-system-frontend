@@ -18,6 +18,11 @@ const createPostSlice = createSlice({
     description: "",
 
     images: [],
+
+    bedrooms: 0,
+    bathrooms: 0,
+    area: 0,
+    price: 0
   },
   reducers: {
     initialSteps: (state, action) => {
@@ -78,6 +83,18 @@ const createPostSlice = createSlice({
     addMultipleImages: (state, action) => {
       state.images = [...state.images, ...action.payload];
     },
+
+    setBedrooms: (state, action) => {
+      state.bedrooms = action.payload;
+    },
+
+    setBathrooms: (state, action) => {
+      state.bathrooms = action.payload;
+    },
+
+    setArea: (state, action) => {
+      state.area = action.payload;
+    },
   },
 });
 
@@ -97,5 +114,8 @@ export const {
   addSingleImage,
   addMultipleImages,
   removeSingleImage,
+  setArea,
+  setBedrooms,
+  setBathrooms,
 } = createPostSlice.actions;
 export default createPostSlice.reducer;

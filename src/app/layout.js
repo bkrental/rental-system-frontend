@@ -1,8 +1,7 @@
-import Header from "@/components/Header/Header";
-import StoreProvider from "@app/StoreProvider";
-import ThemeProvider from "@app/ThemeProvider";
-import { Roboto } from "next/font/google";
+import Header from "@/components/Header";
+import AppProviders from "@/app/AppProviders";
 import "@scss/_global.scss";
+import { Roboto } from "next/font/google";
 
 export const metadata = {
   title: "BKrental",
@@ -18,18 +17,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link
-          href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js/dist/goong-js.css"
-          rel="stylesheet"
-        ></link>
+        <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js/dist/goong-js.css" rel="stylesheet"></link>
       </head>
       <body suppressHydrationWarning={true} className={roboto.className}>
-        <ThemeProvider>
-          <StoreProvider>
-            <Header />
-            {children}
-          </StoreProvider>
-        </ThemeProvider>
+        <AppProviders>
+          <Header />
+          {children}
+        </AppProviders>
       </body>
     </html>
   );

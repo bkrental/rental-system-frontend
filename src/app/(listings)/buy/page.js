@@ -1,8 +1,9 @@
-import getProperties from "@/actions/getProperties";
-import PropertyList from "@/components/Property/PropertyList";
+import dynamic from "next/dynamic";
 
-export default async function BuyPage() {
-  const properties = await getProperties({ transaction_type: "sale" });
+const PropertiesPage = dynamic(() => import("@/components/GetPropertiesPage"), {
+  ssr: false,
+});
 
-  return <PropertyList properties={properties} />;
+export default function BuyPage() {
+  return <PropertiesPage transaction_type="buy" />;
 }

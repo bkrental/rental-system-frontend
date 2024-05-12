@@ -1,10 +1,10 @@
-import { addImages, addSingleImage } from "@/redux/features/createPostSlice";
+import { addSingleImage } from "@/redux/features/createPostSlice";
 import { DeleteOutline } from "@mui/icons-material";
 import { Box, IconButton, styled } from "@mui/material";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import LoadingOverlay from "./LoadingOverlay";
+import { LoadingOverlay, UploadErrorOverlay } from "./ImageOverlay";
 
 const ImageWrapper = styled(Box)(() => ({
   position: "relative",
@@ -22,6 +22,7 @@ const ImageWrapper = styled(Box)(() => ({
 export default function PreviewImage({ image, onRemove }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function uploadImage() {
@@ -31,16 +32,24 @@ export default function PreviewImage({ image, onRemove }) {
       formData.append("file", image.data);
 
       setLoading(true);
-      const response = await fetch("http://localhost:5002/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
+      try {
+        const response = await fetch("http://localhost:5002/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
 
-      console.log(data);
+        console.log(data);
 
-      dispatch(addSingleImage({ id: image.id, url: data.url, uploaded: true }));
-      setLoading(false);
+        dispatch(
+          addSingleImage({ id: image.id, url: data.url, uploaded: true })
+        );
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setError("Failed to upload image" + image.name);
+        setLoading(false);
+      }
     }
 
     uploadImage();
@@ -63,11 +72,13 @@ export default function PreviewImage({ image, onRemove }) {
         aria-label="remove"
         onClick={onRemove}
         size="large"
-        sx={{ position: "absolute", top: 5, right: 5 }}
+        sx={{ position: "absolute", top: 5, right: 5, zIndex: 20 }}
       >
         <DeleteOutline />
       </IconButton>
-      {loading && <LoadingOverlay />}
+
+      <LoadingOverlay loading={loading} />
+      <UploadErrorOverlay error={error} />
     </ImageWrapper>
   );
 }

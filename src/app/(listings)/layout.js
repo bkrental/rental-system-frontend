@@ -1,24 +1,14 @@
 "use client";
 import SearchBar from "@/components/SearchBar";
-import SideBar from "@/components/SideBar";
-import { Container } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import { Box, Container } from "@mui/material";
 
 export default function PropertyLayout({ children }) {
   return (
-    <Container sx={{ mt: 2 }}>
-      <Grid container spacing={2} columns={10}>
-        <Grid item xs={10}>
-          <SearchBar />
-        </Grid>
+    <Container maxWidth="xl" sx={{ position: "relative", mt: 2 }}>
+      <SearchBar />
+      <Box height={50}></Box>
 
-        <Grid item xs={7}>
-          {children}
-        </Grid>
-        <Grid item xs={3}>
-          <SideBar />
-        </Grid>
-      </Grid>
+      {children}
     </Container>
   );
 }

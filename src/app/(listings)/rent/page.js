@@ -1,9 +1,15 @@
-import getProperties from "@/actions/getProperties";
-import PropertyList from "@/components/Property/PropertyList";
-import { getPropertiesWithQueryString } from "@/actions/getProperties";
+import FullscreenLoading from "@/components/FullscreenLoading";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
-export default async function RentPage({ searchParams }) {
-  const properties = await getProperties(searchParams);
+const PropertiesPage = dynamic(() => import("@/components/GetPropertiesPage"), {
+  ssr: false,
+});
 
-  return <PropertyList properties={properties} />;
+export default function RentPage() {
+  return (
+    <Suspense fallback={<FullscreenLoading loading={true} />}>
+      <PropertiesPage transaction_type="rent" />;
+    </Suspense>
+  );
 }
