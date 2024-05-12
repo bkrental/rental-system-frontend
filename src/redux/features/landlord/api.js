@@ -7,12 +7,20 @@ export const landlordApi = createApi({
   baseQuery: baseQueryWithAuth,
   endpoints: (builder) => ({
     getMyProperties: builder.query({
-      query: () => ({
+      query: (queryObject) => ({
         url: "/posts/me",
+        params: { ...queryObject },
       }),
       transformResponse: transformPropertiesResponse,
+    }),
+
+    deletePost: builder.mutation({
+      query: (postId) => ({
+        url: `/posts/${postId}`,
+        method: "DELETE",
+      }),
     }),
   }),
 });
 
-export const { useGetMyPropertiesQuery } = landlordApi;
+export const { useGetMyPropertiesQuery, useDeletePostMutation } = landlordApi;

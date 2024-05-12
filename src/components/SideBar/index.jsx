@@ -28,8 +28,8 @@ const postManagementGroup = {
   title: "Post Management",
   icon: <FormatListBulletedOutlined />,
   options: [
+    { text: "View all posts", url: "/landlord" },
     { text: "Create new post", url: "/landlord/publish" },
-    { text: "View all posts", url: "/landlord/posts" },
     { text: "View pending posts", url: "/landlord/pending" },
   ],
 };

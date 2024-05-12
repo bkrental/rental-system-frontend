@@ -2,7 +2,6 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import ClipLoader from "react-spinners/ClipLoader";
 
 export default function PrivateRoute(Component) {
   return function ProtectedComponent(props) {

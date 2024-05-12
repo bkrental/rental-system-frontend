@@ -22,9 +22,9 @@ const authSlice = createSlice({
 
     removeUserInfo: (state, action) => {
       localStorage.removeItem("accessToken"); // Remove user from localStorage
+      state.isAuthenticated = false;
       state.user = null;
       state.accessToken = null;
-      state.isAuthenticated = false;
     },
   },
 });
