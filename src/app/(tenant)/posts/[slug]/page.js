@@ -58,7 +58,7 @@ export default async function PostDetailPage({ params }) {
             Back to Search
           </Link>
         </div>
-        <h1 className="posts_title">{post.name}</h1>
+        <h1 className="posts_title">{post?.name}</h1>
         <p className="posts_address">{formatAddress(post.address)}</p>
         <div className="posts_gallery">
           <PropertyImage src={post.thumbnail} />
@@ -112,9 +112,7 @@ export default async function PostDetailPage({ params }) {
               <h4>See on map</h4>
               <p>{formatAddress(post.address)}</p>
 
-              {post?.location?.coordinates && (
-                <Map center={post?.location?.coordinates} />
-              )}
+              {post?.location?.coordinates && <Map center={post?.location?.coordinates} />}
             </div>
           </div>
           {/* RIGHT */}
