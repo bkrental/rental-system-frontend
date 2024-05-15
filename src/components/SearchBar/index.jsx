@@ -10,7 +10,7 @@ import AddressInput from "./AddressInput";
 
 const SearchBarContainer = styled(Stack)(({ theme }) => ({
   position: "fixed",
-  top: 60,
+  top: 70,
   flexDirection: "row",
   paddingBottom: theme.spacing(2),
   zIndex: 100,

@@ -5,29 +5,29 @@ const authSlice = createSlice({
   initialState: {
     accessToken: null,
     user: null,
-    isAuth: false,
+    isAuthenticated: false,
   },
   reducers: {
-    setUserInfo: (state, action) => {
-      console.log("setUserInfo payload", action.payload);
-      localStorage.setItem(
-        "accessToken",
-        JSON.stringify(action.payload.access_token)
-      );
-
-      state.user = action.payload.user;
+    loginSuccess: (state, action) => {
       state.accessToken = action.payload.access_token;
-      state.isAuth = true;
-      console.log("current:", current(state));
+      state.user = action.payload.user;
+      state.isAuthenticated = true;
     },
+
+    setUserInfo: (state, action) => {
+      state.accessToken = action.payload.access_token;
+      state.user = action.payload.user;
+      state.isAuthenticated = true;
+    },
+
     removeUserInfo: (state, action) => {
       localStorage.removeItem("accessToken"); // Remove user from localStorage
+      state.isAuthenticated = false;
       state.user = null;
       state.accessToken = null;
-      state.isAuth = false;
     },
   },
 });
 
-export const { setUserInfo, removeUserInfo } = authSlice.actions;
+export const { setUserInfo, removeUserInfo, loginSuccess } = authSlice.actions;
 export default authSlice.reducer;

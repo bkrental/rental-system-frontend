@@ -1,24 +1,20 @@
 "use client";
-
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import ClipLoader from "react-spinners/ClipLoader";
 
 export default function PrivateRoute(Component) {
   return function ProtectedComponent(props) {
     const router = useRouter();
     const pathname = usePathname();
-    const accessToken = useSelector((state) => state.auth.accessToken);
+    const [loading, setLoading] = useState(true);
+    const isAuthenticated = useSelector((s) => s.auth.isAuthenticated);
 
     useEffect(() => {
-      if (!accessToken) {
+      if (!isAuthenticated) {
         router.replace(`/login?returnURL=${pathname}`);
       }
-    }, [accessToken, pathname, router]);
-
-    if (!accessToken)
-      return <ClipLoader loading={true} color="#fff" size={20} />;
+    }, [isAuthenticated, router, pathname]);
 
     return <Component {...props} />;
   };

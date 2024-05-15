@@ -3,7 +3,7 @@ import Link from "next/link";
 import AuthSubmitButton from "@/components/AuthSubmitButton";
 import useRedirectBack from "@/hooks/useRedirectBack";
 import { useLoginMutation } from "@/redux/features/auth/authApiSlice";
-import { setUserInfo } from "@/redux/features/auth/authSlice";
+import { loginSuccess, setUserInfo } from "@/redux/features/auth/authSlice";
 import "@scss/authentication.scss";
 import clsx from "clsx";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -20,7 +20,7 @@ function LoginPage() {
       const response = await login(values).unwrap();
       setSubmitting(false);
 
-      dispatch(setUserInfo(response.data));
+      dispatch(loginSuccess(response.data));
       redirect();
     } catch (error) {
       console.log(error);

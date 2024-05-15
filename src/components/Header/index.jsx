@@ -2,7 +2,7 @@
 import NextLink from "next/link";
 import { useSelector } from "react-redux";
 // import HeaderLink from "./HeaderLink";
-import { Avatar, Box, Button, Link, Stack, styled, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, Link, Stack, styled, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
@@ -14,21 +14,16 @@ const HeaderLink = ({ children, ...props }) => (
   </Link>
 );
 
-const HeaderWrapper = styled(Stack)(({ theme }) => ({
+const HeaderWrapper = styled((props) => <Container maxWidth="xl" {...props} />)(({ theme }) => ({
   height: "60px",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: theme.spacing(4),
-  paddingTop: 0,
-  paddingBottom: 0,
   position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
   zIndex: 1000,
   backgroundColor: "white",
+  boxShadow: "rgba(239, 108, 0, 0.1) 0px 0px 10px 0px",
 }));
 
 function Header() {
@@ -62,7 +57,7 @@ function Header() {
         </Stack>
 
         <Stack direction="row" spacing={1}>
-          <Button onClick={() => router.push("/landlord/publish")} size="large" color="inherit">
+          <Button onClick={() => router.push("/landlord")} size="large" color="inherit">
             Post a property
           </Button>
 

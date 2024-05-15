@@ -5,5 +5,5 @@ const PropertiesPage = dynamic(() => import("@/components/GetPropertiesPage"), {
 });
 
 export default function BuyPage() {
-  return <PropertiesPage transaction_type="buy" />;
+  return <PropertiesPage transaction_type="sale" />;
 }

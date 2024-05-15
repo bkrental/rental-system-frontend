@@ -168,3 +168,11 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.titleCell {
+  white-space: normal;
+  line-height: 1.5; /* Example of increasing line height */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px 0;
+}
