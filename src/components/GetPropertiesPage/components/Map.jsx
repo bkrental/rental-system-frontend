@@ -83,6 +83,7 @@ const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
     const bounds = getCircleBoudingBox([lng, lat], 3);
     map.fitBounds(bounds, {
       padding: 0,
+      animate: false,
     });
 
     const markers = markerList.map((property) => {

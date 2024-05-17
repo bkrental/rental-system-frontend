@@ -61,10 +61,11 @@ export default function PropertyCard({
             <ShowerOutlinedIcon sx={{ fontSize: 20, marginRight: 0.5 }} />
             <Typography variant="body1">{`${bathrooms} wc`}</Typography>
           </Box>
+
           <Box display="flex" alignItems="center">
             <CropFreeOutlined sx={{ fontSize: 20, marginRight: 0.5 }} />
             <Typography variant="body1">
-              {area + "m"}
+              {(area ?? "624") + "m"}
               <sup>2</sup>
             </Typography>
           </Box>

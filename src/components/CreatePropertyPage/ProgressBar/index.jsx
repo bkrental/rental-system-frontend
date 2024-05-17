@@ -18,7 +18,7 @@ const Container = styled(Box)(() => ({
   position: "sticky",
   bottom: 0,
   left: 0,
-  righkgroundColor: "#fff",
+  backgroundColor: "#fff",
   zIndex: 1000,
 }));
 
