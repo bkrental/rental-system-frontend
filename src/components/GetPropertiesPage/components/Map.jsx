@@ -5,6 +5,7 @@ import { circle } from "@turf/turf";
 import polyline from "@mapbox/polyline";
 import calculateBoundsForRoute from "@/utils/getRouteBoundary";
 import getPopupContent from "@/utils/getPopupContent";
+import getCircleBoudingBox from "@/utils/getCircleBoundingBox";
 
 const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
   const [lng, lat] = center;
@@ -27,7 +28,6 @@ const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
   useEffect(() => {
     if (!selected) return;
 
-    console.log(selected);
     const destinationCoordinates = `${selected.coordinates[1]},${selected.coordinates[0]}`;
     const url = `/api/direction?origin=${lat},${lng}&destination=${destinationCoordinates}`;
     fetch(url)
@@ -78,9 +78,12 @@ const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
       container: mapContainerRef.current,
       style: "https://tiles.goong.io/assets/goong_light_v2.json",
       center: [lng, lat],
-      zoom: 12,
     });
     setMapInstance(map);
+    const bounds = getCircleBoudingBox([lng, lat], 3);
+    map.fitBounds(bounds, {
+      padding: 0,
+    });
 
     const markers = markerList.map((property) => {
       let hovered = false;
@@ -116,7 +119,7 @@ const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
 
     map.on("load", function () {
       const center = [lng, lat]; // Replace with the center coordinates for your circle
-      const radius = 5; // radius of the circle in kilometers
+      const radius = 3; // radius of the circle in kilometers
       const options = { steps: 80, units: "kilometers" };
       const circleGeoJSON = circle(center, radius, options);
 

@@ -6,7 +6,7 @@ export default function PropertyLayout({ children }) {
   return (
     <Container maxWidth="xl" sx={{ position: "relative", mt: 2 }}>
       <SearchBar />
-      <Box height={50}></Box>
+      <Box height={60}></Box>
 
       {children}
     </Container>
