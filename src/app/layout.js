@@ -16,9 +16,6 @@ const roboto = Roboto({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js/dist/goong-js.css" rel="stylesheet"></link>
-      </head>
       <body suppressHydrationWarning={true} className={roboto.className}>
         <AppProviders>
           <Header />
