@@ -57,12 +57,8 @@ function LoginPage() {
           </Form>
         )}
       </Formik>
-      <Link href="/" className="auth_form-message--forgot-password">
-        Forgotten password?
-      </Link>
-      <div className="auth_form-seperator"></div>
       <Link href="/signup">
-        <button className="btn btn-default-success btn-xl">Create new account</button>
+        <button className="btn btn-default-success btn-x1">Create new account</button>
       </Link>
     </div>
   );

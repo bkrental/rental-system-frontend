@@ -63,10 +63,10 @@ export default function SideBar() {
         <Avatar src="/path-to-avatar.jpg" sx={{ width: 48, height: 48 }} />
         <Box>
           <Typography variant="h6" component="p" sx={{ fontSize: 16, lineHeight: 1 }}>
-            {user.name}
+            {user?.name}
           </Typography>
           <Typography variant="caption" display="block">
-            {user.phone}
+            {user?.phone}
           </Typography>
         </Box>
       </Stack>

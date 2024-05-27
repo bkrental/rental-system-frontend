@@ -131,3 +131,10 @@
     }
   }
 }
+
+.btn {
+  &:hover {
+    cursor: pointer;
+    background-color: darken($secondary-color, 5%);
+  }
+}

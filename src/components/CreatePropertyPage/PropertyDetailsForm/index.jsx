@@ -1,17 +1,35 @@
 "use client";
 import { useCreatePostMutation } from "@/redux/features/createPost/createPostApi";
-import { setArea, setBathrooms, setBedrooms, setIsStepCompleted } from "@/redux/features/createPostSlice";
+import {
+  setArea,
+  setBathrooms,
+  setBedrooms,
+  setIsStepCompleted,
+  setPrice,
+  setPriceSuggestion,
+} from "@/redux/features/createPostSlice";
 import FullscreenLoading from "@components/FullscreenLoading";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { isNumber } from "lodash";
+import { isNumber, debounce } from "lodash";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function PropertyDetailsForm() {
   const router = useRouter();
   const dispatch = useDispatch();
+  // const priceRental = useSelector((s) => s.createPost.price);
+  const priceSuggestion = useSelector((s) => s.createPost.priceSuggestion);
   const bedrooms = useSelector((s) => s.createPost.bedrooms);
   const bathrooms = useSelector((s) => s.createPost.bathrooms);
   const area = useSelector((s) => s.createPost.area);
@@ -20,6 +38,46 @@ export default function PropertyDetailsForm() {
   const [error, setError] = useState("");
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [createPost] = useCreatePostMutation();
+
+  const fetchPricePrediction = async () => {
+    setLoading(true);
+    let priceFormData = JSON.stringify({
+      province: createPostData?.address?.compound?.province ?? "unknown",
+      district: createPostData?.address?.compound?.district ?? "unknown",
+      ward: createPostData?.address?.compound?.commune ?? "unknown",
+      location_latitude: createPostData?.location[1],
+      location_longitude: createPostData?.location[0],
+      area: createPostData.area * 1,
+    });
+
+    console.log("fetchPricePrediction", priceFormData);
+
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_CRAWLER_PRICE_PREDICTION_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: priceFormData,
+      });
+      const data = await response.json();
+      const roundedPrice = (Math.round(data.price * 10) / 10) * 1000000;
+      setLoading(false);
+      dispatch(setPriceSuggestion(roundedPrice));
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+  const debounceFetchPricePrediction = useCallback(debounce(fetchPricePrediction, 1000), [area]);
+
+  useEffect(() => {
+    debounceFetchPricePrediction();
+    return () => {
+      debounceFetchPricePrediction.cancel();
+    };
+  }, [area]);
 
   useEffect(() => {
     const nextEventHandler = async (e) => {
@@ -48,6 +106,7 @@ export default function PropertyDetailsForm() {
         },
         bedrooms: createPostData.bedrooms * 1,
         bathrooms: createPostData.bathrooms * 1,
+        price: createPostData.price * 1,
       };
 
       try {
@@ -105,6 +164,18 @@ export default function PropertyDetailsForm() {
         />
       </Grid>
 
+      <Grid xs={12}>
+        <Tooltip title="This is a suggested price based on the area and the location of the property. You can change it if you want.">
+          <TextField
+            fullWidth
+            disabled={area == ("" || "0")}
+            placeholder={`Suggested price: ${priceSuggestion}`}
+            onChange={(e) => dispatch(setPrice(e.target.value))}
+            id="priceRental"
+            label="Property Price"
+          />
+        </Tooltip>
+      </Grid>
       <FullscreenLoading loading={loading} />
 
       <Dialog open={isErrorPopupOpen} onClose={() => setIsErrorPopupOpen(false)}>

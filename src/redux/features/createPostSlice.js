@@ -24,6 +24,7 @@ const createPostSlice = createSlice({
     bathrooms: 0,
     area: 0,
     price: 0,
+    priceSuggestion: 0,
   },
   reducers: {
     initialSteps: (state, action) => {
@@ -94,8 +95,16 @@ const createPostSlice = createSlice({
       state.bathrooms = action.payload;
     },
 
+    setPrice: (state, action) => {
+      state.price = action.payload;
+    },
+
     setArea: (state, action) => {
       state.area = action.payload;
+    },
+
+    setPriceSuggestion: (state, action) => {
+      state.priceSuggestion = action.payload;
     },
   },
 });
@@ -120,5 +129,7 @@ export const {
   setBedrooms,
   setBathrooms,
   setDisplayedAddress,
+  setPrice,
+  setPriceSuggestion,
 } = createPostSlice.actions;
 export default createPostSlice.reducer;
