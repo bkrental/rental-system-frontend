@@ -7,29 +7,40 @@ export default function AddressInput() {
   const [addressInput, setAddressInput, suggestions] = usePlaceAutocomplete();
   const [address, setAddress] = useState(null);
   const [location, setLocation] = useQueryParam("center", StringParam);
+  const [boundary, setBoundary] = useQueryParam("boundary", StringParam);
 
   const handleAddressChange = (_, address) => {
     setAddress(address);
   };
 
   useEffect(() => {
-    const getLocation = async (addressId) => {
-      const url = `/api/places/details?place_id=${addressId}`;
+    const getGeoData = async (address) => {
+      const url = `/api/geocoding?address=${address}`;
       const response = await fetch(url.toString());
       const data = await response.json();
-
-      return data?.result?.geometry?.location;
+      return data.results[0].geometry;
     };
 
     if (address?.place_id) {
-      getLocation(address.place_id)
-        .then((location) => {
+      getGeoData(address.description)
+        .then((geometry) => {
+          const { location, boundary } = geometry;
           const { lng, lat } = location;
           setLocation(`${lng},${lat}`);
+
+          if (boundary) {
+            setBoundary(boundary);
+          } else {
+            setBoundary(null);
+          }
         })
         .catch((e) => {
           dispatch(setLocation(null));
+          dispatch(setBoundary(null));
         });
+    } else {
+      setLocation(null);
+      setBoundary(null);
     }
   }, [address]);
 
