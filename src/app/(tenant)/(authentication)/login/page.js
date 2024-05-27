@@ -58,7 +58,7 @@ function LoginPage() {
         )}
       </Formik>
       <Link href="/signup">
-        <button className="btn btn-default-success btn-x1">Create new account</button>
+        <button className="btn btn-default-success btn-xl">Create new account</button>
       </Link>
     </div>
   );
