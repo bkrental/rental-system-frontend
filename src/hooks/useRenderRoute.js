@@ -23,6 +23,14 @@ export default function useRenderRoute(mapInstance, originCoord, destinationCoor
           padding: { top: 80, bottom: 80, left: 80, right: 80 },
         });
 
+        if (mapInstance.getLayer("route-layer")) {
+          mapInstance.removeLayer("route-layer");
+        }
+
+        if (mapInstance.getSource("route")) {
+          mapInstance.removeSource("route");
+        }
+
         mapInstance.addSource("route", {
           type: "geojson",
           data: {
@@ -51,17 +59,5 @@ export default function useRenderRoute(mapInstance, originCoord, destinationCoor
         });
       })
       .catch((error) => console.error(error));
-
-    return () => {
-      if (!mapInstance) return;
-
-      if (mapInstance.getLayer("route-layer")) {
-        mapInstance.removeLayer("route-layer");
-      }
-
-      if (mapInstance.getSource("route")) {
-        mapInstance.removeSource("route");
-      }
-    };
   }, [mapInstance, originCoord, destinationCoord]);
 }

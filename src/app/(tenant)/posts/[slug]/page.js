@@ -1,8 +1,11 @@
-import getPropertyDetail from "@/actions/getPropertyDetail";
-import Map from "@/components/Map/Map";
+"use client";
+import FullscreenLoading from "@/components/FullscreenLoading";
 import OwnerCard from "@/components/OwnerCard/OwnerCard";
 import PropertyImage from "@/components/PropertyImage/PropertyImage";
+import { useGetPropertyByIdQuery } from "@/redux/features/properties/propertyApi";
 import formatAddress from "@/utils/formatAddress";
+import goongJs from "@goongmaps/goong-js";
+import "@goongmaps/goong-js/dist/goong-js.css"; // Import GoongJS CSS
 import {
   BathtubOutlined,
   BedOutlined,
@@ -15,39 +18,59 @@ import {
   PaidOutlined,
 } from "@mui/icons-material";
 import PhoneIcon from "@mui/icons-material/Phone";
+import { Typography } from "@mui/material";
 import "@scss/posts.scss";
 import _ from "lodash";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
-export default async function PostDetailPage({ params }) {
-  const post = await getPropertyDetail(params.slug);
+export default function PostDetailPage({ params }) {
+  // const post = await getPropertyDetail(params.slug);
+  const mapRef = useRef(null);
+  const { data, error, isLoading } = useGetPropertyByIdQuery(params.slug);
+  const post = data?.post;
 
   const getPostSummary = ({ property_type, address }) => {
     return `${_.capitalize(property_type)} in ${formatAddress(address)}`;
   };
 
+  // Create GoongJS map
+  goongJs.accessToken = process.env.NEXT_PUBLIC_GOONG_MAPTILES_KEY;
+  useEffect(() => {
+    if (post?.location?.coordinates && !mapRef.current) {
+      mapRef.current = new goongJs.Map({
+        container: "map",
+        style: "https://tiles.goong.io/assets/goong_light_v2.json",
+        zoom: 20,
+        center: post?.location?.coordinates ?? [107.6416527, 11.295036],
+      });
+    }
+  }, [post]);
+
   const features = [
     {
       label: "Price",
-      value: `${post.price} million VND`,
+      value: post?.price ? `${post.price} million VND` : "Thoả thuận",
       icon: PaidOutlined,
     },
     {
       label: "Bedroom",
-      value: post.bedrooms || 3 + " Beds",
+      value: post?.bedrooms || 3 + " Beds",
       icon: BedOutlined,
     },
     {
       label: "Area",
-      value: `${post.area} m²`,
+      value: `${post?.area} m²`,
       icon: CropFree,
     },
     {
       label: "Bathroom",
-      value: post.bathrooms || 2 + " Baths",
+      value: post?.bathrooms || 2 + " Baths",
       icon: BathtubOutlined,
     },
   ];
+
+  if (isLoading) return <FullscreenLoading loading={isLoading} />;
 
   return (
     <div className="posts_wrapper">
@@ -58,8 +81,13 @@ export default async function PostDetailPage({ params }) {
             Back to Search
           </Link>
         </div>
-        <h1 className="posts_title">{post?.name}</h1>
-        <p className="posts_address">{formatAddress(post.address)}</p>
+        <Typography my={1} variant="h4" component="h1">
+          {post?.name}
+        </Typography>
+        <Typography variant="body1" component="h2">
+          {formatAddress(post.address)}
+        </Typography>
+
         <div className="posts_gallery">
           <PropertyImage src={post.thumbnail} />
           <PropertyImage src={post.images[0]} />
@@ -112,7 +140,7 @@ export default async function PostDetailPage({ params }) {
               <h4>See on map</h4>
               <p>{formatAddress(post.address)}</p>
 
-              {post?.location?.coordinates && <Map center={post?.location?.coordinates} />}
+              <div id="map" style={{ height: "300px", width: "100%" }}></div>
             </div>
           </div>
           {/* RIGHT */}
