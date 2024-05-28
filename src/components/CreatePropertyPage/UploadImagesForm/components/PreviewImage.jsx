@@ -33,17 +33,15 @@ export default function PreviewImage({ image, onRemove }) {
 
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:5002/api/upload", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_IMAGE_UPLOAD_ENDPOINT}/api/upload`, {
           method: "POST",
           body: formData,
         });
         const data = await response.json();
 
-        console.log(data);
+        console.log("Upload image", data);
 
-        dispatch(
-          addSingleImage({ id: image.id, url: data.url, uploaded: true })
-        );
+        dispatch(addSingleImage({ id: image.id, url: data.url, uploaded: true }));
         setLoading(false);
       } catch (error) {
         console.error(error);

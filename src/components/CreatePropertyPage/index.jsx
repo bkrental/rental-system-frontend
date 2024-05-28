@@ -63,7 +63,10 @@ export default function CreatePropertyPage() {
   }, []);
 
   return (
-    <Stack direction="column" sx={{ width: "100%", height: "calc(100vh - 60px)", overflow: "auto" }}>
+    <Stack
+      direction="column"
+      sx={{ width: "100%", height: "calc(100vh - 60px)", overflow: "auto", overflowX: "hidden" }}
+    >
       <Box>
         {CREATE_PROPERTY_STEPS.map(({ Component, title, description }, index) => (
           <Zoom
