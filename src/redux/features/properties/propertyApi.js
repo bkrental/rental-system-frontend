@@ -12,7 +12,14 @@ export const propertyApi = createApi({
       }),
       transformResponse: transformPropertiesResponse,
     }),
+
+    getPropertyById: builder.query({
+      query: (id) => ({
+        url: `/posts/${id}`,
+      }),
+      transformResponse: (res) => res.data,
+    }),
   }),
 });
 
-export const { useGetPropertiesQuery } = propertyApi;
+export const { useGetPropertiesQuery, useGetPropertyByIdQuery } = propertyApi;
