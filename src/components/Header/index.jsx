@@ -7,6 +7,7 @@ import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 import AccountMenu from "./components/AccountMenu";
+import { AddOutlined } from "@mui/icons-material";
 
 const HeaderLink = ({ children, ...props }) => (
   <Link component={NextLink} underline="none" {...props}>
@@ -57,8 +58,8 @@ function Header() {
         </Stack>
 
         <Stack direction="row" spacing={1}>
-          <Button onClick={() => router.push("/landlord")} size="large" color="inherit">
-            Post a property
+          <Button onClick={() => router.push("/landlord/publish")} size="large" color="inherit">
+            <Typography sx={{ fontSize: 16, fontWeight: 500 }}>Create New Post</Typography>
           </Button>
 
           {user ? (

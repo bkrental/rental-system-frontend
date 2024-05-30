@@ -24,7 +24,7 @@ export const PROPERTY_TYPE_DETAILS = [
   {
     value: "rooming_house",
     label: "Rooming House",
-    viLabel: "Nhà trọ, phòng trọ",
+    viLabel: "Phòng trọ",
     Icon: HolidayVillageOutlined,
   },
   {
@@ -77,7 +77,7 @@ export const PROPERTY_TYPES = {
   room: {
     value: "room",
     label: "Rooming House",
-    viLabel: "Nhà trọ, phòng trọ",
+    viLabel: "Phòng trọ",
     Icon: HolidayVillageOutlined,
   },
   dormitory: {

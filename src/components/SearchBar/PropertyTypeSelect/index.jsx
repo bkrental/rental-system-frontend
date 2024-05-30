@@ -37,7 +37,7 @@ const PropertyTypeSelect = () => {
           return selected.length === 0
             ? "Any Property Type"
             : selected.length === 1
-            ? PROPERTY_TYPES[selected[0]]?.label
+            ? PROPERTY_TYPES[selected[0]]?.viLabel
             : `Property Types (${selected.length})`;
         }}
         value={propertyTypes}
@@ -49,10 +49,10 @@ const PropertyTypeSelect = () => {
         <MenuItem disabled value="">
           Property Type
         </MenuItem>
-        {Object.values(PROPERTY_TYPES).map(({ value, label }) => (
+        {Object.values(PROPERTY_TYPES).map(({ value, viLabel }) => (
           <MenuItem sx={{ py: 0, pl: 1 }} key={value} value={value}>
             <Checkbox checked={propertyTypes.indexOf(value) > -1} />
-            <ListItemText primary={label} />
+            <ListItemText primary={viLabel} />
           </MenuItem>
         ))}
       </Select>

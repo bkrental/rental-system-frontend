@@ -1,9 +1,6 @@
 "use client";
 import { PROPERTY_TYPES } from "@/constants/propertyTypes";
-import {
-  setIsStepCompleted,
-  setPropertyType,
-} from "@/redux/features/createPostSlice";
+import { setIsStepCompleted, setPropertyType } from "@/redux/features/createPostSlice";
 import { getPropertyType } from "@/redux/selectors";
 import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
