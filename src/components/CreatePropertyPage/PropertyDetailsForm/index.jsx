@@ -5,7 +5,6 @@ import {
   setBathrooms,
   setBedrooms,
   setIsStepCompleted,
-  setPrice,
   setPriceSuggestion,
 } from "@/redux/features/createPostSlice";
 import formatVietnamesePrice from "@/utils/formatPrice";
@@ -29,11 +28,12 @@ import { isNumber, debounce } from "lodash";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SuccessDialog from "./SuccessDialog";
 
 export default function PropertyDetailsForm() {
   const router = useRouter();
   const dispatch = useDispatch();
-  // const priceRental = useSelector((s) => s.createPost.price);
+
   const priceSuggestion = useSelector((s) => s.createPost.priceSuggestion);
   const bedrooms = useSelector((s) => s.createPost.bedrooms);
   const bathrooms = useSelector((s) => s.createPost.bathrooms);
@@ -43,8 +43,16 @@ export default function PropertyDetailsForm() {
   const [error, setError] = useState("");
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [createPost] = useCreatePostMutation();
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [newPostId, setNewPostId] = useState(null);
+  const user = useSelector((state) => state.auth.user);
+  const [price, setPrice] = useState(0);
 
   const isPriceInputDisabled = area == ("" || "0");
+
+  const handleViewPost = (postId) => {
+    router.push(`/posts/${postId}`);
+  };
 
   const fetchPricePrediction = async () => {
     setLoading(true);
@@ -115,13 +123,19 @@ export default function PropertyDetailsForm() {
         },
         bedrooms: createPostData.bedrooms * 1,
         bathrooms: createPostData.bathrooms * 1,
-        price: createPostData.price * 1,
+        price: price * 1,
+        contact: {
+          name: user?.name ?? "Unknown",
+          phone: user?.phone ?? "Unknown",
+        },
       };
 
       try {
-        await createPost(createPostPayload).unwrap();
+        const data = await createPost(createPostPayload).unwrap();
+        setNewPostId(data?.data?.post?._id);
+        setSuccessDialogOpen(true);
         setLoading(false);
-        return router.push("/");
+        // return router.push("/");
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -185,20 +199,21 @@ export default function PropertyDetailsForm() {
             fullWidth
             disabled={isPriceInputDisabled}
             placeholder={`Suggested price: ${priceSuggestion}`}
-            onChange={(e) => dispatch(setPrice(e.target.value))}
+            onChange={(e) => setPrice(e.target.value)}
             InputProps={{
               endAdornment: <InputAdornment position="start">{pirceUnit}</InputAdornment>,
             }}
             id="priceRental"
             label="Property Price"
             aria-describedby="price-helper-text"
+            value={price}
           />
 
-          {createPostData.price != 0 && (
+          {/* {createPostData.price != 0 && (
             <FormHelperText color="primary" id="price-helper-text">
               {" Giá: " + formatVietnamesePrice(createPostData.price).number + " " + pirceUnit}
-            </FormHelperText>
-          )}
+            </FormHelperText> */}
+          {/* )} */}
         </Tooltip>
       </Grid>
       <FullscreenLoading loading={loading} />
@@ -215,6 +230,12 @@ export default function PropertyDetailsForm() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <SuccessDialog
+        open={successDialogOpen}
+        onClose={() => setSuccessDialogOpen(false)}
+        onViewPost={() => handleViewPost(newPostId)}
+      />
     </Grid>
   );
 }

@@ -1,11 +1,12 @@
 "use client";
 import { useDeletePostMutation, useGetMyPropertiesQuery } from "@/redux/features/landlord/api";
 import { DeleteOutline, EditNoteOutlined, VisibilityOffOutlined } from "@mui/icons-material";
-import { Box, Chip, IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Chip, IconButton, Stack, Tooltip, Typography, Snackbar } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import NoRowsOverlay from "./components/NoRowsOverlay";
 import ActionButtons from "./components/ActonButtons";
+import ConfirmDialog from "../ConfirmDialog";
 
 const columns = [
   { field: "id", headerName: "ID", width: 60 },
@@ -21,13 +22,13 @@ const columns = [
   {
     field: "name",
     headerName: "Title",
-    width: 400,
+    width: 600,
     renderCell: (params) => <div className="titleCell">{params.value}</div>,
   },
   {
     field: "status",
     headerName: "Status",
-    width: 120,
+    width: 150,
     renderCell: (params) => <Chip label={params.value} color="success" variant="outlined" />,
   },
   {
@@ -36,13 +37,19 @@ const columns = [
     sortable: false,
     width: 150,
     renderCell: (params) => {
-      return <ActionButtons postId={params.row.postId} refetch={() => {}} />;
+      return <ActionButtons postTitle={params.row.name} postId={params.row.postId} refetch={() => {}} />;
     },
     disableClickEventBubbling: true,
   },
 ];
 
 const PostManagementPage = () => {
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [deletePost, { isLoading: isDeleting, isSuccess, isError }] = useDeletePostMutation();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
   const [pagination, setPagination] = useState({
     pageSize: 5,
     page: 0,
@@ -53,11 +60,41 @@ const PostManagementPage = () => {
     limit: pagination.pageSize,
   });
 
+  const handleDeletePost = async (postId) => {
+    try {
+      await deletePost(postId).unwrap();
+      setSnackbarMessage("Post deleted successfully");
+      const event = new CustomEvent("post-deleted", { detail: { postId, status: "success" } });
+      window.dispatchEvent(event);
+    } catch (error) {
+      setSnackbarMessage("Error deleting post");
+    }
+    setOpenDeleteConfirmation(false);
+    setOpenSnackbar(true);
+  };
+
   useEffect(() => {
+    const handleOpenDeleteConfirmation = (event) => {
+      setOpenDeleteConfirmation(true);
+      setSelectedPost({
+        postId: event.detail.postId,
+        postTitle: event.detail.postTitle,
+      });
+    };
+
+    const handlePostToggleDisplay = (event) => {
+      setSnackbarMessage("Post visibility toggled successfully");
+      setOpenSnackbar(true);
+    };
+
+    window.addEventListener("delete-confirmation", handleOpenDeleteConfirmation);
     window.addEventListener("post-deleted", refetch);
+    window.addEventListener("toggle-display", handlePostToggleDisplay);
 
     return () => {
       window.removeEventListener("post-deleted", refetch);
+      window.removeEventListener("delete-confirmation", handleOpenDeleteConfirmation);
+      window.removeEventListener("toggle-display", handlePostToggleDisplay);
     };
   }, [refetch]);
 
@@ -97,6 +134,20 @@ const PostManagementPage = () => {
         checkboxSelection
         slots={{ noRowsOverlay: NoRowsOverlay }}
         sx={{ "--DataGrid-overlayHeight": "350px" }}
+      />
+
+      <ConfirmDialog
+        postTitle={selectedPost?.postTitle}
+        open={openDeleteConfirmation}
+        onCancel={() => setOpenDeleteConfirmation(false)}
+        onConfirm={() => handleDeletePost(selectedPost?.postId)}
+      />
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        message={snackbarMessage}
       />
     </Box>
   );

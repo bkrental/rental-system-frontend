@@ -1,3 +1,4 @@
+import { PROPERTY_TYPES } from "@/constants/propertyTypes";
 import { CropFreeOutlined, GradeOutlined } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShowerOutlinedIcon from "@mui/icons-material/ShowerOutlined";
@@ -30,7 +31,7 @@ export default function PropertyCard({
       <CardContent>
         <Box display="flex" mb={1} gap={1}>
           <Chip size="small" icon={<GradeOutlined />} label="Tin mới" color="blue" />
-          <Chip size="small" label="Phòng trọ" />
+          <Chip size="small" label={PROPERTY_TYPES[property_type].viLabel} />
         </Box>
         <Typography
           variant="h4"
@@ -61,13 +62,15 @@ export default function PropertyCard({
             <ShowerOutlinedIcon sx={{ fontSize: 20, marginRight: 0.5 }} />
             <Typography variant="body1">{`${bathrooms} wc`}</Typography>
           </Box>
-          <Box display="flex" alignItems="center">
-            <CropFreeOutlined sx={{ fontSize: 20, marginRight: 0.5 }} />
-            <Typography variant="body1">
-              {area + "m"}
-              <sup>2</sup>
-            </Typography>
-          </Box>
+          {area && (
+            <Box display="flex" alignItems="center">
+              <CropFreeOutlined sx={{ fontSize: 20, marginRight: 0.5 }} />
+              <Typography variant="body1">
+                {area + "m"}
+                <sup>2</sup>
+              </Typography>
+            </Box>
+          )}
         </Box>
         <Typography variant="body2" paragraph sx={{ ...lineTruncate(2) }}>
           {description}
