@@ -60,7 +60,12 @@ function FavouritePostsContent({ properties = [], onDeleteFavourite }) {
       ))}
       <Divider sx={{ my: 1 }} />
 
-      <Link sx={{ margin: "6px auto 0" }} component={NextLink} underline="none" href="/favourites">
+      <Link
+        sx={{ margin: "6px auto 0", fontWeight: "roboto" }}
+        component={NextLink}
+        underline="none"
+        href="/favourites"
+      >
         View all posts
       </Link>
     </>
