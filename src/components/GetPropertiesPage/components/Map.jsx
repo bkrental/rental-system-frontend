@@ -1,75 +1,22 @@
+import useCreateMarkers from "@/hooks/useCreateMakers";
+import useRenderRoute from "@/hooks/useRenderRoute";
+import getBoundary from "@/utils/getBoundary";
 import goongJs from "@goongmaps/goong-js"; // Import GoongJS
 import "@goongmaps/goong-js/dist/goong-js.css"; // Import GoongJS CSS
-import { useCallback, useEffect, useRef, useState } from "react";
-import { circle } from "@turf/turf";
-import polyline from "@mapbox/polyline";
-import calculateBoundsForRoute from "@/utils/getRouteBoundary";
-import getPopupContent from "@/utils/getPopupContent";
-import getCircleBoudingBox from "@/utils/getCircleBoundingBox";
+import { useEffect, useRef, useState } from "react";
+import { StringParam, useQueryParam } from "use-query-params";
 
 const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
+  const [location, setLocation] = useQueryParam("center", StringParam);
+  const [boundary, setBoundary] = useQueryParam("boundary", StringParam);
   const [lng, lat] = center;
   const mapContainerRef = useRef(null);
   const [selected, setSelected] = useState(null);
   const [mapInstance, setMapInstance] = useState(null);
 
-  const removeRoute = useCallback(() => {
-    if (!mapInstance) return;
-
-    if (mapInstance.getLayer("route-layer")) {
-      mapInstance.removeLayer("route-layer");
-    }
-
-    if (mapInstance.getSource("route")) {
-      mapInstance.removeSource("route");
-    }
-  }, [mapInstance]);
-
-  useEffect(() => {
-    if (!selected) return;
-
-    const destinationCoordinates = `${selected.coordinates[1]},${selected.coordinates[0]}`;
-    const url = `/api/direction?origin=${lat},${lng}&destination=${destinationCoordinates}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        const polylineStr = data.routes[0].overview_polyline.points;
-        const decoded = polyline.decode(polylineStr);
-
-        const bounds = calculateBoundsForRoute(decoded);
-        mapInstance.fitBounds(bounds, {
-          padding: { top: 80, bottom: 80, left: 80, right: 80 },
-        });
-
-        removeRoute();
-        mapInstance.addSource("route", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: {
-              type: "LineString",
-              coordinates: decoded.map((point) => [point[1], point[0]]),
-            },
-          },
-        });
-
-        mapInstance.addLayer({
-          id: "route-layer",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "red",
-            "line-width": 8,
-            "line-opacity": 0.3,
-          },
-        });
-      });
-  }, [selected]);
+  const selectedMarkerCoordinates = selected ? `${selected.coordinates[1]},${selected.coordinates[0]}` : "";
+  useRenderRoute(mapInstance, `${lat},${lng}`, selectedMarkerCoordinates);
+  useCreateMarkers(mapInstance, markerList, (marker) => setSelected(marker));
 
   useEffect(() => {
     goongJs.accessToken = process.env.NEXT_PUBLIC_GOONG_MAPTILES_KEY; // Set Goong Maps key
@@ -80,52 +27,25 @@ const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
       center: [lng, lat],
     });
     setMapInstance(map);
-    const bounds = getCircleBoudingBox([lng, lat], 3);
-    map.fitBounds(bounds, {
-      padding: 0,
-    });
-
-    const markers = markerList.map((property) => {
-      let hovered = false;
-      const popup = new goongJs.Popup({ closeButton: false }).setHTML(getPopupContent(property));
-      const marker = new goongJs.Marker().setPopup(popup).setLngLat(property.coordinates).addTo(map);
-      const markerElement = marker.getElement();
-
-      markerElement.addEventListener("click", () => {
-        setSelected(property);
-      });
-      markerElement.addEventListener("mouseenter", () => {
-        hovered = true;
-        popup.addTo(map);
-      });
-      markerElement.addEventListener("mouseleave", () => {
-        hovered = false;
-        setTimeout(() => hovered || popup.remove(), 500);
-      });
-
-      popup.on("open", () => {
-        const popupElement = popup.getElement();
-        popupElement.addEventListener("mouseenter", () => (hovered = true));
-        popupElement.addEventListener("mouseleave", () => {
-          hovered = false;
-          popup.remove();
-        });
-      });
-      return marker;
-    });
 
     // Add controls, markers, layers, etc. as needed
     new goongJs.Marker({ color: "red" }).setLngLat([lng, lat]).addTo(map);
 
     map.on("load", function () {
-      const center = [lng, lat]; // Replace with the center coordinates for your circle
-      const radius = 3; // radius of the circle in kilometers
-      const options = { steps: 80, units: "kilometers" };
-      const circleGeoJSON = circle(center, radius, options);
+      const center = location ? location.split(",").map((v) => parseFloat(v)) : [106.660172, 10.762622];
+      const { polygon, convex } = getBoundary(center, boundary);
+
+      const coordinates = convex.geometry.coordinates[0];
+      const bounds = coordinates.reduce(function (bounds, coord) {
+        return bounds.extend(coord);
+      }, new goongJs.LngLatBounds(coordinates[0], coordinates[0]));
+
+      map.fitBounds(bounds, { padding: 20, duration: 0 });
 
       map.addSource("boundary", {
         type: "geojson",
-        data: circleGeoJSON,
+        data: polygon,
+        // data: boundary,
       });
       map.addLayer({
         id: "maine",
@@ -137,11 +57,25 @@ const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
           "fill-opacity": 0.4,
         },
       });
+
+      map.addSource("outerbox", {
+        type: "geojson",
+        data: convex,
+      });
+      map.addLayer({
+        id: "maine2",
+        type: "line",
+        source: "outerbox",
+        layout: {},
+        paint: {
+          "line-color": "#888",
+          "line-width": 3,
+        },
+      });
     });
 
     return () => {
       map.remove(); // Clean up map on unmount
-      markers.forEach((m) => m.remove());
     };
   }, [lng, lat, markerList]);
 

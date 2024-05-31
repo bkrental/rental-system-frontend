@@ -8,6 +8,7 @@ import {
   setPrice,
   setPriceSuggestion,
 } from "@/redux/features/createPostSlice";
+import formatVietnamesePrice from "@/utils/formatPrice";
 import FullscreenLoading from "@components/FullscreenLoading";
 import {
   Button,
@@ -16,6 +17,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormHelperText,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   TextField,
   Tooltip,
 } from "@mui/material";
@@ -24,11 +29,11 @@ import { isNumber, debounce } from "lodash";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SuccessDialog from "./SuccessDialog";
 
 export default function PropertyDetailsForm() {
   const router = useRouter();
   const dispatch = useDispatch();
-  // const priceRental = useSelector((s) => s.createPost.price);
   const priceSuggestion = useSelector((s) => s.createPost.priceSuggestion);
   const bedrooms = useSelector((s) => s.createPost.bedrooms);
   const bathrooms = useSelector((s) => s.createPost.bathrooms);
@@ -38,6 +43,16 @@ export default function PropertyDetailsForm() {
   const [error, setError] = useState("");
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [createPost] = useCreatePostMutation();
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [newPostId, setNewPostId] = useState(null);
+  const user = useSelector((state) => state.auth.user);
+  const [price, setPrice] = useState(0);
+
+  const isPriceInputDisabled = area == ("" || "0");
+
+  const handleViewPost = (postId) => {
+    router.push(`/posts/${postId}`);
+  };
 
   const fetchPricePrediction = async () => {
     setLoading(true);
@@ -71,6 +86,8 @@ export default function PropertyDetailsForm() {
   };
 
   const debounceFetchPricePrediction = useCallback(debounce(fetchPricePrediction, 1000), [area]);
+
+  const pirceUnit = createPostData.transactionType === "rent" ? "VND (monthly)" : "VND";
 
   useEffect(() => {
     debounceFetchPricePrediction();
@@ -106,13 +123,19 @@ export default function PropertyDetailsForm() {
         },
         bedrooms: createPostData.bedrooms * 1,
         bathrooms: createPostData.bathrooms * 1,
-        price: createPostData.price * 1,
+        price: price * 1,
+        contact: {
+          name: user?.name ?? "Unknown",
+          phone: user?.phone ?? "Unknown",
+        },
       };
 
       try {
-        await createPost(createPostPayload).unwrap();
+        const data = await createPost(createPostPayload).unwrap();
+        setNewPostId(data?.data?.post?._id);
+        setSuccessDialogOpen(true);
         setLoading(false);
-        return router.push("/");
+        // return router.push("/");
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -165,14 +188,25 @@ export default function PropertyDetailsForm() {
       </Grid>
 
       <Grid xs={12}>
-        <Tooltip title="This is a suggested price based on the area and the location of the property. You can change it if you want.">
+        <Tooltip
+          title={
+            isPriceInputDisabled
+              ? "You must provide the area before entering the property price"
+              : "This is a suggested price based on the area and the location of the property. You can change it if you want."
+          }
+        >
           <TextField
             fullWidth
-            disabled={area == ("" || "0")}
+            disabled={isPriceInputDisabled}
             placeholder={`Suggested price: ${priceSuggestion}`}
-            onChange={(e) => dispatch(setPrice(e.target.value))}
+            onChange={(e) => setPrice(e.target.value)}
+            InputProps={{
+              endAdornment: <InputAdornment position="start">{pirceUnit}</InputAdornment>,
+            }}
             id="priceRental"
             label="Property Price"
+            aria-describedby="price-helper-text"
+            value={price}
           />
         </Tooltip>
       </Grid>
@@ -190,6 +224,12 @@ export default function PropertyDetailsForm() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <SuccessDialog
+        open={successDialogOpen}
+        onClose={() => setSuccessDialogOpen(false)}
+        onViewPost={() => handleViewPost(newPostId)}
+      />
     </Grid>
   );
 }

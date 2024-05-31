@@ -31,7 +31,7 @@ export function createMap(config) {
   return map;
 }
 
-export default function Map({ center, zoom = 10, onDragEnd = () => {} }) {
+export default function Map({ center, onDragEnd = () => {} }, width = "100%", height = "100%") {
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -52,5 +52,5 @@ export default function Map({ center, zoom = 10, onDragEnd = () => {} }) {
     };
   }, [center]);
 
-  return <div id="map" style={{ height: "100%" }}></div>;
+  return <div id="map" style={{ height, width }}></div>;
 }

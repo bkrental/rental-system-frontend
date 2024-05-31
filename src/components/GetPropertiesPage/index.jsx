@@ -32,9 +32,10 @@ export default function GetPropertiesPage({ transaction_type = "rent" }) {
   const searchParam = useSearchParams();
   const propertyTypes = useGetPropertyTypes();
   const centerQs = searchParam.get("center");
+  const boundary = searchParam.get("boundary");
   const center = centerQs ? centerQs.split(",").map((v) => parseFloat(v)) : [106.660172, 10.762622];
 
-  const supportedQuery = ["bp", "tp", "ba", "ta", "center", "radius"];
+  const supportedQuery = ["bp", "tp", "ba", "ta", "center", "radius", "boundary"];
   const queryObj = useMemo(() => {
     const res = {};
     searchParam.forEach((value, key) => {
@@ -53,9 +54,6 @@ export default function GetPropertiesPage({ transaction_type = "rent" }) {
     radius: 5,
     ...queryObj,
   });
-
-  const markers = (data?.properties ?? []).map((p) => p.location.coordinates);
-  console.log(markers);
 
   const propertyMarkers = (data?.properties ?? []).map((property) => ({
     coordinates: property.location.coordinates,
