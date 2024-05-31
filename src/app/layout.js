@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import AppProviders from "@/app/AppProviders";
 import "@scss/_global.scss";
 import { Roboto } from "next/font/google";
+import { Box } from "@mui/material";
 
 export const metadata = {
   title: "BKrental",
@@ -19,9 +20,13 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </head>
-      <body suppressHydrationWarning={true} className={roboto.className}>
+      <body
+        suppressHydrationWarning={true}
+        className={roboto.className}
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
+      >
         <AppProviders>
-          <div style={{ paddingTop: "env(safe-area-inset-top)" }}>
+          <div>
             <Header />
             {children}
           </div>

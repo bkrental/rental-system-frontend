@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Stack, styled, TextField } from "@mui/material";
+import { Stack, styled, TextField } from "@mui/material";
 import { StringParam, useQueryParam } from "use-query-params";
 import PriceSelect from "./PriceSelect";
 import PropertyTypeSelect from "./PropertyTypeSelect";
@@ -19,21 +19,13 @@ const SearchBarContainer = styled(Stack)(({ theme }) => ({
   width: "100%",
   gap: theme.spacing(2),
   display: {
-    xs: "none",
-    sm: "none",
-    md: "flex",
+    xs: "flex",
+    sm: "flex",
+    md: "none",
   },
 }));
 
-export default function SearchBar() {
-  function clearQueryParams() {
-    // Get the current URL without the query parameters
-    let url = window.location.origin + window.location.pathname;
-
-    // Use the History API to change the URL without reloading the page
-    window.history.pushState({ path: url }, "", url);
-  }
-
+export default function MobileSearchBar() {
   return (
     <SearchBarContainer>
       <AddressInput />
@@ -41,9 +33,6 @@ export default function SearchBar() {
       <PropertyTypeSelect />
       <PriceSelect />
       <AreaSelect />
-      <Button onClick={clearQueryParams} variant="contained" color="primary">
-        Clear Filter
-      </Button>
     </SearchBarContainer>
   );
 }

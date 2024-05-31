@@ -1,12 +1,31 @@
 "use client";
 import NextLink from "next/link";
 import { useSelector } from "react-redux";
-// import HeaderLink from "./HeaderLink";
-import { Avatar, Box, Button, Container, Link, Stack, styled, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import {
+  Avatar,
+  IconButton,
+  Box,
+  Button,
+  Container,
+  Link,
+  Stack,
+  styled,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from "@mui/material";
+import { grey, orange } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 import AccountMenu from "./components/AccountMenu";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import RentIcon from "@mui/icons-material/VpnKey";
+import AccountDrawer from "./components/Drawer";
 import { AddOutlined } from "@mui/icons-material";
 
 const HeaderLink = ({ children, ...props }) => (
@@ -16,15 +35,19 @@ const HeaderLink = ({ children, ...props }) => (
 );
 
 const HeaderWrapper = styled((props) => <Container maxWidth="xl" {...props} />)(({ theme }) => ({
-  height: "60px",
+  // height: "80px",
+  // paddingTop: "env(safe-area-inset-top)",
+  paddingTop: "60px",
+  paddingBottom: "10px",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
   position: "fixed",
   zIndex: 1000,
-  backgroundColor: "white",
-  boxShadow: "rgba(239, 108, 0, 0.1) 0px 0px 10px 0px",
+  backgroundColor: orange[800],
+  // backgroundColor: "white",
+  // boxShadow: "rgba(239, 108, 0, 0.1) 0px 0px 10px 0px",
 }));
 
 function Header() {
@@ -33,33 +56,52 @@ function Header() {
   const userName = useMemo(() => user?.name || "User", [user]);
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+      return;
+    }
+    setDrawerOpen(open);
   };
 
   return (
     <>
       <HeaderWrapper>
         <Stack direction="row" spacing={3} alignItems="center">
-          <HeaderLink href="/" sx={{ fontSize: 28, fontWeight: 600, width: 120 }}>
+          <HeaderLink href="/" sx={{ fontSize: 28, fontWeight: 600, width: 120, color: "#fff" }}>
             BKRental
           </HeaderLink>
-          <HeaderLink fontSize={20} href="/rent" color="inherit">
+          <HeaderLink
+            fontSize={20}
+            href="/rent"
+            color="inherit"
+            sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
+          >
             Rent
           </HeaderLink>
-          <HeaderLink fontSize={20} href="/buy" color="inherit">
+          <HeaderLink
+            fontSize={20}
+            href="/buy"
+            color="inherit"
+            sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
+          >
             Buy
           </HeaderLink>
         </Stack>
 
-        <Stack direction="row" spacing={1}>
-          <Button onClick={() => router.push("/landlord/publish")} size="large" color="inherit">
-            <Typography sx={{ fontSize: 16, fontWeight: 500 }}>Create New Post</Typography>
+        <Stack direction="row" spacing={1} sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
+          <Button onClick={() => router.push("/landlord")} size="large" color="inherit">
+            Post a property
           </Button>
 
           {user ? (
@@ -85,8 +127,22 @@ function Header() {
             </Button>
           )}
         </Stack>
+
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ display: { xs: "flex", sm: "flex", md: "none" } }}
+          onClick={toggleDrawer(true)}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        <AccountDrawer open={drawerOpen} toggleDrawer={toggleDrawer} user={user} userName={userName} />
+
         <AccountMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
       </HeaderWrapper>
+
       <Box sx={{ width: "100%", height: "60px" }}></Box>
     </>
   );

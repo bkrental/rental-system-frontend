@@ -6,7 +6,7 @@ import Link from "next/link";
 
 function HomePage() {
   return (
-    <div className="home_container">
+    <div className="home_container" style={{ paddingTop: "30px" }}>
       <div className="home_hero">
         <h1>
           Experience the ease of <span className="home_highlight">BKRental</span> for seamless home discovery.
