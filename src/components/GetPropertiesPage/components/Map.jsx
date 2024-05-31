@@ -86,7 +86,6 @@ const Map = ({ center = [107.6416527, 11.295036], markerList = [] }) => {
     });
 
     const markers = markerList.map((property) => {
-      console.log("property", property.coordinates);
       let hovered = false;
       const popup = new goongJs.Popup({ closeButton: false }).setHTML(getPopupContent(property));
       const marker = new goongJs.Marker().setPopup(popup).setLngLat(property.coordinates).addTo(map);

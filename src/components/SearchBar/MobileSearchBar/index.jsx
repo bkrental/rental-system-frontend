@@ -19,13 +19,13 @@ const SearchBarContainer = styled(Stack)(({ theme }) => ({
   width: "100%",
   gap: theme.spacing(2),
   display: {
-    xs: "none",
-    sm: "none",
-    md: "flex",
+    xs: "flex",
+    sm: "flex",
+    md: "none",
   },
 }));
 
-export default function SearchBar() {
+export default function MobileSearchBar() {
   return (
     <SearchBarContainer>
       <AddressInput />

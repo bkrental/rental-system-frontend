@@ -1,12 +1,31 @@
 "use client";
 import NextLink from "next/link";
 import { useSelector } from "react-redux";
-// import HeaderLink from "./HeaderLink";
-import { Avatar, Box, Button, Container, Link, Stack, styled, Typography } from "@mui/material";
+import {
+  Avatar,
+  IconButton,
+  Box,
+  Button,
+  Container,
+  Link,
+  Stack,
+  styled,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 import AccountMenu from "./components/AccountMenu";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import RentIcon from "@mui/icons-material/VpnKey";
+import AccountDrawer from "./components/Drawer";
 
 const HeaderLink = ({ children, ...props }) => (
   <Link component={NextLink} underline="none" {...props}>
@@ -32,13 +51,22 @@ function Header() {
   const userName = useMemo(() => user?.name || "User", [user]);
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+      return;
+    }
+    setDrawerOpen(open);
   };
 
   return (
@@ -48,15 +76,25 @@ function Header() {
           <HeaderLink href="/" sx={{ fontSize: 28, fontWeight: 600, width: 120 }}>
             BKRental
           </HeaderLink>
-          <HeaderLink fontSize={20} href="/rent" color="inherit">
+          <HeaderLink
+            fontSize={20}
+            href="/rent"
+            color="inherit"
+            sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
+          >
             Rent
           </HeaderLink>
-          <HeaderLink fontSize={20} href="/buy" color="inherit">
+          <HeaderLink
+            fontSize={20}
+            href="/buy"
+            color="inherit"
+            sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
+          >
             Buy
           </HeaderLink>
         </Stack>
 
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
           <Button onClick={() => router.push("/landlord")} size="large" color="inherit">
             Post a property
           </Button>
@@ -84,8 +122,22 @@ function Header() {
             </Button>
           )}
         </Stack>
+
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ display: { xs: "flex", sm: "flex", md: "none" } }}
+          onClick={toggleDrawer(true)}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        <AccountDrawer open={drawerOpen} toggleDrawer={toggleDrawer} user={user} userName={userName} />
+
         <AccountMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
       </HeaderWrapper>
+
       <Box sx={{ width: "100%", height: "60px" }}></Box>
     </>
   );
