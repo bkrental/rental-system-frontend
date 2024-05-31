@@ -1,12 +1,14 @@
 import { PROPERTY_TYPES } from "@/constants/propertyTypes";
-import { CropFreeOutlined, GradeOutlined } from "@mui/icons-material";
+import { useAddToFavouriteMutation, useRemoveFromFavouriteMutation } from "@/redux/features/properties/propertyApi";
+import { CropFreeOutlined, FavoriteOutlined, GradeOutlined } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShowerOutlinedIcon from "@mui/icons-material/ShowerOutlined";
 import SingleBedOutlinedIcon from "@mui/icons-material/SingleBedOutlined";
 import { Avatar, Box, Card, CardContent, CardHeader, Chip, Divider, IconButton, Typography } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
-import { deepOrange } from "@mui/material/colors";
+import { deepOrange, orange } from "@mui/material/colors";
 import Link from "next/link";
+import { useState } from "react";
 
 const lineTruncate = (line = 1) => ({
   overflow: "hidden",
@@ -17,12 +19,48 @@ const lineTruncate = (line = 1) => ({
 });
 
 export default function PropertyCard({
-  property: { _id, address, name, description, price, area, thumbnail, owner, bedrooms, bathrooms, property_type },
+  property: {
+    _id,
+    address,
+    name,
+    description,
+    price,
+    area,
+    thumbnail,
+    owner,
+    bedrooms,
+    bathrooms,
+    property_type,
+    isFavourite,
+  },
 }) {
   bedrooms = 1;
   bathrooms = 1;
+  const [isFavouriteState, setIsFavouriteState] = useState(isFavourite);
+
   const formatAddress = ({ street, district, province }) => {
     return `${street}, ${district}, ${province}`;
+  };
+
+  const [addToFavourite, { isError }] = useAddToFavouriteMutation();
+  const [removeFromFavourite] = useRemoveFromFavouriteMutation();
+
+  const toggleFavourite = async () => {
+    const before = isFavouriteState;
+    console.log(_id);
+    try {
+      setIsFavouriteState((prev) => !prev);
+      if (!isFavouriteState) {
+        await addToFavourite(_id).unwrap();
+      } else {
+        await removeFromFavourite(_id).unwrap();
+      }
+      const event = new Event("favourite-post-updated", { detail: { postId: _id, isFavourite: !before } });
+      window.dispatchEvent(event);
+    } catch (error) {
+      console.error(error);
+      setIsFavouriteState(before);
+    }
   };
 
   return (
@@ -88,8 +126,13 @@ export default function PropertyCard({
           />
         }
         action={
-          <IconButton aria-label="add to favorites">
-            <FavoriteBorderIcon />
+          <IconButton size="large" aria-label="add to favorites" onClick={toggleFavourite}>
+            {isFavouriteState ? (
+              <FavoriteOutlined fontSize="40" sx={{ color: orange[800] }} />
+            ) : (
+              <FavoriteBorderIcon fontSize="40" />
+            )}
+            {/* <FavoriteBorderIcon /> */}
           </IconButton>
         }
         title={owner?.name || "Ẩn danh"}
