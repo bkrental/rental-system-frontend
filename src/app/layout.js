@@ -16,10 +16,15 @@ const roboto = Roboto({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
       <body suppressHydrationWarning={true} className={roboto.className}>
         <AppProviders>
-          <Header />
-          {children}
+          <div style={{ paddingTop: "env(safe-area-inset-top)" }}>
+            <Header />
+            {children}
+          </div>
         </AppProviders>
       </body>
     </html>

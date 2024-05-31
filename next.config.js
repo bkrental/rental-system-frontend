@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = {
+  output: "export",
   sassOptions: {
     includePaths: [path.join(__dirname, "scss")],
   },
@@ -9,6 +10,7 @@ module.exports = {
     missingSuspenseWithCSRBailout: false,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

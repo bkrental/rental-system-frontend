@@ -2,27 +2,20 @@
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import "@scss/homepage.scss";
+import Link from "next/link";
 
 function HomePage() {
   return (
     <div className="home_container">
       <div className="home_hero">
         <h1>
-          Experience the ease of{" "}
-          <span className="home_highlight">BKRental</span> for seamless home
-          discovery.
+          Experience the ease of <span className="home_highlight">BKRental</span> for seamless home discovery.
         </h1>
 
-        <h4 className="home_subtitle">
-          Discover houses and apartments for rent tailored to your needs and
-          budget.
-        </h4>
+        <h4 className="home_subtitle">Discover houses and apartments for rent tailored to your needs and budget.</h4>
 
         <div className="home_search">
-          <input
-            placeholder="Search for City, Address, Neighbourhood..."
-            className="home_search-input"
-          />
+          <input placeholder="Search for City, Address, Neighbourhood..." className="home_search-input" />
           <button className="home_searchBtn">
             <SearchIcon sx={{ fontSize: 24, color: "hsl(60, 9.1%, 97.8%)" }} />
           </button>
