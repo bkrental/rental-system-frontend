@@ -1,11 +1,11 @@
 // components/Chatbot.js
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, TextField, IconButton, List, ListItem, ListItemText, Paper, styled } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
-import { grey } from "@mui/material/colors";
-import { useSelector } from "react-redux";
-import { v4 as uuid } from "uuid";
 import getRandomSenderId from "@/utils/getRandomSenderId";
+import SendIcon from "@mui/icons-material/Send";
+import { Box, IconButton, List, ListItem, ListItemText, Paper, styled, TextField } from "@mui/material";
+import { grey } from "@mui/material/colors";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 const ChatbotContainer = styled(Box)(({ theme }) => ({
   position: "fixed",
@@ -22,9 +22,22 @@ const ChatWidget = () => {
   const user = useSelector((s) => s.auth.user);
   const senderId = useMemo(() => (user && user?.id ? user.id : getRandomSenderId(), []));
   const lastMessageEl = useRef(null);
+  const router = useRouter();
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+
+  // Load previous messages from session storage
+  useEffect(() => {
+    console.log(sessionStorage.getItem("chatMessages") ?? []);
+    const storedMessages = JSON.parse(sessionStorage.getItem("chatMessages") ?? "[]");
+    setMessages(storedMessages);
+  }, []);
+
+  // Save messages to session storage
+  useEffect(() => {
+    sessionStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   const handleSend = () => {
     if (input.trim() === "") return;
@@ -34,26 +47,33 @@ const ChatWidget = () => {
     setMessages(newMessages);
 
     // Call to RASA API to get the bot response
-    fetch("http://localhost:8888/webhooks/rest/webhook", {
+    fetch(`${process.env.NEXT_PUBLIC_RASA_WEBHOOK_URL}/webhooks/rest/webhook`, {
       method: "POST",
       body: JSON.stringify({ sender: senderId, message: input }),
     })
       .then((response) => response.json())
       .then((data) => {
-        const botReponses = data.map((message) => ({ text: message.text, sender: "bot" }));
-        setMessages([...newMessages, ...botReponses]);
-        console.log(data);
+        for (const message of data) {
+          if (message?.custom?.message_type == "search_properties") {
+            const { message_type, transaction, ...params } = message.custom;
+
+            const searchParam = new URLSearchParams();
+            for (const [key, value] of Object.entries(params)) {
+              searchParam.append(key, value);
+            }
+
+            console.log(searchParam.toString());
+            router.push(`/${transaction ?? "rent"}?${searchParam.toString()}`);
+            setMessages((prev) => [...prev, { text: "Tôi đã tìm những phòng trọ phù hợp với bạn", sender: "bot" }]);
+          } else {
+            console.log(message.text);
+            setMessages((prev) => [...prev, { text: message.text, sender: "bot" }]);
+          }
+        }
       });
 
     setInput("");
   };
-
-  useEffect(() => {
-    // Scroll to bottom when new message is added
-    if (lastMessageEl.current) {
-      lastMessageEl.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
 
   return (
     <ChatbotContainer>
