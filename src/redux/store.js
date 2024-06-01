@@ -6,12 +6,13 @@ import { propertyApi } from "./features/properties/propertyApi";
 import { landlordApi } from "./features/landlord/api";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import systemSlice from "./features/system/systemSlice";
 
 const persistConfig = {
   key: "root",
   storage,
   timeout: 2000,
-  whitelist: ["auth"],
+  whitelist: ["auth", "system"],
 };
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   [landlordApi.reducerPath]: landlordApi.reducer,
   auth: authSlice,
   createPost: createPostSlice,
+  system: systemSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

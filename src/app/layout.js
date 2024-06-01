@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import AppProviders from "@/app/AppProviders";
 import "@scss/_global.scss";
 import { Roboto } from "next/font/google";
+import ChatbotProvider from "@/components/Chatbot";
 
 export const metadata = {
   title: "BKrental",
@@ -18,8 +19,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning={true} className={roboto.className}>
         <AppProviders>
-          <Header />
-          {children}
+          <ChatbotProvider>
+            <Header />
+            {children}
+          </ChatbotProvider>
         </AppProviders>
       </body>
     </html>
