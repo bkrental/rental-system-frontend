@@ -78,7 +78,7 @@ export default function GetPropertiesPage({ transaction_type = "rent" }) {
           />
         )}
       </Grid>
-      <Grid xs={12} sm={6} md={5} sx={{ position: "relative" }}>
+      <Grid xs={0} sm={6} md={5} sx={{ position: "relative" }}>
         <MapContainer>
           <Map center={center} markerList={propertyMarkers} />
         </MapContainer>

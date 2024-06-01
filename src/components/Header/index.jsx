@@ -27,6 +27,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import RentIcon from "@mui/icons-material/VpnKey";
 import AccountDrawer from "./components/Drawer";
 import { AddOutlined } from "@mui/icons-material";
+import AddressInput from "../SearchBar/AddressInput";
 
 const HeaderLink = ({ children, ...props }) => (
   <Link component={NextLink} underline="none" {...props}>
@@ -93,6 +94,18 @@ function Header() {
           >
             Buy
           </HeaderLink>
+        </Stack>
+
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{
+            flex: { sx: 1, sm: 1, md: "unset" },
+            display: { xs: "flex", sm: "flex", md: "none" },
+            width: "50%",
+          }}
+        >
+          <AddressInput />
         </Stack>
 
         <Stack direction="row" spacing={1} sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>

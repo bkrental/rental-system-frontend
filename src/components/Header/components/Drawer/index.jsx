@@ -40,7 +40,7 @@ export default function AccountDrawer({ open, toggleDrawer, user, userName }) {
               Login
             </Button>
             <Button variant="contained" sx={{ flexGrow: 1 }} onClick={() => router.push("/signup")}>
-              Sign- up
+              Sign-up
             </Button>
           </Stack>
         )}
