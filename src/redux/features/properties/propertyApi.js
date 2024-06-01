@@ -1,9 +1,10 @@
+import baseQueryWithAuth from "@/redux/baseQueryWithAuth";
 import { transformPropertiesResponse } from "@/redux/transform";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 export const propertyApi = createApi({
   reducerPath: "properties",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_RENTAL_SERVICE_BACKEND_ENDPOINT }),
+  baseQuery: baseQueryWithAuth,
   endpoints: (builder) => ({
     getProperties: builder.query({
       query: (queryObject) => ({
@@ -19,7 +20,34 @@ export const propertyApi = createApi({
       }),
       transformResponse: (res) => res.data,
     }),
+
+    addToFavourite: builder.mutation({
+      query: (id) => ({
+        url: `/posts/${id}/favourites`,
+        method: "POST",
+      }),
+    }),
+
+    removeFromFavourite: builder.mutation({
+      query: (id) => ({
+        url: `/posts/${id}/favourites`,
+        method: "DELETE",
+      }),
+    }),
+
+    getFavourites: builder.query({
+      query: () => ({
+        url: "/posts/favourites",
+      }),
+      transformResponse: transformPropertiesResponse,
+    }),
   }),
 });
 
-export const { useGetPropertiesQuery, useGetPropertyByIdQuery } = propertyApi;
+export const {
+  useGetPropertiesQuery,
+  useGetPropertyByIdQuery,
+  useGetFavouritesQuery,
+  useAddToFavouriteMutation,
+  useRemoveFromFavouriteMutation,
+} = propertyApi;
