@@ -9,6 +9,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { deepOrange, orange } from "@mui/material/colors";
 import Link from "next/link";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const lineTruncate = (line = 1) => ({
   overflow: "hidden",
@@ -42,12 +43,13 @@ export default function PropertyCard({
     return `${street}, ${district}, ${province}`;
   };
 
-  const [addToFavourite, { isError }] = useAddToFavouriteMutation();
+  const isAuthenticated = useSelector((s) => s.auth.isAuthenticated);
+  const [addToFavourite] = useAddToFavouriteMutation();
   const [removeFromFavourite] = useRemoveFromFavouriteMutation();
 
   const toggleFavourite = async () => {
+    if (!isAuthenticated) return alert("Vui lòng đăng nhập để thực hiện chức năng này!");
     const before = isFavouriteState;
-    console.log(_id);
     try {
       setIsFavouriteState((prev) => !prev);
       if (!isFavouriteState) {
