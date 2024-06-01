@@ -27,5 +27,14 @@ const theme = createTheme({
       color: grey[900],
     },
   },
+  components: {
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          minWidth: 36,
+        },
+      },
+    },
+  },
 });
 export default theme;
