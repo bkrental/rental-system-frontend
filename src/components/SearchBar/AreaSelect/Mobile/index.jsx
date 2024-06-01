@@ -1,29 +1,25 @@
 import { Box, Stack, TextField, Typography, Slider, Button, useTheme } from "@mui/material";
 import ArrowRight from "@mui/icons-material/ArrowRight";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { grey } from "@mui/material/colors";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
+import { setAreaRange as ASetAreaRange } from "@/redux/features/filter/filterSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function MobileAreaSelect() {
-  const [bottomArea, setBottomArea] = useQueryParam("ba", withDefault(NumberParam, 0));
-  const [topArea, setTopArea] = useQueryParam("ta", withDefault(NumberParam, 0));
-
-  const [areaRange, setAreaRange] = useState([bottomArea, topArea]);
-  const areaConfig = { min: 0, max: 50000, step: 1 };
+  const areaRange = useSelector((s) => s.filter.areaRange);
+  const areaConfig = { min: 0, max: 500, step: 1 };
 
   const theme = useTheme();
-
-  const handleAreaSelect = (newAreaRange) => {
-    const newBottomArea = Math.min(...newAreaRange);
-    const newTopArea = Math.max(...newAreaRange);
-
-    setTopArea(newTopArea === 0 ? undefined : newTopArea);
-    setBottomArea(newBottomArea === 0 ? undefined : newBottomArea);
-  };
+  const dispatch = useDispatch();
 
   const handleSliderChange = (event, newAreaRange) => {
-    setAreaRange(newAreaRange);
+    dispatch(ASetAreaRange(newAreaRange));
   };
+
+  useEffect(() => {
+    console.log("area:", areaRange);
+  }, [areaRange]);
 
   return (
     <Box width={"100%"}>
@@ -38,7 +34,7 @@ export default function MobileAreaSelect() {
             variant="outlined"
             value={areaRange[0]}
             inputProps={{ type: "number", ...areaConfig }}
-            onChange={(e) => setAreaRange((prev) => [e.target.value, prev[1]])}
+            onChange={(e) => dispatch(ASetAreaRange([e.target.value, areaRange[1]]))}
           />
           <ArrowRight fontSize="large" />
           <TextField
@@ -47,7 +43,7 @@ export default function MobileAreaSelect() {
             variant="outlined"
             value={areaRange[1]}
             inputProps={{ type: "number", ...areaConfig }}
-            onChange={(e) => setAreaRange((prev) => [prev[0], e.target.value])}
+            onChange={(e) => dispatch(ASetAreaRange([areaRange[0], e.target.value]))}
           />
         </Stack>
         <Slider {...areaConfig} value={areaRange} onChange={handleSliderChange} valueLabelDisplay="auto" />

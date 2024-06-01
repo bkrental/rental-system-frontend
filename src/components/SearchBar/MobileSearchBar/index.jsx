@@ -7,6 +7,9 @@ import MobilePriceSelect from "../PriceSelect/Mobile";
 import TuneIcon from "@mui/icons-material/Tune";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MapIcon from "@mui/icons-material/Map";
+import { NumberParam, useQueryParam, withDefault } from "use-query-params";
+import { useDispatch, useSelector } from "react-redux";
+import { setPriceRange, setAreaRange } from "@/redux/features/filter/filterSlice";
 
 const SearchBarContainer = styled(Stack)(({ theme }) => ({
   position: "fixed",
@@ -21,13 +24,47 @@ const SearchBarContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function MobileSearchBar() {
+  const [bottomPrice, setBottomPrice] = useQueryParam("bp", withDefault(NumberParam, 0));
+  const [topPrice, setTopPrice] = useQueryParam("tp", withDefault(NumberParam, 0));
+  const [bottomArea, setBottomArea] = useQueryParam("ba", withDefault(NumberParam, 0));
+  const [topArea, setTopArea] = useQueryParam("ta", withDefault(NumberParam, 0));
+  const [propertyType, setPropertyType] = useQueryParam("pt", withDefault(NumberParam, 0));
+
+  const areaRange = useSelector((s) => s.filter.areaRange);
+  const priceRange = useSelector((s) => s.filter.priceRange);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const dispatch = useDispatch();
 
   const toggleDrawer = (open) => (event) => {
     if (event && (event.key === "Tab" || event.key === "Shift")) {
       return;
     }
     setDrawerOpen(open);
+  };
+
+  const handleFilterClick = () => {
+    console.log("Filter clicked");
+    const newBottomArea = Math.min(...areaRange);
+    const newTopArea = Math.max(...areaRange);
+    const newBottomPrice = Math.min(...priceRange);
+    const newTopPrice = Math.max(...priceRange);
+
+    setTopPrice(newTopPrice === 0 ? undefined : newTopPrice);
+    setBottomPrice(newBottomPrice === 0 ? undefined : newBottomPrice);
+    setTopArea(newTopArea === 0 ? undefined : newTopArea);
+    setBottomArea(newBottomArea === 0 ? undefined : newBottomArea);
+    setDrawerOpen(false);
+  };
+
+  const handleReset = () => {
+    setBottomPrice(undefined);
+    setTopPrice(undefined);
+    setBottomArea(undefined);
+    setTopArea(undefined);
+    setPropertyType(undefined);
+    dispatch(setPriceRange([0, 0]));
+    dispatch(setAreaRange([0, 0]));
   };
 
   return (
@@ -78,9 +115,12 @@ export default function MobileSearchBar() {
           <MobilePropertyTypeSelect />
           <MobilePriceSelect />
           <MobileAreaSelect />
+          <Button variant="text" color="primary" onClick={handleReset}>
+            Reset Filter
+          </Button>
         </Box>
         <Box sx={{ padding: 2, borderTop: "1px solid #ddd" }}>
-          <Button variant="contained" color="primary" fullWidth onClick={toggleDrawer(false)}>
+          <Button variant="contained" color="primary" fullWidth onClick={handleFilterClick}>
             View Rentals
           </Button>
         </Box>

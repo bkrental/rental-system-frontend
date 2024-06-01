@@ -22,6 +22,8 @@ import {
 import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
+import { setPriceRange } from "@/redux/features/filter/filterSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const StyledButton = styled((props) => <Button size="small" variant="outlined" color="inherit" {...props} />)(
   ({ theme }) => ({
@@ -36,15 +38,13 @@ const StyledButton = styled((props) => <Button size="small" variant="outlined" c
 );
 
 export default function MobilePriceSelect() {
-  const [bottomPrice, setBottomPrice] = useQueryParam("bp", withDefault(NumberParam, 0));
-  const [topPrice, setTopPrice] = useQueryParam("tp", withDefault(NumberParam, 0));
-
-  const [priceRange, setPriceRange] = useState([bottomPrice, topPrice]);
+  const priceRange = useSelector((s) => s.filter.priceRange);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const priceConfig = { min: 0, max: 100, step: 0.5 };
 
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,29 +54,13 @@ export default function MobilePriceSelect() {
     setAnchorEl(null);
   };
 
-  const handlePriceSelect = (newPriceRange) => {
-    const newBottomPrice = Math.min(...newPriceRange);
-    const newTopPrice = Math.max(...newPriceRange);
-
-    setTopPrice(newTopPrice === 0 ? undefined : newTopPrice);
-    setBottomPrice(newBottomPrice === 0 ? undefined : newBottomPrice);
-    handleClose();
-  };
-
-  const handleReset = () => {
-    setBottomPrice(undefined);
-    setTopPrice(undefined);
-    handleClose();
-  };
-
   const handleSliderChange = (event, newPriceRange) => {
-    setPriceRange(newPriceRange);
+    dispatch(setPriceRange(newPriceRange));
   };
 
-  // Sync local price range with query params
-  useEffect(() => {
-    setPriceRange([bottomPrice, topPrice]);
-  }, [topPrice, bottomPrice]);
+  const handlePriceSelect = (newPriceRange) => {
+    dispatch(setPriceRange(newPriceRange));
+  };
 
   return (
     <Box width={"100%"}>
@@ -91,7 +75,7 @@ export default function MobilePriceSelect() {
             variant="outlined"
             value={priceRange[0]}
             inputProps={{ type: "number", ...priceConfig }}
-            onChange={(e) => setPriceRange((prev) => [e.target.value, prev[1]])}
+            onChange={(e) => dispatch(setPriceRange([e.target.value * 1, priceRange[1]]))}
           />
           <ArrowRight fontSize="large" />
           <TextField
@@ -100,7 +84,7 @@ export default function MobilePriceSelect() {
             variant="outlined"
             value={priceRange[1]}
             inputProps={{ type: "number", ...priceConfig }}
-            onChange={(e) => setPriceRange((prev) => [prev[0], e.target.value])}
+            onChange={(e) => dispatch(setPriceRange([priceRange[0], e.target.value * 1]))}
           />
         </Stack>
 
@@ -113,7 +97,7 @@ export default function MobilePriceSelect() {
           aria-expanded={open ? "true" : undefined}
           sx={{ borderColor: open ? theme.palette.primary.main : grey[400] }}
         >
-          {getPriceSelectLabel([bottomPrice, topPrice])} <ArrowDropDown color={grey[400]} />
+          {getPriceSelectLabel(priceRange ? priceRange : [0, 0])} <ArrowDropDown color={grey[500]} />
         </StyledButton>
         <Menu onClose={handleClose} anchorEl={anchorEl} open={open} sx={{ "& .MuiPaper-root": { width: "100%" } }}>
           <Box height={170} sx={{ overflowY: "scroll", width: "100%" }}>
@@ -123,18 +107,6 @@ export default function MobilePriceSelect() {
               </MenuItem>
             ))}
           </Box>
-
-          <Divider />
-
-          <Stack direction="row" justifyContent="space-between" px={1} pt={1}>
-            <Button onClick={handleReset} color="inherit">
-              <CachedOutlined sx={{ fontSize: 20 }} />
-              Reset
-            </Button>
-            <Button onClick={() => handlePriceSelect(priceRange)} variant="contained">
-              Apply
-            </Button>
-          </Stack>
         </Menu>
       </Box>
     </Box>
