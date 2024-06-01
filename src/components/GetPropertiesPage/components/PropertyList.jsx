@@ -1,9 +1,8 @@
 "use client";
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import PropertyCard from "./PropertyCard";
-import NotFound from "./NotFound";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import NotFound from "./NotFound";
+import PropertyCard from "./PropertyCard";
 
 export default function PropertyList({ properties, currentPage, totalPages, handlePageChange }) {
   if (!properties || properties.length === 0) {

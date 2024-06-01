@@ -2,12 +2,14 @@
 import NextLink from "next/link";
 import { useSelector } from "react-redux";
 // import HeaderLink from "./HeaderLink";
-import { Avatar, Box, Button, Container, Link, Stack, styled, Typography } from "@mui/material";
+import useMenu from "@/hooks/useMenu";
+import { FavoriteBorderOutlined, NotificationsOutlined } from "@mui/icons-material";
+import { Avatar, Box, Button, Container, IconButton, Link, Stack, styled, Tooltip, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
+import FavouritePostMenu from "../GetPropertiesPage/components/FavouritePostMenu";
 import AccountMenu from "./components/AccountMenu";
-import { AddOutlined } from "@mui/icons-material";
 
 const HeaderLink = ({ children, ...props }) => (
   <Link component={NextLink} underline="none" {...props}>
@@ -32,15 +34,8 @@ function Header() {
   const user = useSelector((state) => state.auth.user);
   const userName = useMemo(() => user?.name || "User", [user]);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const [open, anchorEl, handleClick, handleClose] = useMenu();
+  const [isFavouriteMenuOpen, favouriteBtn, handleOpenFavouriteMenu, handleCloseFavouriteMenu] = useMenu();
 
   return (
     <>
@@ -63,22 +58,33 @@ function Header() {
           </Button>
 
           {user ? (
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing={1}
-              sx={{
-                border: 1,
-                borderColor: grey[300],
-                px: 1,
-                borderRadius: 2,
-                cursor: "pointer",
-              }}
-              onClick={handleClick}
-            >
-              <Avatar sx={{ width: 30, height: 30 }}>{userName[0].toUpperCase()}</Avatar>
-              <Typography>{userName}</Typography>
-            </Stack>
+            <>
+              <Tooltip title="List of saved post">
+                <IconButton onClick={handleOpenFavouriteMenu}>
+                  <FavoriteBorderOutlined />
+                </IconButton>
+              </Tooltip>
+
+              <IconButton>
+                <NotificationsOutlined />
+              </IconButton>
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={1}
+                sx={{
+                  border: 1,
+                  borderColor: grey[300],
+                  px: 1,
+                  borderRadius: 2,
+                  cursor: "pointer",
+                }}
+                onClick={handleClick}
+              >
+                <Avatar sx={{ width: 30, height: 30 }}>{userName[0].toUpperCase()}</Avatar>
+                <Typography>{userName}</Typography>
+              </Stack>
+            </>
           ) : (
             <Button onClick={() => router.push("/login")} variant="outlined">
               Sign Up or Login
@@ -87,6 +93,8 @@ function Header() {
         </Stack>
         <AccountMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
       </HeaderWrapper>
+
+      <FavouritePostMenu anchorEl={favouriteBtn} open={isFavouriteMenuOpen} onCancel={handleCloseFavouriteMenu} />
       <Box sx={{ width: "100%", height: "60px" }}></Box>
     </>
   );

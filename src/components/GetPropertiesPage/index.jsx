@@ -1,14 +1,14 @@
 "use client";
-import PropertyList from "./components/PropertyList";
+import Map from "@/components/GetPropertiesPage/components/Map";
 import useGetPropertyTypes from "@/hooks/useGetPropertyTypes";
 import { useGetPropertiesQuery } from "@/redux/features/properties/propertyApi";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useMemo } from "react";
-import { NumberParam, useQueryParam, withDefault } from "use-query-params";
-import Map from "@/components/GetPropertiesPage/components/Map";
 import { Box, styled } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
+import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import FullscreenLoading from "../FullscreenLoading";
+import PropertyList from "./components/PropertyList";
 
 const MapContainer = styled(Box)(({ theme }) => ({
   position: "sticky",

@@ -1,7 +1,5 @@
-import ConfirmDialog from "@/components/ConfirmDialog";
-import { useDeletePostMutation } from "@/redux/features/landlord/api";
 import { DeleteOutline, EditNoteOutlined, VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
-import { IconButton, Stack, Tooltip, Snackbar } from "@mui/material";
+import { IconButton, Stack, Tooltip } from "@mui/material";
 import { useState } from "react";
 
 export default function ActionButtons({ postId, postTitle }) {
