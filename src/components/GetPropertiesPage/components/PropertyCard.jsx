@@ -70,7 +70,7 @@ export default function PropertyCard({
     <Card variant="outlined" sx={{ maxWidth: 390 }} key={_id}>
       <CardMedia sx={{ width: "100%", height: 230, objectFit: "contain" }}>
         <div style={{ position: "relative", width: "100%", height: "100%" }}>
-          <Image alt={name} src={thumbnail} layout="fill" objectFit="cover" />
+          <Image alt={name} src={thumbnail} objectFit="cover" width={500} height={230} />
         </div>
       </CardMedia>
       {/* <CardMedia image={thumbnail} sx={{ width: "100%", height: 230, objectFit: "contain" }} title={name} /> */}
