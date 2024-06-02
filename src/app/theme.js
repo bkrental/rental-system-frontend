@@ -5,7 +5,6 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      // main: "hsl(24.6, 95%, 53.1%)",
       main: orange[800],
       contrastText: "#fff",
     },

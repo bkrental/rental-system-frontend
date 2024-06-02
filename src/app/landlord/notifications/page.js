@@ -1,5 +1,6 @@
-import { Typography } from "@mui/material";
+"use client";
+import P2PChat from "@/components/P2PChat";
 
 export default function NotificationsPage() {
-  return <Typography>Hello World</Typography>;
+  return <P2PChat />;
 }
