@@ -7,6 +7,7 @@ import SingleBedOutlinedIcon from "@mui/icons-material/SingleBedOutlined";
 import { Avatar, Box, Card, CardContent, CardHeader, Chip, Divider, IconButton, Typography } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import { deepOrange, orange } from "@mui/material/colors";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
