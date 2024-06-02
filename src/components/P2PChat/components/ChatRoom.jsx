@@ -53,7 +53,10 @@ export default function ChatRoom() {
 
   // Handle fetching messages
   useEffect(() => {
-    if (!targetingUser) return;
+    fetchMessages();
+    if (!targetingUser) {
+      return;
+    }
 
     const getNewMessage = (e) => {
       const { text, senderId, receiverId } = e.detail;

@@ -17,25 +17,6 @@ export default function P2PChat() {
     setChatPreviews(data ?? []);
   }, [data]);
 
-  // Display the preview when the user is selected
-  useEffect(() => {
-    if (!targetingUser) return;
-
-    const preview = chatPreviews.find((p) => p.user === targetingUser.id);
-    if (!preview) {
-      setChatPreviews([
-        ...chatPreviews,
-        {
-          user: targetingUser.id,
-          name: targetingUser.name,
-          avatar: targetingUser.avatar,
-          messageType: "sent",
-          message: "",
-        },
-      ]);
-    }
-  }, [targetingUser]);
-
   return (
     <SocketProvider>
       <Grid container columns={10} height="calc(100vh - 60px)" width="100%">

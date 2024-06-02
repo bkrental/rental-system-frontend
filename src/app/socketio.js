@@ -13,6 +13,7 @@ export default function SocketProvider({ children }) {
   useEffect(() => {
     if (user && !socket.current) {
       socket.current = io("http://localhost:3000");
+      console.log("connect");
     }
 
     return () => {

@@ -9,6 +9,7 @@ export default function ChatPreview({ previews, setPreviews }) {
   const targetingUser = useSelector((s) => s.system.chatTargetingUser);
   const onlineUsers = useSelector((s) => s.system.chatOnlineUsers);
   const dispatch = useDispatch();
+  console.log(previews);
 
   return (
     <List>
@@ -18,7 +19,6 @@ export default function ChatPreview({ previews, setPreviews }) {
           sx={{
             borderRadius: 1,
             backgroundColor: targetingUser?.id == preview.user ? "rgba(239, 108, 0, 0.12)" : "#fff",
-            borderLeft: onlineUsers.includes(targetingUser?._id) ? "4px solid" : "none",
           }}
           onClick={() =>
             dispatch(

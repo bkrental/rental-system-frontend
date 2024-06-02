@@ -39,7 +39,7 @@ export default function UserSearch() {
   };
 
   const onUserSelect = (user) => {
-    dispatch(setChatTargetingUser(user));
+    dispatch(setChatTargetingUser({ ...user, id: user?._id }));
   };
 
   return (
