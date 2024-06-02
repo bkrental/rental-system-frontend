@@ -1,15 +1,16 @@
 import { Stack, styled, Button, SwipeableDrawer, Box, Typography, Divider } from "@mui/material";
 import { useState } from "react";
-import PriceSelect from "../PriceSelect";
 import MobileAreaSelect from "../AreaSelect/Mobile";
 import MobilePropertyTypeSelect from "../PropertyTypeSelect/Mobile";
 import MobilePriceSelect from "../PriceSelect/Mobile";
 import TuneIcon from "@mui/icons-material/Tune";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import MapIcon from "@mui/icons-material/Map";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import { useDispatch, useSelector } from "react-redux";
 import { setPriceRange, setAreaRange } from "@/redux/features/filter/filterSlice";
+import { toggleMapWidget } from "@/redux/features/system/systemSlice";
 
 const SearchBarContainer = styled(Stack)(({ theme }) => ({
   position: "fixed",
@@ -32,6 +33,7 @@ export default function MobileSearchBar() {
 
   const areaRange = useSelector((s) => s.filter.areaRange);
   const priceRange = useSelector((s) => s.filter.priceRange);
+  const isMapOpened = useSelector((s) => s.system.isMapOpened);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -67,6 +69,11 @@ export default function MobileSearchBar() {
     dispatch(setAreaRange([0, 0]));
   };
 
+  const handleMapClick = () => {
+    dispatch(toggleMapWidget(!isMapOpened));
+  };
+
+  console.log("isMapOpened", isMapOpened);
   return (
     <SearchBarContainer
       sx={{
@@ -77,9 +84,15 @@ export default function MobileSearchBar() {
         },
       }}
     >
-      <Button variant="contained" sx={{ flex: 1 }} startIcon={<MapIcon />}>
-        <Typography>Map</Typography>
-      </Button>
+      {!isMapOpened ? (
+        <Button variant="contained" onClick={handleMapClick} sx={{ flex: 1 }} startIcon={<MapIcon />}>
+          <Typography>Map</Typography>
+        </Button>
+      ) : (
+        <Button variant="contained" onClick={handleMapClick} sx={{ flex: 1 }} startIcon={<FormatListBulletedIcon />}>
+          <Typography>List</Typography>
+        </Button>
+      )}
       <Button variant="contained" sx={{ flex: 1 }} startIcon={<FavoriteBorderIcon />}>
         <Typography>Favorites</Typography>
       </Button>
